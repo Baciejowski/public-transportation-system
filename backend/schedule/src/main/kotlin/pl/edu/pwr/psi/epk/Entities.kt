@@ -59,6 +59,3 @@ class Linia(
     @OneToMany(mappedBy = "linia")
     var trasy: Set<Trasa> = mutableSetOf()
 )
-
-
-@

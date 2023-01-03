@@ -8,11 +8,11 @@
         <version>3.0.0-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>pl.edu.pwr.psi</groupId>
-    <artifactId>epk-backend-tickets</artifactId>
+    <groupId>pl.edu.pwr.psi.epk</groupId>
+    <artifactId>tickets</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>backend-tickets</name>
-    <description>backend-tickets</description>
+    <name>tickets</name>
+    <description>tickets</description>
     <properties>
         <java.version>17</java.version>
         <kotlin.version>1.7.21</kotlin.version>
