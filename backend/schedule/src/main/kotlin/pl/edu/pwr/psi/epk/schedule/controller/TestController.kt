@@ -1,4 +1,4 @@
-package pl.edu.pwr.psi.epk.controller
+package pl.edu.pwr.psi.epk.schedule.controller
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RestController
 class TestController {
 
     @GetMapping
-    fun greet() = ResponseEntity.ok("Hello World")
+    fun greet() = ResponseEntity.ok("Hello from ${this.javaClass}")
 }

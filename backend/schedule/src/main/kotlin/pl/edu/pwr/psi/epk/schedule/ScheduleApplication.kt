@@ -1,4 +1,4 @@
-package pl.edu.pwr.psi.epk
+package pl.edu.pwr.psi.epk.schedule
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
