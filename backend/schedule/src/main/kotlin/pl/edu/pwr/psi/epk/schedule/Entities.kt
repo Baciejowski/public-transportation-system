@@ -3,59 +3,59 @@ package pl.edu.pwr.psi.epk.schedule
 import jakarta.persistence.*
 
 @Embeddable
-class Polozenie(
-    var szerokosc: Double,
-    var dlugosc: Double
+class Coordinates(
+    var latitude: Double,
+    var longitude: Double
 )
 
 
 @Entity
-@Table(name = "Przystanki")
-class Przystanek(
-        @Column(length = 20)
-    var nazwa: String,
-        @Embedded
-    var polozenie: Polozenie,
-        var jestNaZadanie: Boolean = false,
-        @ManyToMany(mappedBy = "przystanki")
-    var trasy: Set<Trasa> = mutableSetOf(),
-        @Id
+@Table(name = "Stops")
+class Stop(
+    @Column(length = 20)
+    var name: String,
+    @Embedded
+    var coordinates: Coordinates,
+    var onRequest: Boolean = false,
+    @ManyToMany(mappedBy = "stops")
+    var routes: Set<Route> = mutableSetOf(),
+    @Id
     @GeneratedValue
     var id: Int? = null
 )
 
 
 @Entity
-@Table(name = "Trasy")
-class Trasa(
-        @Column(length = 30)
-    var nazwa: String,
-        @ManyToOne
-    @JoinColumn(name="linie_linia", nullable=false)
-    var linia: Linia,
-        @ManyToMany
+@Table(name = "Routes")
+class Route(
+    @Column(length = 30)
+    var name: String,
+    @ManyToOne
+    @JoinColumn(name = "lines_line", nullable = false)
+    var line: Line,
+    @ManyToMany
     @JoinTable(
-        name = "Przystanki_Trasy",
-        joinColumns = [JoinColumn(name = "trasy_id")],
-        inverseJoinColumns = [JoinColumn(name = "przystanki_id")]
+        name = "Stops_Routes",
+        joinColumns = [JoinColumn(name = "routes_id")],
+        inverseJoinColumns = [JoinColumn(name = "stops_id")]
     )
-    var przystanki: Set<Przystanek> = mutableSetOf(),
-        @Id
+    var stops: Set<Stop> = mutableSetOf(),
+    @Id
     @GeneratedValue
     var id: Int? = null
 )
 
 
 @Entity
-@Table(name = "Linie")
-class Linia(
+@Table(name = "Lines")
+class Line(
     @Id
     @Column(length = 3)
-    var linia: String,
+    var line: String,
     @Column(length = 30)
-    var nazwa: String,
+    var name: String,
     @Column(length = 7)
-    var kolor: String?,
-    @OneToMany(mappedBy = "linia")
-    var trasy: Set<Trasa> = mutableSetOf()
+    var color: String?,
+    @OneToMany(mappedBy = "line")
+    var routes: Set<Route> = mutableSetOf()
 )
