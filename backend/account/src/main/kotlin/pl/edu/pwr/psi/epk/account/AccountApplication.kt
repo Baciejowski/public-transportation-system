@@ -1,11 +1,11 @@
-package pl.edu.pwr.psi.epk.auth
+package pl.edu.pwr.psi.epk.account
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class AuthApplication
+class AccountApplication
 
 fun main(args: Array<String>) {
-    runApplication<AuthApplication>(*args)
+    runApplication<AccountApplication>(*args)
 }

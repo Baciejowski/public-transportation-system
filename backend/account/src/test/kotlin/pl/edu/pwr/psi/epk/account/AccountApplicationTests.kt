@@ -1,10 +1,10 @@
-package pl.edu.pwr.psi.epk.auth
+package pl.edu.pwr.psi.epk.account
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class AuthApplicationTests {
+class AccountApplicationTests {
 
     @Test
     fun contextLoads() {

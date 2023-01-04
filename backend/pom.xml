@@ -21,10 +21,11 @@
         <java.version>17</java.version>
         <kotlin.version>1.6.21</kotlin.version>
         <spring-cloud.version>2022.0.0</spring-cloud.version>
+        <spring-boot.version>3.0.0</spring-boot.version>
     </properties>
 
     <modules>
-        <module>auth</module>
+        <module>account</module>
         <module>discovery</module>
         <module>gateway</module>
         <module>ticket</module>

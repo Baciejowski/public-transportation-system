@@ -12,9 +12,9 @@ class GatewayConfig {
     @Bean
     fun routes(builder: RouteLocatorBuilder): RouteLocator = builder.routes()
             .route("auth") { p: PredicateSpec ->
-                p.path("/auth/**")
-                        .filters { f -> f.rewritePath("^/auth", "") }
-                        .uri("lb://auth")
+                p.path("/account/**")
+                        .filters { f -> f.rewritePath("^/account", "") }
+                        .uri("lb://account")
             }
             .route("ticket") { p: PredicateSpec ->
                 p.path("/ticket/**")

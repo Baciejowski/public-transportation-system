@@ -1,4 +1,4 @@
-package pl.edu.pwr.psi.epk.auth.controller
+package pl.edu.pwr.psi.epk.account.controller
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
