@@ -1,10 +1,10 @@
-package pl.edu.pwr.psi.epk.tickets
+package pl.edu.pwr.psi.epk.ticket
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class TicketsApplicationTests {
+class TicketApplicationTests {
 
     @Test
     fun contextLoads() {
