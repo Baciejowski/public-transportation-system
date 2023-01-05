@@ -21,4 +21,8 @@ class Stop(
     @ManyToMany(mappedBy = "stops")
     var routes: Set<Route> = mutableSetOf(),
 
+    @OneToMany
+    @OrderBy(value = "departureTime")
+    var halts: List<Halt> = mutableListOf()
+
 )

@@ -23,6 +23,10 @@ class Route(
         joinColumns = [JoinColumn(name = "routes_id")],
         inverseJoinColumns = [JoinColumn(name = "stops_id")]
     )
-    var stops: Set<Stop> = mutableSetOf(),
+    @OrderColumn(name = "no")
+    var stops: List<Stop> = mutableListOf(),
+
+    @OneToMany(mappedBy = "serviceId")
+    var services: Set<Service> = mutableSetOf()
 
 )
