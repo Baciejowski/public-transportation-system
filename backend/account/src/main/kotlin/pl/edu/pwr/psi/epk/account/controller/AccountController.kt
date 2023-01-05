@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.edu.pwr.psi.epk.account.dto.UserReadDto
 import pl.edu.pwr.psi.epk.account.model.Role
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @RestController
 @RequestMapping("/account")
@@ -17,7 +17,7 @@ class AccountController {
             "mail@mail.com",
             "Joe",
             "Doe",
-            LocalDateTime.MIN,
+            LocalDate.MIN,
             Role.PASSENGER,
             0.0
         )
