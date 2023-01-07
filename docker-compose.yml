@@ -2,21 +2,11 @@ version: '3.8'
 
 
 services:
-  tickets-db:
-    image: postgres:15-alpine
-    env_file:
-      - ./backend/Tickets/db-environment.env
-    volumes: 
-      - tickets-db:/var/lib/postgresql/data
 
-  tickets-app:
+  discovery-app:
     build:
-      context: ./backend/Tickets
+      context: ./backend/discovery
       dockerfile: Dockerfile
-    env_file:
-      - ./backend/Tickets/app-environment.env
-    depends_on:
-      - tickets-db
 
   schedule-db:
     image: postgres:15-alpine
@@ -33,6 +23,24 @@ services:
       - ./backend/Schedule/app-environment.env
     depends_on:
       - schedule-db
+      - discovery-app
+
+  tickets-db:
+    image: postgres:15-alpine
+    env_file:
+      - ./backend/ticket/db-environment.env
+    volumes: 
+      - schedule-db:/var/lib/postgresql/data
+
+  tickets-app:
+    build:
+      context: ./backend/ticket
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/ticket/app-environment.env
+    depends_on:
+      - tickets-db
+      - discovery-app
 
 volumes:
   tickets-db:
