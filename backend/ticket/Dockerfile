@@ -1,5 +1,5 @@
 #### Build app
-FROM amazoncorretto:19 as build
+FROM amazoncorretto:17 as build
 WORKDIR /app
 
 COPY mvnw .
@@ -13,7 +13,7 @@ COPY src src
 RUN ./mvnw install -DskipTests
 
 #### Provide executable jar
-FROM amazoncorretto:19
+FROM amazoncorretto:17
 
 RUN mkdir -p /opt/app
 COPY --from=build /app/target/*.jar /opt/app/epk-tickets.jar
