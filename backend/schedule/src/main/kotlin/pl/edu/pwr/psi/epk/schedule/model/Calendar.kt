@@ -18,7 +18,7 @@ class Calendar (
     var calendarExemptions: Set<CalendarExemption>,
 
     @OneToMany(mappedBy = "serviceId")
-    var services: Set<Service> = setOf(),
+    var busFares: Set<BusFare> = setOf(),
 
     @Id
     @GeneratedValue

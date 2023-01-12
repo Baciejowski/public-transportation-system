@@ -27,6 +27,6 @@ class Route(
     var stops: List<Stop> = mutableListOf(),
 
     @OneToMany(mappedBy = "serviceId")
-    var services: Set<Service> = mutableSetOf()
+    var busFares: Set<BusFare> = mutableSetOf()
 
 )

@@ -4,16 +4,17 @@ import jakarta.persistence.*
 import java.io.Serializable
 import java.util.*
 
-class RideId(var service: Service, var bus: Bus, var date: Date): Serializable
+class RideId(var busFare: BusFare, var bus: Bus, var date: Date): Serializable
 
 @Entity
 @Table(name = "Rides")
 @IdClass(RideId::class)
 class Ride (
+
     @Id
     @ManyToOne
     @JoinColumn(name = "services_service_id")
-    var service: Service,
+    var busFare: BusFare,
 
     @Id
     @ManyToOne

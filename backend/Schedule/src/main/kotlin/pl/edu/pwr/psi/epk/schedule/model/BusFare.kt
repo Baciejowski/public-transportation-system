@@ -6,7 +6,7 @@ import jakarta.persistence.*
 // kurs
 @Entity
 @Table(name = "Services")
-class Service (
+class BusFare (
     @ManyToOne
     @JoinColumn(name = "routes_id", nullable = false)
     var route: Route,

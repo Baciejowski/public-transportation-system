@@ -5,7 +5,7 @@ import java.io.Serializable
 import java.util.*
 
 
-class HaltId(var stop: Stop, var service: Service):Serializable
+class HaltId(var stop: Stop, var busFare: BusFare):Serializable
 
 @Entity
 @Table(name = "Halts")
@@ -19,7 +19,7 @@ class Halt (
     @Id
     @ManyToOne
     @JoinColumn(name = "services_service_id", nullable = false)
-    var service: Service,
+    var busFare: BusFare,
 
     var departureTime: Date
 )
