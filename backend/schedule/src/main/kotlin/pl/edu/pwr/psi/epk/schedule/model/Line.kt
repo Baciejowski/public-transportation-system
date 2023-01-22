@@ -3,20 +3,16 @@ package pl.edu.pwr.psi.epk.schedule.model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Lines")
 class Line(
+    val name: String,
+    val color: String? = null,
+) {
 
     @Id
-    @Column(length = 3)
-    var line: String,
-
-    @Column(length = 30)
-    var name: String,
-
-    @Column(length = 7)
-    var color: String?,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
 
     @OneToMany(mappedBy = "line")
-    var routes: Set<Route> = mutableSetOf(),
+    var routes: Set<Route> = mutableSetOf()
 
-)
+}

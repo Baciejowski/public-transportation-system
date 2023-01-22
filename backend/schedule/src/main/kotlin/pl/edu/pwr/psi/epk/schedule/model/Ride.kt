@@ -1,26 +1,33 @@
 package pl.edu.pwr.psi.epk.schedule.model
 
 import jakarta.persistence.*
-import java.io.Serializable
-import java.util.*
+import java.time.LocalDateTime
 
-class RideId(var busFare: BusFare, var bus: Bus, var date: Date): Serializable
 
 @Entity
-@Table(name = "Rides")
-@IdClass(RideId::class)
 class Ride (
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "services_service_id")
-    var busFare: BusFare,
+    val routeService: RouteService,
+
+    @ManyToOne
+    val bus: Bus,
+
+    val plannedStartTime: LocalDateTime,
+
+    val plannedEndTime: LocalDateTime
+
+) {
 
     @Id
-    @ManyToOne
-    @JoinColumn(name = "buses_side_number")
-    var bus: Bus,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
 
-    @Id
-    var date: Date
-)
+    @OneToMany(mappedBy = "ride")
+    val rideStops: List<RideStop> = mutableListOf()
+
+    var startTime: LocalDateTime? = null
+
+    var endTime: LocalDateTime? = null
+
+}

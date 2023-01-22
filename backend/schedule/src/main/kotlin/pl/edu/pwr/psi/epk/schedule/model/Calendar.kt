@@ -1,26 +1,28 @@
 package pl.edu.pwr.psi.epk.schedule.model
 
 import jakarta.persistence.*
-import java.util.*
+import java.time.DayOfWeek
+import java.time.LocalDateTime
 
 @Entity
-@Table(name = "Calendars")
 class Calendar (
-    @ElementCollection
-    @OrderColumn(name = "pos")
-    var days: List<Boolean>,
 
-    var startDate: Date,
+    @OneToMany(mappedBy = "calendar")
+    val calendarExemptions: Set<CalendarExemption>,
 
-    var endDate: Date,
+    val serviceDays: Set<DayOfWeek>,
 
-    @OneToMany
-    var calendarExemptions: Set<CalendarExemption>,
+    val startDate: LocalDateTime,
 
-    @OneToMany(mappedBy = "serviceId")
-    var busFares: Set<BusFare> = setOf(),
+    val endDate: LocalDateTime? = null,
+
+) {
 
     @Id
     @GeneratedValue
-    var id: Int? = null
-)
+    val id: Long = 0
+
+    @OneToMany(mappedBy = "calendar")
+    val routeServices: Set<RouteService> = mutableSetOf()
+
+}

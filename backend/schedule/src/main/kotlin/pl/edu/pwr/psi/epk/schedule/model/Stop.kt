@@ -3,26 +3,17 @@ package pl.edu.pwr.psi.epk.schedule.model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Stops")
 class Stop(
-
-    @Id
-    @GeneratedValue
-    var id: Int? = null,
-
-    @Column(length = 20)
-    var name: String,
+    val name: String,
 
     @Embedded
-    var coordinates: Coordinates,
+    val coordinates: Coordinates,
 
-    var onRequest: Boolean = false,
+    val onRequest: Boolean = false,
+) {
 
-    @ManyToMany(mappedBy = "stops")
-    var routes: Set<Route> = mutableSetOf(),
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
 
-    @OneToMany
-    @OrderBy(value = "departureTime")
-    var halts: List<Halt> = mutableListOf()
-
-)
+}

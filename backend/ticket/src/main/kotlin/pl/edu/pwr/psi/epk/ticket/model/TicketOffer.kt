@@ -1,19 +1,20 @@
 package pl.edu.pwr.psi.epk.ticket.model
 
 import jakarta.persistence.*
-import java.util.Date
+import java.time.LocalDateTime
 
 
 @Entity
-@Table(name = "TicketOffers")
 class TicketOffer (
-    var offerStart: Date,
-    var offerEnd: Date? = null,
-    @OneToMany
-    var offeredOnewayTickets: Set<OfferedOnewayTicket> = mutableSetOf(),
-    @OneToMany
-    var offeredTimelimitedTickets: Set<OfferedTimelimitedTicket> = mutableSetOf(),
+    val offerStart: LocalDateTime,
+    val offerEnd: LocalDateTime? = null
+) {
+
     @Id
-    @GeneratedValue
-    var id: Int? = null
-)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
+
+    @OneToMany(mappedBy = "offer")
+    val tickets = mutableSetOf<OfferedTicket>()
+
+}
