@@ -7,20 +7,27 @@ services:
     build:
       context: ./backend/discovery
       dockerfile: Dockerfile
+    networks:
+      - discovery-network
 
   schedule-db:
     image: postgres:15-alpine
     env_file:
-      - ./backend/Schedule/db-environment.env
-    volumes: 
+      - ./backend/schedule/db-environment.env
+    networks:
+      - schedule-network
+    volumes:
       - schedule-db:/var/lib/postgresql/data
 
   schedule-app:
     build:
-      context: ./backend/Schedule
+      context: ./backend/schedule
       dockerfile: Dockerfile
     env_file:
-      - ./backend/Schedule/app-environment.env
+      - ./backend/schedule/app-environment.env
+    networks:
+      - schedule-network
+      - discovery-network
     depends_on:
       - schedule-db
       - discovery-app
@@ -29,8 +36,10 @@ services:
     image: postgres:15-alpine
     env_file:
       - ./backend/ticket/db-environment.env
-    volumes: 
-      - schedule-db:/var/lib/postgresql/data
+    networks:
+      - ticket-network
+    volumes:
+      - tickets-db:/var/lib/postgresql/data
 
   tickets-app:
     build:
@@ -38,6 +47,9 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./backend/ticket/app-environment.env
+    networks:
+      - ticket-network
+      - discovery-network
     depends_on:
       - tickets-db
       - discovery-app
@@ -45,3 +57,9 @@ services:
 volumes:
   tickets-db:
   schedule-db:
+
+networks:
+  discovery-network:
+    driver: bridge
+  ticket-network:
+  schedule-network:
