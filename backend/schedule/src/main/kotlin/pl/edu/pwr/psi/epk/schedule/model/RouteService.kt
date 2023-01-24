@@ -1,0 +1,32 @@
+package pl.edu.pwr.psi.epk.schedule.model
+
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
+
+@Entity
+class RouteService(
+    @ManyToOne
+    val route: Route,
+
+    @ManyToOne
+    val calendar: Calendar,
+
+    val isLowFloor: Boolean = true
+
+) {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 0
+
+    @OneToMany(mappedBy = "routeService")
+    val routeServiceStops: List<RouteServiceStop> = mutableListOf()
+
+    @OneToMany(mappedBy = "routeService")
+    val rides: List<Ride> = mutableListOf()
+
+}

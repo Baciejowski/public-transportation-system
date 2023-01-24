@@ -25,4 +25,5 @@ class ScheduleController {
 
     @PatchMapping("/location/next")
     fun updateCurrentLocation(rideId: String): ResponseEntity<*> = TODO()
+
 }

@@ -3,30 +3,22 @@ package pl.edu.pwr.psi.epk.schedule.model
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Routes")
 class Route(
+    @ManyToOne
+    val line: Line,
+
+    val name: String,
+
+) {
 
     @Id
     @GeneratedValue
-    var id: Int? = null,
-
-    @Column(length = 30)
-    var name: String,
-
-    @ManyToOne
-    @JoinColumn(name = "lines_line", nullable = false)
-    var line: Line,
+    val id: Long = 0
 
     @ManyToMany
-    @JoinTable(
-        name = "Stops_Routes",
-        joinColumns = [JoinColumn(name = "routes_id")],
-        inverseJoinColumns = [JoinColumn(name = "stops_id")]
-    )
-    @OrderColumn(name = "no")
-    var stops: List<Stop> = mutableListOf(),
+    val stops: List<Stop> = mutableListOf()
 
-    @OneToMany(mappedBy = "serviceId")
-    var busFares: Set<BusFare> = mutableSetOf()
+    @OneToMany(mappedBy = "route")
+    val routeServices: Set<RouteService> = mutableSetOf()
 
-)
+}
