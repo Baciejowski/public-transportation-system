@@ -1,0 +1,59 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: EPK infrastructure stack template
+
+Resources:
+  AccountDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 5
+      DBName: "account"
+      DBInstanceIdentifier: "epk-account-db"
+      DBInstanceClass: db.t3.micro
+      Engine: postgres
+      EngineVersion: 14
+      MasterUsername: postgres
+      MasterUserPassword: my-postgres-secret
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+
+  TicketsDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 5
+      DBName: "ticket"
+      DBInstanceIdentifier: "epk-ticket-db"
+      DBInstanceClass: db.t3.micro
+      Engine: postgres
+      EngineVersion: 14
+      MasterUsername: postgres
+      MasterUserPassword: my-postgres-secret
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+
+  ScheduleDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      AllocatedStorage: 5
+      DBName: "schedule"
+      DBInstanceIdentifier: "epk-schedule-db"
+      DBInstanceClass: db.t3.micro
+      Engine: postgres
+      EngineVersion: 14
+      MasterUsername: postgres
+      MasterUserPassword: my-postgres-secret
+    DeletionPolicy: Snapshot
+    UpdateReplacePolicy: Snapshot
+
+Outputs:
+
+  AccountDatabaseEndpoint:
+    Description: "Connection endpoint for account database"
+    Value: !GetAtt AccountDatabase.Endpoint.Address
+
+  TicketDatabaseEndpoint:
+    Description: "Connection endpoint for tickets database"
+    Value: !GetAtt TicketDatabase.Endpoint.Address
+
+  ScheduleDatabaseEndpoint:
+    Description: "Connection endpoint for schedule database"
+    Value: !GetAtt ScheduleDatabase.Endpoint.Address

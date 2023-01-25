@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: epk-schedule-service
+spec:
+  selector:
+    app: epk-schedule-app
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epk-schedule-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epk-schedule-app
+  template:
+    metadata:
+      labels:
+        app: epk-schedule-app
+    spec:
+      containers:
+        - name: epk-schedule-app
+          image: epk-schedule-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8083
+          envFrom:
+            - configMapRef:
+                name: epk-config
+            - configMapRef:
+                name: epk-schedule-config
+            - secretRef:
+                name: epk-schedule-secret

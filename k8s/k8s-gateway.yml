@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epk-gateway-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epk-gateway-app
+  template:
+    metadata:
+      labels:
+        app: epk-gateway-app
+    spec:
+      containers:
+        - name: epk-gateway-app
+          image: epk-gateway-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: epk-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: epk-gateway-service
+spec:
+  selector:
+    app: epk-gateway-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: epk-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: epk-gateway-service
+                port:
+                  number: 8080

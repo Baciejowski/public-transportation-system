@@ -1,0 +1,11 @@
+kubectl delete ingress/epk-ingress
+kubectl delete service/epk-account-service
+kubectl delete service/epk-ticket-service
+kubectl delete service/epk-schedule-service
+kubectl delete service/epk-gateway-service
+kubectl delete service/epk-discovery-service
+kubectl delete deployment.apps/epk-account-app
+kubectl delete deployment.apps/epk-ticket-app
+kubectl delete deployment.apps/epk-schedule-app
+kubectl delete deployment.apps/epk-gateway-app
+kubectl delete deployment.apps/epk-discovery-app

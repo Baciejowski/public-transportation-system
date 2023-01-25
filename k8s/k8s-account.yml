@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: epk-account-service
+spec:
+  selector:
+    app: epk-account-app
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: epk-account-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: epk-account-app
+  template:
+    metadata:
+      labels:
+        app: epk-account-app
+    spec:
+      containers:
+        - name: epk-account-app
+          image: epk-account-app
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8081
+          envFrom:
+          - configMapRef:
+              name: epk-config
+          - configMapRef:
+              name: epk-account-config
+          - secretRef:
+              name: epk-account-secret

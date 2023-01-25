@@ -16,7 +16,6 @@ RUN ./mvnw install -DskipTests
 FROM amazoncorretto:17
 
 RUN mkdir -p /opt/app
-COPY --from=build /app/target/*.jar /opt/app/epk-ticket.jar
+COPY --from=build /app/target/*.jar /opt/app/epk-account.jar
 
-ENTRYPOINT ["java", "-jar", "/opt/app/epk-ticket.jar"]
-
+ENTRYPOINT ["java", "-jar", "/opt/app/epk-account.jar"]

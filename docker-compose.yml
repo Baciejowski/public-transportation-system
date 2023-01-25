@@ -9,6 +9,43 @@ services:
       dockerfile: Dockerfile
     networks:
       - discovery-network
+    ports:
+      - "8761:8761"
+
+  gateway-app:
+    build:
+      context: ./backend/gateway
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/gateway/app-environment.env
+    networks:
+      - discovery-network
+    ports:
+      - "8080:8080"
+
+  account-db:
+    image: postgres:15-alpine
+    env_file:
+      - ./backend/account/db-environment.env
+    networks:
+      - account-network
+    volumes:
+      - account-db:/var/lib/postgresql/data
+
+  account-app:
+    build:
+      context: ./backend/account
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/account/app-environment.env
+    networks:
+      - account-network
+      - discovery-network
+    depends_on:
+      - account-db
+      - discovery-app
+    ports:
+      - "8081:8081"
 
   schedule-db:
     image: postgres:15-alpine
@@ -31,17 +68,19 @@ services:
     depends_on:
       - schedule-db
       - discovery-app
+    ports:
+      - "8082:8082"
 
-  tickets-db:
+  ticket-db:
     image: postgres:15-alpine
     env_file:
       - ./backend/ticket/db-environment.env
     networks:
       - ticket-network
     volumes:
-      - tickets-db:/var/lib/postgresql/data
+      - ticket-db:/var/lib/postgresql/data
 
-  tickets-app:
+  ticket-app:
     build:
       context: ./backend/ticket
       dockerfile: Dockerfile
@@ -51,15 +90,19 @@ services:
       - ticket-network
       - discovery-network
     depends_on:
-      - tickets-db
+      - ticket-db
       - discovery-app
+    ports:
+      - "8083:8083"
 
 volumes:
-  tickets-db:
+  account-db:
+  ticket-db:
   schedule-db:
 
 networks:
   discovery-network:
     driver: bridge
+  account-network:
   ticket-network:
   schedule-network:

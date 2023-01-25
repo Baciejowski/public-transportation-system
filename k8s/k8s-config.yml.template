@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: epk-config
+data:
+  DISCOVERY_HOST: epk-discovery-service
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: epk-account-config
+data:
+  DB_URL:
+  JWT_ACCESS_TOKEN_MAX_AGE: "5"
+  JWT_REFRESH_TOKEN_MAX_AGE: "4320"
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: epk-account-secret
+data:
+  DB_NAME:
+  DB_USERNAME:
+  DB_PASSWORD:
+  JWT_SECRET:
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: epk-schedule-config
+data:
+  DB_URL:
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: epk-schedule-secret
+data:
+  DB_NAME:
+  DB_USERNAME:
+  DB_PASSWORD:
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: epk-ticket-config
+data:
+  DB_URL:
+
+---
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: epk-ticket-secret
+data:
+  DB_NAME:
+  DB_USERNAME:
+  DB_PASSWORD:
