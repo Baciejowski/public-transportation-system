@@ -14,7 +14,6 @@ class TicketOffer (
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
-    @OneToMany(mappedBy = "offer")
+    @OneToMany(mappedBy = "offer", cascade = [CascadeType.ALL])
     val tickets = mutableSetOf<OfferedTicket>()
-
 }

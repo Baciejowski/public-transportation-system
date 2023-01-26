@@ -1,11 +1,14 @@
 package pl.edu.pwr.psi.epk.ticket.controller
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import pl.edu.pwr.psi.epk.ticket.model.TicketOffer
+import pl.edu.pwr.psi.epk.ticket.repository.TicketOfferRepository
 import java.time.LocalDateTime
 
 // TODO implement the abstraction
@@ -15,6 +18,9 @@ data class OfferedTicketDto(val id: Long, val price: Double)
 @RestController
 @RequestMapping("/tickets")
 class TicketController {
+
+    @Autowired
+    private lateinit var ticketOfferRepository: TicketOfferRepository
 
     @GetMapping
     fun getUserTickets(): ResponseEntity<List<TicketReadDto>> =
@@ -37,14 +43,9 @@ class TicketController {
         )
 
     @GetMapping("/offer")
-    fun getCurrentOffer(): ResponseEntity<List<OfferedTicketDto>> =
+    fun getCurrentOffer(): ResponseEntity<List<TicketOffer>> =
         ResponseEntity.ok(
-            listOf(
-                OfferedTicketDto(
-                    1L,
-                    0.0
-                )
-            )
+            ticketOfferRepository.findAll()
         )
 
     @PostMapping("/offer/buy")

@@ -1,14 +1,18 @@
 package pl.edu.pwr.psi.epk.ticket.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*
 import java.time.Duration
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 abstract class OfferedTicket(
+
     open val price: Double,
+
     open val isReduced: Boolean = false,
 
+    @JsonIgnore
     @ManyToOne
     open val offer: TicketOffer
 ) {
@@ -20,7 +24,6 @@ abstract class OfferedTicket(
 }
 
 @Entity
-@Table
 class OfferedOneWayTicket (
     price: Double,
     isReduced: Boolean = false,
@@ -28,7 +31,6 @@ class OfferedOneWayTicket (
 ): OfferedTicket(price, isReduced, offer)
 
 @Entity
-@Table
 class OfferedTimeLimitedTicket (
     price: Double,
     isReduced: Boolean = false,

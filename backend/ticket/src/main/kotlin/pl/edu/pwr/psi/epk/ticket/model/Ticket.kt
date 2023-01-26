@@ -5,7 +5,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 abstract class Ticket(
     open val passengerId: Long,
     open val pricePaid: Double,
