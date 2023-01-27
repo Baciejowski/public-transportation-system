@@ -13,13 +13,9 @@ class JwtUtil {
     @Autowired
     private lateinit var jwtProperties: JwtProperties
 
-    fun getClaims(token: String): Claims? {
-        return try {
-            Jwts.parser().setSigningKey(jwtProperties.secret).parseClaimsJws(token).body
-        } catch (e: Exception) {
-            println(e.message + " => " + e)
-            null
-        }
-    }
+    fun getClaims(token: String): Claims = Jwts.parser()
+        .setSigningKey(jwtProperties.secret)
+        .parseClaimsJws(token)
+        .body
 
 }

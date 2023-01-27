@@ -14,7 +14,7 @@ class GatewayConfig(
 
     @Bean
     fun routes(builder: RouteLocatorBuilder): RouteLocator = builder.routes()
-            .route("auth") { p: PredicateSpec ->
+            .route("account") { p: PredicateSpec ->
                 p.path("/account/**")
                         .filters { f -> f.filter(jwtFilter).rewritePath("^/account", "") }
                         .uri("lb://account")
