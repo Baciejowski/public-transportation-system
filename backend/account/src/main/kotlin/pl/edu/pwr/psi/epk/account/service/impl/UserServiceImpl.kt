@@ -16,10 +16,13 @@ class UserServiceImpl(
     val encoder: PasswordEncoder
 ): UserService {
 
-    override fun getUserByEmail(email: String): User = userRepository.findById(email)
-        .orElseThrow { throw EntityNotFoundException("Could not find user with email '$email'.") }
+    override fun getUserById(id: Long): User = userRepository.findById(id)
+        .orElseThrow { throw EntityNotFoundException("Could not find user with id '$id'.") }
 
-    override fun userExistsByEmail(email: String): Boolean = userRepository.existsById(email)
+    override fun getUserByEmail(email: String): User = userRepository.findByEmail(email)
+        ?: throw EntityNotFoundException("Could not find user with email '$email'.")
+
+    override fun userExistsByEmail(email: String): Boolean = userRepository.existsByEmail(email)
 
     override fun registerUser(registerDto: RegisterDto): User {
         if(userExistsByEmail(registerDto.email))
@@ -29,8 +32,7 @@ class UserServiceImpl(
             registerDto.email,
             encoder.encode(registerDto.password),
             registerDto.firstName,
-            registerDto.lastName,
-            registerDto.dateOfBirth
+            registerDto.lastName
         )
         return userRepository.save(userAccount)
     }

@@ -7,6 +7,7 @@ services:
     build:
       context: ./backend/discovery
       dockerfile: Dockerfile
+    image: epk-discovery-app
     networks:
       - discovery-network
     ports:
@@ -16,6 +17,7 @@ services:
     build:
       context: ./backend/gateway
       dockerfile: Dockerfile
+    image: epk-gateway-app
     env_file:
       - ./backend/gateway/app-environment.env
     networks:
@@ -33,11 +35,14 @@ services:
       - account-network
     volumes:
       - account-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   account-app:
     build:
       context: ./backend/account
       dockerfile: Dockerfile
+    image: epk-account-app
     env_file:
       - ./backend/account/app-environment.env
     networks:
@@ -57,11 +62,14 @@ services:
       - schedule-network
     volumes:
       - schedule-db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
 
   schedule-app:
     build:
       context: ./backend/schedule
       dockerfile: Dockerfile
+    image: epk-schedule-app
     env_file:
       - ./backend/schedule/app-environment.env
     networks:
@@ -81,11 +89,14 @@ services:
       - ticket-network
     volumes:
       - ticket-db:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
 
   ticket-app:
     build:
       context: ./backend/ticket
       dockerfile: Dockerfile
+    image: epk-ticket-app
     env_file:
       - ./backend/ticket/app-environment.env
     networks:

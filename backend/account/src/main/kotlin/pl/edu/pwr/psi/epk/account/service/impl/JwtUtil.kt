@@ -6,7 +6,7 @@ import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.stereotype.Component
-import pl.edu.pwr.psi.epk.account.config.JwtProperties
+import pl.edu.pwr.psi.epk.account.config.properties.JwtProperties
 import pl.edu.pwr.psi.epk.account.exception.ExpiredTokenException
 import pl.edu.pwr.psi.epk.account.exception.MalformedTokenException
 import pl.edu.pwr.psi.epk.account.model.Token
@@ -52,12 +52,12 @@ class JwtUtil(
 
         val stringToken = Jwts.builder()
             .setClaims(claims)
-            .setSubject(user.email)
+            .setSubject(user.id.toString())
             .claim("role", user.role)
             .claim("fid", fid)
             .signWith(SignatureAlgorithm.HS512, jwtProperties.secret)
             .compact()
 
-        return Token(stringToken, LocalDateTime.from(claims.expiration.toInstant()))
+        return Token(stringToken, LocalDateTime.ofInstant(claims.expiration.toInstant(), ZoneId.systemDefault()))
     }
 }

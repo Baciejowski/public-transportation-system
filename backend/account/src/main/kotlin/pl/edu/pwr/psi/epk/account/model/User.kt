@@ -12,8 +12,7 @@ abstract class User(
     open val email: String,
     open val password: String,
     open val firstName: String,
-    open val lastName: String,
-    open val dateOfBirth: LocalDate
+    open val lastName: String
     ) {
 
     @Id
@@ -31,8 +30,7 @@ class Passenger(
     password: String,
     firstName: String,
     lastName: String,
-    dateOfBirth: LocalDate
-) : User(email, password, firstName, lastName, dateOfBirth) {
+) : User(email, password, firstName, lastName) {
 
     var walletBalance: Double = 0.0
 
@@ -46,8 +44,7 @@ class TicketInspector(
     password: String,
     firstName: String,
     lastName: String,
-    dateOfBirth: LocalDate
-) : User(email, password, firstName, lastName, dateOfBirth) {
+) : User(email, password, firstName, lastName) {
 
     override val role: Role = Role.TICKET_INSPECTOR
 
@@ -59,8 +56,7 @@ class Moderator(
     password: String,
     firstName: String,
     lastName: String,
-    dateOfBirth: LocalDate
-) : User(email, password, firstName, lastName, dateOfBirth) {
+) : User(email, password, firstName, lastName) {
 
     override val role: Role = Role.MODERATOR
 
@@ -72,8 +68,7 @@ class Planner(
     password: String,
     firstName: String,
     lastName: String,
-    dateOfBirth: LocalDate
-) : User(email, password, firstName, lastName, dateOfBirth) {
+) : User(email, password, firstName, lastName) {
 
     override val role: Role = Role.PLANNER
 
