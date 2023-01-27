@@ -8,6 +8,8 @@ services:
       context: ./backend/discovery
       dockerfile: Dockerfile
     image: epk-discovery-app
+    env_file:
+      - ./backend/discovery/app-environment.env
     networks:
       - discovery-network
     ports:
