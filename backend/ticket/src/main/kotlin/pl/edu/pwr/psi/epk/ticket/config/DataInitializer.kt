@@ -1,6 +1,5 @@
 package pl.edu.pwr.psi.epk.ticket.config
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
@@ -10,10 +9,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 @Component
-class DevDataInitializer : ApplicationRunner {
-
-    @Autowired
-    private lateinit var tickerOfferRepo: TicketOfferRepository
+class DevDataInitializer(private val tickerOfferRepo: TicketOfferRepository) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments?) {
         initializeTicketOffer()
