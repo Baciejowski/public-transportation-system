@@ -1,7 +1,6 @@
 package pl.edu.pwr.psi.epk.account.model
 
 import jakarta.persistence.*
-import java.time.LocalDate
 
 enum class Role {
     PASSENGER, TICKET_INSPECTOR, MODERATOR, PLANNER
@@ -14,6 +13,8 @@ abstract class User(
     open val firstName: String,
     open val lastName: String
     ) {
+
+    constructor(): this("", "", "", "")
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -32,6 +33,8 @@ class Passenger(
     lastName: String,
 ) : User(email, password, firstName, lastName) {
 
+    constructor(): this("", "", "", "")
+
     var walletBalance: Double = 0.0
 
     override val role: Role = Role.PASSENGER
@@ -46,6 +49,8 @@ class TicketInspector(
     lastName: String,
 ) : User(email, password, firstName, lastName) {
 
+    constructor(): this("", "", "", "")
+
     override val role: Role = Role.TICKET_INSPECTOR
 
 }
@@ -58,6 +63,8 @@ class Moderator(
     lastName: String,
 ) : User(email, password, firstName, lastName) {
 
+    constructor(): this("", "", "", "")
+
     override val role: Role = Role.MODERATOR
 
 }
@@ -69,6 +76,8 @@ class Planner(
     firstName: String,
     lastName: String,
 ) : User(email, password, firstName, lastName) {
+
+    constructor(): this("", "", "", "")
 
     override val role: Role = Role.PLANNER
 
