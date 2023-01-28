@@ -1,26 +1,24 @@
 package pl.edu.pwr.psi.epk.ticket.controller
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import pl.edu.pwr.psi.epk.ticket.model.TicketOffer
+import org.springframework.web.bind.annotation.*
+import pl.edu.pwr.psi.epk.ticket.model.ticket.Ticket
+import pl.edu.pwr.psi.epk.ticket.model.offer.TicketOffer
 import pl.edu.pwr.psi.epk.ticket.repository.TicketOfferRepository
+import pl.edu.pwr.psi.epk.ticket.service.TicketService
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 // TODO implement the abstraction
-data class TicketReadDto(val id: Long, val punchTime: LocalDateTime)
-data class OfferedTicketDto(val id: Long, val price: Double)
+class TicketReadDto(val id: Long, val punchTime: LocalDateTime)
+class OfferedTicketDto(val id: Long, val price: Double)
 
 @RestController
 @RequestMapping("/tickets")
-class TicketController {
-
-    @Autowired
-    private lateinit var ticketOfferRepository: TicketOfferRepository
+class TicketController(
+    val ticketOfferRepository: TicketOfferRepository,
+    val ticketService: TicketService
+) {
 
     @GetMapping
     fun getUserTickets(): ResponseEntity<List<TicketReadDto>> =
@@ -45,13 +43,19 @@ class TicketController {
     @GetMapping("/offer")
     fun getCurrentOffer(): ResponseEntity<List<TicketOffer>> =
         ResponseEntity.ok(
-            ticketOfferRepository.findAll()
+            ticketOfferRepository.findOfferByDate(LocalDateTime.now(ZoneOffset.UTC))
         )
 
     @PostMapping("/offer/buy")
-    fun buyTicket(offeredTicketId: Long): TicketReadDto =
-        TicketReadDto(
-            1L,
-            LocalDateTime.MIN
+    fun buyTicket(
+        @RequestHeader("user-id", required = true) passengerId: Long,
+        @RequestParam offeredTicketId: Long
+    ): ResponseEntity<Ticket> {
+
+        return ResponseEntity.ok(
+            ticketService.buyTicket(offeredTicketId, passengerId)
         )
+    }
+
 }
+
