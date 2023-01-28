@@ -1,1 +1,59 @@
-<p>register works!</p>
+<main>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+        <h1>Register</h1>
+
+        <mat-form-field appearance="fill">
+            <mat-label for="firstName">First name</mat-label>
+            <input id="firstName" type="text" formControlName="firstName" matInput>
+            <mat-error *ngIf="firstName?.hasError('required')">
+                First name is required!
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label for="lastName">Last name</mat-label>
+            <input id="lastName" type="text" formControlName="lastName" matInput>
+            <mat-error *ngIf="lastName?.hasError('required')">
+                Last name is required!
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label for="email">Email</mat-label>
+            <input id="email" type="email" formControlName="email" matInput>
+            <mat-error *ngIf="email?.hasError('required')">
+                Email is required!
+            </mat-error>
+            <mat-error *ngIf="email?.hasError('email')">
+                Email should be of correct form!
+            </mat-error>
+        </mat-form-field>
+
+        <div class="fullPassword" formGroupName="fullPassword">
+            <mat-form-field appearance="fill">
+                <mat-label for="password">Password</mat-label>
+                <input id="password" type="password" formControlName="password" matInput>
+                <mat-error *ngIf="password?.hasError('required')">
+                    Password is required!
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label for="confirmPassword">Confirm password</mat-label>
+                <input id="confirmPassword" type="password" formControlName="confirmPassword" [errorStateMatcher]="matcher" matInput>
+                <mat-error *ngIf="confirmPassword?.hasError('required')">
+                    Confirm the password!
+                </mat-error>
+                <mat-error *ngIf="!confirmPassword?.hasError('required') && fullPassword?.hasError('notSame')">
+                    Passwords do not match!
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="button-panel">
+            <button mat-raised-button type="button" routerLink="/login">Login</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="!registerForm.valid">Submit</button>
+        </div>
+    </form>
+</main>
