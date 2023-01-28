@@ -15,6 +15,7 @@ import pl.edu.pwr.psi.epk.account.model.User
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
 
 
@@ -47,8 +48,8 @@ class JwtUtil(
         maxAgeInMinutes: Long
     ): Token {
         val claims = Jwts.claims()
-            .setIssuedAt(Date.from(Instant.now()))
-            .setExpiration(Date.from(Instant.now().plusSeconds(maxAgeInMinutes * 60)))
+            .setIssuedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)))
+            .setExpiration(Date.from(LocalDateTime.now().plusSeconds(maxAgeInMinutes * 60).toInstant(ZoneOffset.UTC)))
 
         val stringToken = Jwts.builder()
             .setClaims(claims)
@@ -58,6 +59,6 @@ class JwtUtil(
             .signWith(SignatureAlgorithm.HS512, jwtProperties.secret)
             .compact()
 
-        return Token(stringToken, LocalDateTime.ofInstant(claims.expiration.toInstant(), ZoneId.systemDefault()))
+        return Token(stringToken, LocalDateTime.ofInstant(claims.expiration.toInstant(), ZoneOffset.UTC))
     }
 }
