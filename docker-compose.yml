@@ -35,8 +35,8 @@ services:
       - ./backend/account/db-environment.env
     networks:
       - account-network
-    volumes:
-      - account-db:/var/lib/postgresql/data
+#    volumes:
+#      - account-db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
 
@@ -62,8 +62,8 @@ services:
       - ./backend/schedule/db-environment.env
     networks:
       - schedule-network
-    volumes:
-      - schedule-db:/var/lib/postgresql/data
+#    volumes:
+#      - schedule-db:/var/lib/postgresql/data
     ports:
       - "5433:5432"
 
@@ -89,8 +89,8 @@ services:
       - ./backend/ticket/db-environment.env
     networks:
       - ticket-network
-    volumes:
-      - ticket-db:/var/lib/postgresql/data
+#    volumes:
+#      - ticket-db:/var/lib/postgresql/data
     ports:
       - "5434:5432"
 
@@ -110,10 +110,12 @@ services:
     ports:
       - "8083:8083"
 
-volumes:
-  account-db:
-  ticket-db:
-  schedule-db:
+# Disabled it to prevent duplicate data population.
+# Since it won't be used in production we can just use this file as dev-env.
+#volumes:
+#  account-db:
+#  ticket-db:
+#  schedule-db:
 
 networks:
   discovery-network:
