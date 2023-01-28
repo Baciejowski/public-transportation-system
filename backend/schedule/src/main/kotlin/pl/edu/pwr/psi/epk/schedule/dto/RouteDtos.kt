@@ -1,0 +1,22 @@
+package pl.edu.pwr.psi.epk.schedule.dto
+
+import pl.edu.pwr.psi.epk.schedule.model.Route
+
+class RouteManifestDTO(
+    val id: Long,
+    val name: String
+) {
+    companion object {
+        fun fromRoute(route: Route) = RouteManifestDTO(route.id, route.name)
+    }
+}
+
+class RouteDetailDTO(
+    id: Long,
+    name: String,
+    val stops: List<StopManifestDTO>
+) {
+    companion object {
+        fun fromRoute(route: Route) = RouteDetailDTO(route.id, route.name, route.stops.map{StopManifestDTO.fromStop(it)})
+    }
+}
