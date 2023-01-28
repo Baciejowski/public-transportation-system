@@ -43,4 +43,18 @@ class UserServiceImpl(
         return if(encoder.matches(loginDto.password, user.password) && user.active) user
         else throw IllegalArgumentException("Could not authenticate user with email '${loginDto.email}'.")
     }
+
+    override fun deduceBalance(passengerId: Long, amount: Double): Passenger {
+        val passenger: User = getUserById(passengerId)
+
+        if (passenger !is Passenger)
+            throw IllegalArgumentException("User is not a passenger")
+
+        passenger.walletBalance.minus(amount)
+
+        // todo check if balance is saved
+        // userRepository.save(user)
+
+        return passenger
+    }
 }

@@ -1,4 +1,4 @@
-package pl.edu.pwr.psi.epk.ticket.model
+package pl.edu.pwr.psi.epk.ticket.model.offer
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import jakarta.persistence.*

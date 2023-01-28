@@ -3,10 +3,13 @@ package pl.edu.pwr.psi.epk.ticket.config
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
-import pl.edu.pwr.psi.epk.ticket.model.*
+import pl.edu.pwr.psi.epk.ticket.model.offer.OfferedOneWayTicket
+import pl.edu.pwr.psi.epk.ticket.model.offer.OfferedTimeLimitedTicket
+import pl.edu.pwr.psi.epk.ticket.model.offer.TicketOffer
 import pl.edu.pwr.psi.epk.ticket.repository.TicketOfferRepository
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 
 @Component
 class DevDataInitializer(private val tickerOfferRepo: TicketOfferRepository) : ApplicationRunner {
@@ -17,8 +20,8 @@ class DevDataInitializer(private val tickerOfferRepo: TicketOfferRepository) : A
 
     private fun initializeTicketOffer() {
         val ticketOffer = TicketOffer(
-            LocalDateTime.now().minusMonths(2),
-            LocalDateTime.now().plusMonths(6),
+            LocalDateTime.now(ZoneOffset.UTC).minusMonths(2),
+            LocalDateTime.now(ZoneOffset.UTC).plusMonths(6),
         )
 
         ticketOffer.tickets += listOf(
