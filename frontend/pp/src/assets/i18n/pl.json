@@ -1,0 +1,21 @@
+{
+    "LANG": {
+        "SELECT": "Język"
+    },
+    "AUTH": {
+        "REGISTER": "Zarejestruj się",
+        "LOGIN": "Zaloguj się",
+        "SUBMIT": "Potwierdź",
+        "PASSWORD": "Hasło",
+        "CONFIRM_PASSWORD": "Potwierdź hasło",
+        "FIRST_NAME": "Imię",
+        "LAST_NAME": "Nazwisko",
+        "FIRST_NAME_REQUIRED": "Imię jest wymagane!",
+        "LAST_NAME_REQUIRED": "Nazwisko  jest wymagane!",
+        "EMAIL_REQUIRED": "Email jest wymagany!",
+        "EMAIL_CORRECT_FORM": "Email powinien być w prawidłowej formie!",
+        "PASSWORD_REQUIRED": "Hasło jest wymagane!",
+        "PASSWORD_CONFIRM": "Potwierdź hasło!",
+        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!"
+    }
+}
