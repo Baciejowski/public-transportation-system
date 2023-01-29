@@ -25,10 +25,12 @@ class ScheduleController(
     val stopRepository: StopRepository,
     val busRepository: BusRepository
 ) {
+    //Screen 4.6.2.1
     @GetMapping("/lines")
     fun getLines() =
         ResponseEntity.ok(lineRepository.findAll().map{LineDTO.fromLine(it)})
 
+    //Screen 4.6.2.1
     @GetMapping("/stops")
     fun getStops() =
         ResponseEntity.ok(stopRepository.findAll().map{StopManifestDTO.fromStop(it)})
@@ -37,6 +39,7 @@ class ScheduleController(
     fun getBuses() =
         ResponseEntity.ok(busRepository.findAll().map{BusDTO.fromBus(it)})
 
+    //Screen 4.6.2.2?
     @GetMapping("/lines/{id}/routes")
     fun getLineRoutes(@PathVariable id: Long): ResponseEntity<List<RouteManifestDTO>> {
         val line = lineRepository.findById(id)
@@ -45,6 +48,7 @@ class ScheduleController(
         return ResponseEntity.ok(line.get().routes.map{RouteManifestDTO.fromRoute(it)})
     }
 
+    //Screen 4.6.2.2
     @GetMapping("/routes/{id}")
     fun getRoute(@PathVariable id: Long): ResponseEntity<RouteDetailDTO> {
         val route = routeRepository.findById(id)
@@ -60,6 +64,8 @@ class ScheduleController(
             return ResponseEntity.notFound().build()
         return ResponseEntity.ok(stop.get().routes.map{it.line}.distinctBy{it.id}.map {LineDTO.fromLine(it)})
     }
+
+
 
     @GetMapping
     fun getSchedule(lineId: String): ResponseEntity<*> = TODO()
