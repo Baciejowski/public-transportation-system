@@ -6,10 +6,7 @@ import java.time.LocalDateTime
 
 @Entity
 class Calendar (
-
-    @OneToMany(mappedBy = "calendar")
-    val calendarExemptions: Set<CalendarExemption>,
-
+    @ElementCollection
     val serviceDays: Set<DayOfWeek>,
 
     val startDate: LocalDateTime,
@@ -24,5 +21,8 @@ class Calendar (
 
     @OneToMany(mappedBy = "calendar")
     val routeServices: Set<RouteService> = mutableSetOf()
+
+    @OneToMany(mappedBy = "calendar")
+    val calendarExemptions: Set<CalendarExemption> = mutableSetOf()
 
 }
