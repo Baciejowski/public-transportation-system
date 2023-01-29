@@ -12,7 +12,7 @@ abstract class Ticket(
     open val isReduced: Boolean
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     open val ticketNo: Long = -1
 
     open var punchTime: LocalDateTime? = null

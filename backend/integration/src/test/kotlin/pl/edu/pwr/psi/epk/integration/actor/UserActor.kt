@@ -4,8 +4,10 @@ import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertAll
 import org.springframework.test.web.reactive.server.WebTestClient
 import pl.edu.pwr.psi.epk.integration.dto.account.*
+import pl.edu.pwr.psi.epk.integration.dto.account.offer.TicketOfferDto
 import pl.edu.pwr.psi.epk.integration.step.AccountSteps
 import pl.edu.pwr.psi.epk.integration.step.AuthenticationSteps
+import pl.edu.pwr.psi.epk.integration.step.TicketSteps
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -49,7 +51,7 @@ abstract class UserActor(
 
     open fun getsUserInfo(): UserReadDto = AccountSteps.userGetsAccountInfo(client!!)
 
-    fun validate(tokenReadDto: TokenReadDto) {
+    fun validateTokenEquality(tokenReadDto: TokenReadDto) {
         assertAll(
             { Assertions.assertThat(tokenReadDto.accessToken).isNotNull() },
             { Assertions.assertThat(tokenReadDto.accessTokenExpirationDate).isAfter(LocalDateTime.now(ZoneOffset.UTC)) },
@@ -59,7 +61,7 @@ abstract class UserActor(
         )
     }
 
-    open fun validate(userReadDto: UserReadDto) {
+    open fun validateUserEquality(userReadDto: UserReadDto) {
         assertAll(
             { Assertions.assertThat(userReadDto.id).isNotNull() },
             { Assertions.assertThat(userReadDto.firstName).isEqualTo(this.firstName) },
@@ -104,8 +106,10 @@ class PassengerActor(
 
     override fun getsUserInfo(): PassengerReadDto = AccountSteps.userGetsPassengerInfo(client!!)
 
-    fun validate(userReadDto: PassengerReadDto) {
-        super.validate(userReadDto)
+    fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client!!)
+
+    fun validateEquality(userReadDto: PassengerReadDto) {
+        super.validateUserEquality(userReadDto)
         Assertions.assertThat(userReadDto.accountBalance).isEqualTo(0.0)
     }
 

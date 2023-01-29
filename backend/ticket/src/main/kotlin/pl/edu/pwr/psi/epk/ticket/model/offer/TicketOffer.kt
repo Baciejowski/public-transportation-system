@@ -10,6 +10,8 @@ class TicketOffer (
     val offerEnd: LocalDateTime? = null
 ) {
 
+    constructor(): this(LocalDateTime.MIN, null)
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = -1
