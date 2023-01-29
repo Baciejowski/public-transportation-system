@@ -10,10 +10,7 @@ class TicketIntegrationTests : TestBase() {
 
     @Test
     fun `Passenger views the offer`() {
-        PASSENGER_JOHN.client = webTestClient
-
-        val johnsToken = PASSENGER_JOHN.logsIn()
-        PASSENGER_JOHN.client = TestUtils.getWebClientWithAuthorization(webTestClient, johnsToken.accessToken)
+        PASSENGER_JOHN.logsIn()
 
         val ticketOffer = PASSENGER_JOHN.getsTicketOffer()
 

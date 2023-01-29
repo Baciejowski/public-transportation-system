@@ -17,8 +17,6 @@ import java.time.Duration
 @Testcontainers
 abstract class TestBase {
 
-    val webTestClient = TestUtils.configureWebTestClient()
-
     companion object {
         private val DOCKER_COMPOSE_ENV = DockerComposeContainer(File(System.getenv("DOCKER_COMPOSE_PATH")))
             .waitingFor(

@@ -13,40 +13,28 @@ class AccountIntegrationTests: TestBase() {
 
     @Test
     fun `Passenger gets user info`() {
-        PASSENGER_JOHN.client = webTestClient
-        val registerToken = PASSENGER_JOHN.logsIn()
-        PASSENGER_JOHN.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
-
+        PASSENGER_JOHN.logsIn()
         val userInfo: PassengerReadDto = PASSENGER_JOHN.getsUserInfo()
         PASSENGER_JOHN.validateEquality(userInfo)
     }
 
     @Test
     fun `Ticket inspector gets user info`() {
-        TICKET_INSPECTOR_FELIX.client = webTestClient
-        val registerToken = TICKET_INSPECTOR_FELIX.logsIn()
-        TICKET_INSPECTOR_FELIX.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
-
+        TICKET_INSPECTOR_FELIX.logsIn()
         val userInfo: UserReadDto = TICKET_INSPECTOR_FELIX.getsUserInfo()
         TICKET_INSPECTOR_FELIX.validateUserEquality(userInfo)
     }
 
     @Test
     fun `Planner gets user info`() {
-        PLANNER_EMILY.client = webTestClient
-        val registerToken = PLANNER_EMILY.logsIn()
-        PLANNER_EMILY.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
-
+        PLANNER_EMILY.logsIn()
         val userInfo: UserReadDto = PLANNER_EMILY.getsUserInfo()
         PLANNER_EMILY.validateUserEquality(userInfo)
     }
 
     @Test
     fun `Moderator gets user info`() {
-        MODERATOR_ANGELINA.client = webTestClient
-        val registerToken = MODERATOR_ANGELINA.logsIn()
-        MODERATOR_ANGELINA.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
-
+        MODERATOR_ANGELINA.logsIn()
         val userInfo: UserReadDto = MODERATOR_ANGELINA.getsUserInfo()
         MODERATOR_ANGELINA.validateUserEquality(userInfo)
     }

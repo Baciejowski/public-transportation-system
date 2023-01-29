@@ -1,8 +1,8 @@
 package pl.edu.pwr.psi.epk.integration.step
 
 import org.springframework.test.web.reactive.server.WebTestClient
-import pl.edu.pwr.psi.epk.integration.dto.account.offer.TicketDto
-import pl.edu.pwr.psi.epk.integration.dto.account.offer.TicketOfferDto
+import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
+import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
 
 class TicketSteps {
 
