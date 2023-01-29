@@ -1,13 +1,10 @@
-package pl.edu.pwr.psi.epk.integration
+package pl.edu.pwr.psi.epk.integration.testcase
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
-import org.springframework.test.annotation.DirtiesContext
 import pl.edu.pwr.psi.epk.integration.actor.PassengerActor.Companion.PASSENGER_JOHN
 import pl.edu.pwr.psi.epk.integration.actor.PassengerActor.Companion.NR_PASSENGER_MARK
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 
 class AuthenticationIntegrationTests : TestBase() {
 
@@ -15,14 +12,14 @@ class AuthenticationIntegrationTests : TestBase() {
     fun `Passenger can register`() {
         NR_PASSENGER_MARK.client = webTestClient
         val marksToken = NR_PASSENGER_MARK.registers()
-        NR_PASSENGER_MARK.validate(marksToken)
+        NR_PASSENGER_MARK.validateTokenEquality(marksToken)
     }
 
     @Test
     fun `User can log in`() {
         PASSENGER_JOHN.client = webTestClient
         val johnsToken = PASSENGER_JOHN.logsIn()
-        PASSENGER_JOHN.validate(johnsToken)
+        PASSENGER_JOHN.validateTokenEquality(johnsToken)
     }
 
     @Test

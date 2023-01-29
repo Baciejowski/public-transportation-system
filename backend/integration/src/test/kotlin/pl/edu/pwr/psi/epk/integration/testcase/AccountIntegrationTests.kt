@@ -1,7 +1,6 @@
-package pl.edu.pwr.psi.epk.integration
+package pl.edu.pwr.psi.epk.integration.testcase
 
 import org.junit.jupiter.api.Test
-import org.springframework.test.annotation.DirtiesContext
 import pl.edu.pwr.psi.epk.integration.actor.PassengerActor.Companion.PASSENGER_JOHN
 import pl.edu.pwr.psi.epk.integration.actor.TicketInspectorActor.Companion.TICKET_INSPECTOR_FELIX
 import pl.edu.pwr.psi.epk.integration.actor.PlannerActor.Companion.PLANNER_EMILY
@@ -19,7 +18,7 @@ class AccountIntegrationTests: TestBase() {
         PASSENGER_JOHN.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
 
         val userInfo: PassengerReadDto = PASSENGER_JOHN.getsUserInfo()
-        PASSENGER_JOHN.validate(userInfo)
+        PASSENGER_JOHN.validateEquality(userInfo)
     }
 
     @Test
@@ -29,7 +28,7 @@ class AccountIntegrationTests: TestBase() {
         TICKET_INSPECTOR_FELIX.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
 
         val userInfo: UserReadDto = TICKET_INSPECTOR_FELIX.getsUserInfo()
-        TICKET_INSPECTOR_FELIX.validate(userInfo)
+        TICKET_INSPECTOR_FELIX.validateUserEquality(userInfo)
     }
 
     @Test
@@ -39,7 +38,7 @@ class AccountIntegrationTests: TestBase() {
         PLANNER_EMILY.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
 
         val userInfo: UserReadDto = PLANNER_EMILY.getsUserInfo()
-        PLANNER_EMILY.validate(userInfo)
+        PLANNER_EMILY.validateUserEquality(userInfo)
     }
 
     @Test
@@ -49,7 +48,7 @@ class AccountIntegrationTests: TestBase() {
         MODERATOR_ANGELINA.client = TestUtils.getWebClientWithAuthorization(webTestClient, registerToken.accessToken)
 
         val userInfo: UserReadDto = MODERATOR_ANGELINA.getsUserInfo()
-        MODERATOR_ANGELINA.validate(userInfo)
+        MODERATOR_ANGELINA.validateUserEquality(userInfo)
     }
 
 }
