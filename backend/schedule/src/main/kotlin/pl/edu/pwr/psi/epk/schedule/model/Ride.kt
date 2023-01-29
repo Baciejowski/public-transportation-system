@@ -24,7 +24,7 @@ class Ride (
     val id: Long = 0
 
     @OneToMany(mappedBy = "ride")
-    val rideStops: List<RideStop> = mutableListOf()
+    var rideStops: List<RideStop> = mutableListOf()
 
     var startTime: LocalDateTime? = null
 
