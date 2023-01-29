@@ -1,11 +1,7 @@
 package pl.edu.pwr.psi.epk.schedule.controller
 
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import pl.edu.pwr.psi.epk.schedule.dto.*
 import pl.edu.pwr.psi.epk.schedule.model.Coordinates
 import pl.edu.pwr.psi.epk.schedule.model.Line
@@ -13,7 +9,10 @@ import pl.edu.pwr.psi.epk.schedule.repository.BusRepository
 import pl.edu.pwr.psi.epk.schedule.repository.LineRepository
 import pl.edu.pwr.psi.epk.schedule.repository.RouteRepository
 import pl.edu.pwr.psi.epk.schedule.repository.StopRepository
+import pl.edu.pwr.psi.epk.schedule.service.ScheduleService
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 data class RideReadDto(val serviceId: Int, val busSideNumber: Int, val date: LocalDate)
 
@@ -23,7 +22,8 @@ class ScheduleController(
     val lineRepository: LineRepository,
     val routeRepository: RouteRepository,
     val stopRepository: StopRepository,
-    val busRepository: BusRepository
+    val busRepository: BusRepository,
+    val scheduleService: ScheduleService
 ) {
     //Screen 4.6.2.1
     @GetMapping("/lines")
@@ -65,7 +65,16 @@ class ScheduleController(
         return ResponseEntity.ok(stop.get().routes.map{it.line}.distinctBy{it.id}.map {LineDTO.fromLine(it)})
     }
 
-
+    //Screens 4.6.2.3, 4.7.2.1
+    @GetMapping("/stops/{id}/departures")
+    fun getStopDepartures(@PathVariable id: Long, @RequestParam length: Optional<Int>): ResponseEntity<List<StopDepartureDTO>> {
+        val stop = stopRepository.findById(id)
+        if(stop.isEmpty)
+            return ResponseEntity.notFound().build()
+        if(length.isEmpty)
+            return ResponseEntity.ok(scheduleService.getStopDepartures(id, LocalDateTime.now()))
+        return ResponseEntity.ok(scheduleService.getStopDepartures(id, LocalDateTime.now(), length.get()))
+    }
 
     @GetMapping
     fun getSchedule(lineId: String): ResponseEntity<*> = TODO()
