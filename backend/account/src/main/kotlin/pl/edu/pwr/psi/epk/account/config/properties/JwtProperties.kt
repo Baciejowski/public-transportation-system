@@ -1,4 +1,4 @@
-package pl.edu.pwr.psi.epk.account.config
+package pl.edu.pwr.psi.epk.account.config.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration
 @ConfigurationProperties(prefix="jwt")
 data class JwtProperties(
     var secret: String = "",
-    var accessTokenMaxAgeInMinutes: Long = 0,
-    var refreshTokenMaxAgeInMinutes: Long = 0,
+    var accessTokenMaxAgeInMinutes: Long = 5,
+    var refreshTokenMaxAgeInMinutes: Long = 4320
 )

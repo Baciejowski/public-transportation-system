@@ -6,7 +6,7 @@ import io.jsonwebtoken.JwtException
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.stereotype.Component
-import pl.edu.pwr.psi.epk.account.config.JwtProperties
+import pl.edu.pwr.psi.epk.account.config.properties.JwtProperties
 import pl.edu.pwr.psi.epk.account.exception.ExpiredTokenException
 import pl.edu.pwr.psi.epk.account.exception.MalformedTokenException
 import pl.edu.pwr.psi.epk.account.model.Token
@@ -15,6 +15,7 @@ import pl.edu.pwr.psi.epk.account.model.User
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.*
 
 
@@ -47,17 +48,17 @@ class JwtUtil(
         maxAgeInMinutes: Long
     ): Token {
         val claims = Jwts.claims()
-            .setIssuedAt(Date.from(Instant.now()))
-            .setExpiration(Date.from(Instant.now().plusSeconds(maxAgeInMinutes * 60)))
+            .setIssuedAt(Date.from(LocalDateTime.now().toInstant(ZoneOffset.UTC)))
+            .setExpiration(Date.from(LocalDateTime.now().plusSeconds(maxAgeInMinutes * 60).toInstant(ZoneOffset.UTC)))
 
         val stringToken = Jwts.builder()
             .setClaims(claims)
-            .setSubject(user.email)
+            .setSubject(user.id.toString())
             .claim("role", user.role)
             .claim("fid", fid)
             .signWith(SignatureAlgorithm.HS512, jwtProperties.secret)
             .compact()
 
-        return Token(stringToken, LocalDateTime.from(claims.expiration.toInstant()))
+        return Token(stringToken, LocalDateTime.ofInstant(claims.expiration.toInstant(), ZoneOffset.UTC))
     }
 }

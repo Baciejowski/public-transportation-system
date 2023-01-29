@@ -7,6 +7,9 @@ services:
     build:
       context: ./backend/discovery
       dockerfile: Dockerfile
+    image: epk-discovery-app
+    env_file:
+      - ./backend/discovery/app-environment.env
     networks:
       - discovery-network
     ports:
@@ -16,6 +19,7 @@ services:
     build:
       context: ./backend/gateway
       dockerfile: Dockerfile
+    image: epk-gateway-app
     env_file:
       - ./backend/gateway/app-environment.env
     networks:
@@ -31,13 +35,16 @@ services:
       - ./backend/account/db-environment.env
     networks:
       - account-network
-    volumes:
-      - account-db:/var/lib/postgresql/data
+#    volumes:
+#      - account-db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
   account-app:
     build:
       context: ./backend/account
       dockerfile: Dockerfile
+    image: epk-account-app
     env_file:
       - ./backend/account/app-environment.env
     networks:
@@ -55,13 +62,16 @@ services:
       - ./backend/schedule/db-environment.env
     networks:
       - schedule-network
-    volumes:
-      - schedule-db:/var/lib/postgresql/data
+#    volumes:
+#      - schedule-db:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
 
   schedule-app:
     build:
       context: ./backend/schedule
       dockerfile: Dockerfile
+    image: epk-schedule-app
     env_file:
       - ./backend/schedule/app-environment.env
     networks:
@@ -79,13 +89,16 @@ services:
       - ./backend/ticket/db-environment.env
     networks:
       - ticket-network
-    volumes:
-      - ticket-db:/var/lib/postgresql/data
+#    volumes:
+#      - ticket-db:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
 
   ticket-app:
     build:
       context: ./backend/ticket
       dockerfile: Dockerfile
+    image: epk-ticket-app
     env_file:
       - ./backend/ticket/app-environment.env
     networks:
@@ -97,10 +110,12 @@ services:
     ports:
       - "8083:8083"
 
-volumes:
-  account-db:
-  ticket-db:
-  schedule-db:
+# Disabled it to prevent duplicate data population.
+# Since it won't be used in production we can just use this file as dev-env.
+#volumes:
+#  account-db:
+#  ticket-db:
+#  schedule-db:
 
 networks:
   discovery-network:

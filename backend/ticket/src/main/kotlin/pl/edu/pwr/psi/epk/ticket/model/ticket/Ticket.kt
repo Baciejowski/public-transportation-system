@@ -1,19 +1,19 @@
-package pl.edu.pwr.psi.epk.ticket.model
+package pl.edu.pwr.psi.epk.ticket.model.ticket
 
 import jakarta.persistence.*
 import java.time.Duration
 import java.time.LocalDateTime
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 abstract class Ticket(
     open val passengerId: Long,
     open val pricePaid: Double,
-    open val reducedPrice: Boolean
+    open val isReduced: Boolean
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    open val ticketNo: Long = 0
+    open val ticketNo: Long = -1
 
     open var punchTime: LocalDateTime? = null
 }

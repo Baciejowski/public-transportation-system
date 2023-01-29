@@ -1,15 +1,13 @@
 package pl.edu.pwr.psi.epk.account.dto
 
 import pl.edu.pwr.psi.epk.account.model.TokenPair
-import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class RegisterDto(
     val email: String,
     val password: String,
     val firstName: String,
-    val lastName: String,
-    val dateOfBirth: LocalDate
+    val lastName: String
 )
 
 data class LoginDto(

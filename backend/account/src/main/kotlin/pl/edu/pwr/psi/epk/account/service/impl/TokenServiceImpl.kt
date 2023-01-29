@@ -54,7 +54,7 @@ class TokenServiceImpl(
             throw RefreshTokenReuseAttemptException("Refresh token has already been used")
         }
 
-        val user = userService.getUserByEmail(claims.subject)
+        val user = userService.getUserById(claims.subject.toLong())
         return createTokenPair(user, tokenFamily)
     }
 
