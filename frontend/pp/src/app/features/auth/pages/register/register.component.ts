@@ -72,7 +72,7 @@ export class RegisterComponent implements OnDestroy {
         if (res instanceof HttpErrorResponse) {
           this.error = res.error;
         }
-        this.router.navigateByUrl('/ticket/offer')
+        this.router.navigateByUrl('/tickets/offer')
       });
   }
 

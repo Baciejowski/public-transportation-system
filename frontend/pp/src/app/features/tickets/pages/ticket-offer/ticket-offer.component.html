@@ -1,0 +1,46 @@
+<main>
+    <section>
+        <h1>{{'TICKET.OFFER' | translate}}</h1>
+    </section>
+    <section>
+        <h3>{{'TICKET.SINGLE_PLURAL' | translate}}</h3>
+        <div class="ticket-container">
+            <app-ticket
+            [type]="'Ulgowy'"
+            [time]="'15 min'"
+            [subtitleBold]="'3.00 zł'"></app-ticket>
+        
+            <app-ticket
+            [type]="'Normalny'"
+            [time]="'Jednorazowy'"
+            [subtitleThin]="'Ilość: '"
+            [subtitleBold]="'5'"></app-ticket>
+        
+            <app-ticket
+            [type]="'Normalny'"
+            [time]="'Jednorazowy'"
+            [subtitleThin]="'Pojazd #1234'"></app-ticket>
+        </div>
+    </section>
+    <section>
+        <h3>{{'TICKET.TIME_LIMITED' | translate}}</h3>
+        <div class="ticket-container">
+            <app-ticket
+            [type]="'Ulgowy'"
+            [time]="'15 min'"
+            [subtitleBold]="'3.00 zł'"></app-ticket>
+        
+            <app-ticket
+            [type]="'Normalny'"
+            [time]="'Jednorazowy'"
+            [subtitleThin]="'Ilość: '"
+            [subtitleBold]="'5'"></app-ticket>
+        
+            <app-ticket
+            [type]="'Normalny'"
+            [time]="'Jednorazowy'"
+            [subtitleThin]="'Pojazd #1234'"></app-ticket>
+        </div>
+    </section>
+</main>
+    

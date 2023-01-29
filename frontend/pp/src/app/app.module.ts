@@ -14,6 +14,8 @@ import { SessionInterceptor } from './features/auth/interceptors/session.interce
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageSelectComponent } from './common/language-select/language-select.component';
+import { TicketComponent } from './features/tickets/components/ticket/ticket.component';
+import { TicketOfferComponent } from './features/tickets/pages/ticket-offer/ticket-offer.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -26,7 +28,9 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     AppComponent,
     RegisterComponent,
     LoginComponent,
-    LanguageSelectComponent
+    LanguageSelectComponent,
+    TicketComponent,
+    TicketOfferComponent
   ],
   imports: [
     BrowserModule,

@@ -17,5 +17,15 @@
         "PASSWORD_REQUIRED": "Password is required!",
         "PASSWORD_CONFIRM": "Confirm the password!",
         "PASSWORD_NOT_MATCHING": "Passwords do not match!"
+    },
+    "TICKET": {
+        "OFFER": "Ticket offer",
+        "DISCOUNTED": "Discounted",
+        "DISCOUNTED_PLURAL": "Discounted",
+        "REGULAR": "Regular",
+        "REGULAR_PLURAL": "Regular",
+        "SINGLE": "Single",
+        "SINGLE_PLURAL": "Single",
+        "TIME_LIMITED": "Time limited"
     }
 }

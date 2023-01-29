@@ -45,7 +45,7 @@ export class LoginComponent {
         // }),
         takeUntil(this.destroy$)    
       ).subscribe(res => {
-        // this.router.navigateByUrl('/ticket/offer');
+        this.router.navigateByUrl('/tickets/offer');
       });
   }
 

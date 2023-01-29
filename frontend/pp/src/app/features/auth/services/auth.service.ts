@@ -35,13 +35,13 @@ class Session {
 
   isExpired(): boolean {
     return this.exists()
-      ? moment().isAfter(this.getSessionExpirationDate())
+      ? moment().utc().isAfter(this.getSessionExpirationDate())
       : true;
   }
 
   set(refreshToken: string, sessionExpiresAt: string): void {
     localStorage.setItem(this.keys.refreshToken, refreshToken);
-    localStorage.setItem(this.keys.sessionExpirationDate, sessionExpiresAt);
+    localStorage.setItem(this.keys.sessionExpirationDate, `${sessionExpiresAt}Z`);
   }
 
   getRefreshToken(): string | null {

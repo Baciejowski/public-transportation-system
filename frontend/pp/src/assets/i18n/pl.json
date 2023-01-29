@@ -17,5 +17,15 @@
         "PASSWORD_REQUIRED": "Hasło jest wymagane!",
         "PASSWORD_CONFIRM": "Potwierdź hasło!",
         "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!"
+    },
+    "TICKET": {
+        "OFFER": "Oferta biletów",
+        "DISCOUNTED": "Ulgowy",
+        "DISCOUNTED_PLURAL": "Ulgowe",
+        "REGULAR": "Normalny",
+        "REGULAR_PLURAL": "Normalne",
+        "SINGLE": "Jednorazowy",
+        "SINGLE_PLURAL": "Jednorazowe",
+        "TIME_LIMITED": "Czasowe"
     }
 }
