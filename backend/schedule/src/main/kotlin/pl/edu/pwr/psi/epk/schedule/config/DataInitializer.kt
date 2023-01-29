@@ -30,15 +30,15 @@ class DataInitializer(
         val now = LocalDateTime.now()
 
         val stop121 = stopRepository.save(
-            Stop("Dzierżoniów Staszica (121)", Coordinates(50.720208, 16.65726)))
+            Stop("Staszica (121)", Coordinates(50.720208, 16.65726)))
         val stop69 = stopRepository.save(
-            Stop("Dzierżoniów Batalionów Chłopskich (69)", Coordinates(50.719418, 16.649913)))
+            Stop("Batalionów Chłopskich (69)", Coordinates(50.719418, 16.649913)))
         val stop70 = stopRepository.save(
-            Stop("Dzierżoniów młyn (70)", Coordinates(50.725123, 16.653868)))
+            Stop("Młyn (70)", Coordinates(50.725123, 16.653868)))
         val stop72 = stopRepository.save(
-            Stop("Dzierżoniów Piłsudskiego (72)", Coordinates(50.72992, 16.653388)))
+            Stop("Piłsudskiego (72)", Coordinates(50.72992, 16.653388)))
         val stop88 = stopRepository.save(
-            Stop("Dzierżoniów Wrocławska (szkoła nr 4) (88)", Coordinates(50.736085, 16.658693))
+            Stop("Wrocławska (88)", Coordinates(50.736085, 16.658693))
         )
         val stop310 = stopRepository.save(
             Stop("Uciechów I (310)", Coordinates(50.753622, 16.681590))
@@ -47,10 +47,10 @@ class DataInitializer(
         val lineA = lineRepository.save(
             Line("A"))
 
-        val routeA01 = Route(lineA, "Dzierżoniów Staszica - Dzierżoniów Piłsudskiego")
+        val routeA01 = Route(lineA, "Staszica - Piłsudskiego")
         routeA01.stops = listOf(stop121, stop69, stop70, stop72)
         routeRepository.save(routeA01)
-        val routeA03 = Route(lineA, "Dzierżoniów Piłsudskiego - Uciechów I")
+        val routeA03 = Route(lineA, "Piłsudskiego - Uciechów I")
         routeA03.stops = listOf(stop72, stop88, stop310)
         routeRepository.save(routeA03)
 
