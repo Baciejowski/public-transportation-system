@@ -24,7 +24,7 @@ class RideStop(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
-    val timeDeviation: Duration = run {
+    var timeDeviation: Duration = run {
         val plannedDepartureDay = LocalDateTime.from(LocalDate.from(ride.plannedStartTime))
         val plannedDepartureDateTime = plannedDepartureDay.plus(routeServiceStop.plannedDepartureTime)
         Duration.between(plannedDepartureDateTime, LocalDateTime.now())
