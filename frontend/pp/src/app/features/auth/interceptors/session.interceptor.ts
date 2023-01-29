@@ -20,9 +20,7 @@ export class SessionInterceptor implements HttpInterceptor {
         setHeaders: { Authorization: `Bearer ${token}` }
       });
     }
-
-    console.log(req.url, req.headers);
-
+    
     if (this.authService.isLoggedIn() || req.url.includes("refresh"))
       return next.handle(req);
 
