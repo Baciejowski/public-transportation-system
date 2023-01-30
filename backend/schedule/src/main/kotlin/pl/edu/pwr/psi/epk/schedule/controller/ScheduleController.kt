@@ -76,16 +76,16 @@ class ScheduleController(
         return ResponseEntity.ok(scheduleService.getStopDepartures(id, LocalDateTime.now(), length.get()))
     }
 
-    @GetMapping
-    fun getSchedule(lineId: String): ResponseEntity<*> = TODO()
-
-    @GetMapping("/rides")
-    fun getCurrentRide(sideNumber: String): ResponseEntity<RideReadDto> = TODO()
-
-    @GetMapping("/location")
-    fun getCurrentLocation(rideId: String): ResponseEntity<Coordinates> = TODO()
-
-    @PatchMapping("/location/next")
-    fun updateCurrentLocation(rideId: String): ResponseEntity<*> = TODO()
+//    @GetMapping
+//    fun getSchedule(lineId: String): ResponseEntity<*> = TODO()
+//
+//    @GetMapping("/rides")
+//    fun getCurrentRide(sideNumber: String): ResponseEntity<RideReadDto> = TODO()
+//
+//    @GetMapping("/location")
+//    fun getCurrentLocation(rideId: String): ResponseEntity<Coordinates> = TODO()
+//
+//    @PatchMapping("/location/next")
+//    fun updateCurrentLocation(rideId: String): ResponseEntity<*> = TODO()
 
 }
