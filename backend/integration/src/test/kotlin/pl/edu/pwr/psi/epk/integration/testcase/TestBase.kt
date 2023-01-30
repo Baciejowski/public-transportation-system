@@ -49,5 +49,4 @@ abstract class TestBase {
         PlannerActor.PLANNERS.forEach { it.reset() }
         ModeratorActor.MODERATORS.forEach { it.reset() }
     }
-
 }

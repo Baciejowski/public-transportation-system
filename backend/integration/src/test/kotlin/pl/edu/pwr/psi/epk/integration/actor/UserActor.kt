@@ -5,6 +5,7 @@ import org.junit.jupiter.api.assertAll
 import org.springframework.test.web.reactive.server.WebTestClient
 import pl.edu.pwr.psi.epk.integration.dto.ErrorDto
 import pl.edu.pwr.psi.epk.integration.dto.account.*
+import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
 import pl.edu.pwr.psi.epk.integration.step.AccountSteps
 import pl.edu.pwr.psi.epk.integration.step.AuthenticationSteps
@@ -146,9 +147,10 @@ class PassengerActor(
 
     fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client)
 
+    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client!!, offeredTicketId)
+
     fun validateEquality(userReadDto: PassengerReadDto) {
         super.validateUserEquality(userReadDto)
-        Assertions.assertThat(userReadDto.accountBalance).isEqualTo(0.0)
     }
 
 }
@@ -161,7 +163,6 @@ class TicketInspectorActor(
 ) : UserActor(email, password, firstName, lastName) {
 
     override val role: Role = Role.TICKET_INSPECTOR
-
 
     companion object {
         var TICKET_INSPECTOR_FELIX = TicketInspectorActor("felix.carey@mail.com", "secret", "Felix", "Carey")

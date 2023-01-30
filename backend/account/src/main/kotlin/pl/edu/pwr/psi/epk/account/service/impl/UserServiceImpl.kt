@@ -51,11 +51,11 @@ class UserServiceImpl(
         if (passenger !is Passenger)
             throw IllegalArgumentException("User is not a passenger")
 
-        passenger.walletBalance.minus(amount)
+        if (passenger.walletBalance < amount)
+            throw IllegalArgumentException("Passenger does not have enough money.")
 
-        // todo check if balance is saved
-        // userRepository.save(user)
+        passenger.walletBalance = passenger.walletBalance - amount
 
-        return passenger
+        return userRepository.save(passenger)
     }
 }

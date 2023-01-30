@@ -28,6 +28,8 @@ class TicketService(
             accountApiService.deduceBalance(passengerId, offeredTicket.price)
         } catch (ex: FeignException) {
             throw ApiCallException("Error when trying to deduce balance using api service. $ex")
+        } catch (ex: Exception) {
+            throw ApiCallException("Unexpected error when trying to deduce balance using api service. $ex")
         }
 
         return savedTicket

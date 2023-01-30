@@ -16,14 +16,13 @@ class TicketSteps {
                 .expectBodyList(TicketOfferDto::class.java)
                 .returnResult().responseBody!!
 
-        fun userBuysTicket(webTestClient: WebTestClient, offeredTicketId: Long) {
+        fun userBuysTicket(webTestClient: WebTestClient, offeredTicketId: Long): TicketDto =
             webTestClient.post()
-                .uri("/ticket/tickets/offer/buy")
+                .uri("/ticket/tickets/offer/buy?offeredTicketId=$offeredTicketId")
                 .exchange()
                 .expectStatus().isOk
-                .expectBodyList(TicketDto::class.java)
+                .expectBody(TicketDto::class.java)
                 .returnResult().responseBody!!
-        }
 
     }
 

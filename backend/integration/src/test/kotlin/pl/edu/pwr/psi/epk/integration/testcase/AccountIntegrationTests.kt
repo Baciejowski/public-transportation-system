@@ -1,10 +1,10 @@
 package pl.edu.pwr.psi.epk.integration.testcase
 
 import org.junit.jupiter.api.Test
-import pl.edu.pwr.psi.epk.integration.actor.PassengerActor.Companion.PASSENGER_JOHN
-import pl.edu.pwr.psi.epk.integration.actor.TicketInspectorActor.Companion.TICKET_INSPECTOR_FELIX
-import pl.edu.pwr.psi.epk.integration.actor.PlannerActor.Companion.PLANNER_EMILY
 import pl.edu.pwr.psi.epk.integration.actor.ModeratorActor.Companion.MODERATOR_ANGELINA
+import pl.edu.pwr.psi.epk.integration.actor.PassengerActor.Companion.PASSENGER_JOHN
+import pl.edu.pwr.psi.epk.integration.actor.PlannerActor.Companion.PLANNER_EMILY
+import pl.edu.pwr.psi.epk.integration.actor.TicketInspectorActor.Companion.TICKET_INSPECTOR_FELIX
 import pl.edu.pwr.psi.epk.integration.dto.account.PassengerReadDto
 import pl.edu.pwr.psi.epk.integration.dto.account.UserReadDto
 import pl.edu.pwr.psi.epk.integration.util.TestUtils
