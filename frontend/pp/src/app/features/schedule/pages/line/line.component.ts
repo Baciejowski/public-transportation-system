@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-line',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LineComponent implements OnInit {
 
-  constructor() { }
+  lineId: string;
+
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.lineId =  this.route.snapshot.paramMap.get('lineId')!;
   }
 
 }
