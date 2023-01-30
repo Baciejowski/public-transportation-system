@@ -1,9 +1,8 @@
 package pl.edu.pwr.psi.epk.schedule.service.impl
 
 import org.springframework.stereotype.Service
-import pl.edu.pwr.psi.epk.schedule.dto.LineDTO
-import pl.edu.pwr.psi.epk.schedule.dto.RouteManifestDTO
-import pl.edu.pwr.psi.epk.schedule.dto.StopDepartureDTO
+import pl.edu.pwr.psi.epk.schedule.dto.*
+import pl.edu.pwr.psi.epk.schedule.repository.RideRepository
 import pl.edu.pwr.psi.epk.schedule.repository.RouteServiceStopRepository
 import pl.edu.pwr.psi.epk.schedule.service.ScheduleService
 import java.time.Duration
@@ -11,7 +10,8 @@ import java.time.LocalDateTime
 
 @Service
 class ScheduleServiceImpl(
-    private val routeServiceStopRepository: RouteServiceStopRepository
+    private val routeServiceStopRepository: RouteServiceStopRepository,
+    private val rideRepository: RideRepository
 ): ScheduleService {
     override fun getStopDepartures(
         stopId: Long,
@@ -71,4 +71,25 @@ class ScheduleServiceImpl(
             return (departuresOfTodaysRides+departuresTomorrow).sortedBy { it.departure }.take(numberOfDepartures)
         }
     }
+
+    override fun getDeviations(): List<DeviationDTO> =
+        rideRepository
+            .findAllByStartTimeIsNotNullAndEndTimeIsNull()
+            .map { route -> Pair(route.rideStops.last(), route.rideStops.size) }
+            .sortedBy { it.first.timeDeviation.abs() }
+            .map { (rideStop, nextIndex) ->
+                val lastStop = rideStop.routeServiceStop.stop
+                val nextStop = rideStop.routeServiceStop.routeService.routeServiceStops[nextIndex].stop
+                val departed =
+                    rideStop.ride.plannedStartTime.toLocalDate().atStartOfDay() +
+                            rideStop.routeServiceStop.plannedDepartureTime +
+                            rideStop.timeDeviation
+                DeviationDTO(
+                    rideStop.timeDeviation,
+                    LineDTO.fromLine(rideStop.ride.routeService.route.line),
+                    StopManifestDTO.fromStop(lastStop),
+                    departed,
+                    StopManifestDTO.fromStop(nextStop),
+                )
+            }
 }
