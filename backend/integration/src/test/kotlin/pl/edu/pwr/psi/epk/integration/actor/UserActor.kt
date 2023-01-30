@@ -139,6 +139,9 @@ class PassengerActor(
 
     fun getsTickets(): List<TicketDto> = TicketSteps.userGetsTickets(client)
 
+    fun punchesTicket(ticketId: Long, rideId: Long): TicketDto =
+        TicketSteps.userPunchesTicket(client, ticketId, rideId)
+
     fun validateEquality(userReadDto: PassengerReadDto) {
         super.validateUserEquality(userReadDto)
     }
@@ -161,6 +164,9 @@ class TicketInspectorActor(
 
         var TICKET_INSPECTORS = listOf(TICKET_INSPECTOR_FELIX, TICKET_INSPECTOR_STEPHANIE, TICKET_INSPECTOR_DORIS)
     }
+
+    fun validatesTicket(ticketNo: Long, rideId: Long): Boolean =
+        TicketSteps.inspectorValidatesTicket(client, ticketNo, rideId)
 
 }
 

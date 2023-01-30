@@ -32,6 +32,21 @@ class TicketSteps {
                 .expectBodyList(TicketDto::class.java)
                 .returnResult().responseBody!!
 
+        fun userPunchesTicket(webTestClient: WebTestClient, ticketId: Long, rideId: Long): TicketDto =
+            webTestClient.patch()
+                .uri("/ticket/tickets/punch?ticketId=$ticketId&rideId=$rideId")
+                .exchange()
+                .expectStatus().isOk
+                .expectBody(TicketDto::class.java)
+                .returnResult().responseBody!!
+
+        fun inspectorValidatesTicket(webTestClient: WebTestClient, ticketNo: Long, rideId: Long): Boolean =
+            webTestClient.get()
+                .uri("/ticket/tickets/validate?ticketId=$ticketNo&rideId=$rideId")
+                .exchange()
+                .expectStatus().isOk
+                .expectBody(Boolean::class.java)
+                .returnResult().responseBody!!
     }
 
 

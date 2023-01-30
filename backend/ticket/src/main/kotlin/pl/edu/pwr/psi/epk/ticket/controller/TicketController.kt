@@ -32,14 +32,17 @@ class TicketController(
         )
     }
 
-    @PatchMapping
-    fun punchTicket(ticketId: Long, rideId: Long): ResponseEntity<TicketReadDto> =
-        ResponseEntity.ok(
-            TicketReadDto(
-                1L,
-                LocalDateTime.MIN
-            )
+    @PatchMapping("/punch")
+    fun punchTicket(
+        @RequestHeader("user-id", required = true) passengerId: Long,
+        @RequestParam ticketId: Long,
+        @RequestParam rideId: Long
+    ): ResponseEntity<Ticket> {
+
+        return ResponseEntity.ok(
+            ticketService.punchTicket(passengerId, ticketId, rideId)
         )
+    }
 
     @GetMapping("/offer")
     fun getCurrentOffer(): ResponseEntity<List<TicketOffer>> =
@@ -55,6 +58,18 @@ class TicketController(
 
         return ResponseEntity.ok(
             ticketService.buyTicket(passengerId, offeredTicketId)
+        )
+    }
+
+    @GetMapping("/validate")
+    fun validateTicket(
+        @RequestHeader("user-id", required = true) inspectorId: Long,
+        @RequestParam ticketId: Long,
+        @RequestParam rideId: Long
+    ): ResponseEntity<Boolean> {
+
+        return ResponseEntity.ok(
+            ticketService.validateTicket(ticketId, rideId)
         )
     }
 
