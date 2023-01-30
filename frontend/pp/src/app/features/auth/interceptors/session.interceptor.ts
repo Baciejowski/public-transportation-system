@@ -21,8 +21,9 @@ export class SessionInterceptor implements HttpInterceptor {
       });
     }
     
-    if (this.authService.isLoggedIn() || req.url.includes("refresh"))
+    if (this.authService.isLoggedIn() || req.url.includes("refresh") || req.url.includes("assets")) {
       return next.handle(req);
+    }
 
     return this.authService.refresh().pipe(mergeMap(_ => {
       token = this.authService.session.getRefreshToken();

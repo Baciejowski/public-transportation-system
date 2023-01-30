@@ -88,7 +88,6 @@ export class AuthService {
   refresh(): Observable<boolean> {
     if (!this.session.exists())
       return of(false); // cannot refresh not existing session
-
     const headers = { headers: { "Authorization": `bearer ${this.session.getRefreshToken()}` } }
     return this.http.post<AuthResultDto>("/api/account/auth/refresh", "", headers).pipe(
       map(authResult => {this.setSession(authResult); return true;}),

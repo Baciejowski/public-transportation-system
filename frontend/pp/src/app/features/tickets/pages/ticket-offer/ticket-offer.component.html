@@ -1,6 +1,9 @@
 <main>
     <section>
         <h1>{{'TICKET.OFFER' | translate}}</h1>
+        <div *ngIf="ticketOffer$ | async as ticketOffer">
+            {{ticketOffer}}
+        </div>
     </section>
     <section>
         <h3>{{'TICKET.SINGLE_PLURAL' | translate}}</h3>
