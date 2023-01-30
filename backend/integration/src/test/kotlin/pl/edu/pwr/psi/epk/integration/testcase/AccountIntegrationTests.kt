@@ -1,5 +1,6 @@
 package pl.edu.pwr.psi.epk.integration.testcase
 
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import pl.edu.pwr.psi.epk.integration.actor.ModeratorActor.Companion.MODERATOR_ANGELINA
 import pl.edu.pwr.psi.epk.integration.actor.PassengerActor.Companion.PASSENGER_JOHN
@@ -7,7 +8,6 @@ import pl.edu.pwr.psi.epk.integration.actor.PlannerActor.Companion.PLANNER_EMILY
 import pl.edu.pwr.psi.epk.integration.actor.TicketInspectorActor.Companion.TICKET_INSPECTOR_FELIX
 import pl.edu.pwr.psi.epk.integration.dto.account.PassengerReadDto
 import pl.edu.pwr.psi.epk.integration.dto.account.UserReadDto
-import pl.edu.pwr.psi.epk.integration.util.TestUtils
 
 class AccountIntegrationTests: TestBase() {
 
@@ -16,6 +16,15 @@ class AccountIntegrationTests: TestBase() {
         PASSENGER_JOHN.logsIn()
         val userInfo: PassengerReadDto = PASSENGER_JOHN.getsUserInfo()
         PASSENGER_JOHN.validateEquality(userInfo)
+    }
+
+    @Test
+    fun `Passenger tops up balance`() {
+        PASSENGER_JOHN.logsIn()
+        val topUpAmount = 20.51
+        val balanceBefore = PASSENGER_JOHN.getsUserInfo().accountBalance
+        val balanceAfter = PASSENGER_JOHN.topsUpBalance(topUpAmount).accountBalance
+        assertThat(balanceAfter.minus(balanceBefore)).isEqualTo(topUpAmount)
     }
 
     @Test

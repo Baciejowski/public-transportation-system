@@ -42,3 +42,7 @@ class PassengerReadDto(
     role: Role,
     val accountBalance: Double
 ): UserReadDto(id, email, firstName, lastName, role)
+
+class BalanceTopUpDto(
+    val amount: Double
+)

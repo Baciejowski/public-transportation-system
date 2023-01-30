@@ -2,8 +2,8 @@ package pl.edu.pwr.psi.epk.account.controller
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import pl.edu.pwr.psi.epk.account.dto.BalanceTopUpDto
 import pl.edu.pwr.psi.epk.account.dto.UserReadDto
-import pl.edu.pwr.psi.epk.account.model.Passenger
 import pl.edu.pwr.psi.epk.account.service.UserService
 
 @RestController
@@ -16,15 +16,19 @@ class AccountController(
     fun getAccountInfo(@RequestHeader("user-id", required = true) userId: Long): ResponseEntity<UserReadDto> =
         ResponseEntity.ok(UserReadDto.fromUser(userService.getUserById(userId)))
 
-    // TODO: investigate 3rd party payment + dtos
     @PostMapping("/balance/top-up")
-    fun topUpBalance(@RequestHeader("user-id", required = true) passengerId: Long): ResponseEntity<*> = ResponseEntity.ok("OK :)")
+    fun topUpBalance(
+        @RequestHeader("user-id", required = true) passengerId: Long,
+        @RequestBody balanceTopUpDto: BalanceTopUpDto
+    ): ResponseEntity<UserReadDto> {
+        return ResponseEntity.ok(UserReadDto.fromUser(userService.topUpBalance(passengerId, balanceTopUpDto.amount)))
+    }
 
     @PostMapping("/balance/deduce")
     fun deduceBalance(
         @RequestHeader("user-id", required = true) passengerId: Long,
         @RequestBody amount: Double
-    ): ResponseEntity<Passenger> {
-        return ResponseEntity.ok(userService.deduceBalance(passengerId, amount))
+    ): ResponseEntity<UserReadDto> {
+        return ResponseEntity.ok(UserReadDto.fromUser(userService.deduceBalance(passengerId, amount)))
     }
 }

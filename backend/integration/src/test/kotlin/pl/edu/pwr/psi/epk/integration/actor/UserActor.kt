@@ -127,23 +127,11 @@ class PassengerActor(
         var NR_PASSENGER_MARK = PassengerActor("mark.twain@mail.com", "secret", "Mark", "Twain")
 
         var PASSENGERS = listOf(PASSENGER_JOHN, PASSENGER_OLIVIA, PASSENGER_GREGORY, PASSENGER_DONALD, PASSENGER_FREDDIE, PASSENGER_EMIL, NR_PASSENGER_MARK)
-
-        fun resetAll() {
-            PASSENGER_JOHN = PassengerActor("john.doe@mail.com", "secret", "John", "Doe")
-            PASSENGER_OLIVIA = PassengerActor("olivia.may@mail.com", "secret", "Olivia", "May")
-            PASSENGER_GREGORY = PassengerActor("gregory.trevino@mail.com", "secret", "Gregory", "Trevino")
-            PASSENGER_DONALD = PassengerActor("donald.soto@mail.com", "secret", "Donald", "Soto")
-            PASSENGER_FREDDIE = PassengerActor("freddie.stuart@mail.com", "secret", "Freddy", "Stuart")
-            PASSENGER_EMIL = PassengerActor("emil.briggs@mail.com", "secret", "Emil", "Briggs")
-
-            // NON REGISTERED
-            NR_PASSENGER_MARK = PassengerActor("mark.twain@mail.com", "secret", "Mark", "Twain")
-
-            PASSENGERS = listOf(PASSENGER_JOHN, PASSENGER_OLIVIA, PASSENGER_GREGORY, PASSENGER_DONALD, PASSENGER_FREDDIE, PASSENGER_EMIL, NR_PASSENGER_MARK)
-        }
     }
 
     override fun getsUserInfo(): PassengerReadDto = AccountSteps.userGetsPassengerInfo(client)
+
+    fun topsUpBalance(amount: Double): PassengerReadDto = AccountSteps.passengerTopsUpBalance(client, BalanceTopUpDto(amount))
 
     fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client)
 
