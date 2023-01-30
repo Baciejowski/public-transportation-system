@@ -1,6 +1,7 @@
 package pl.edu.pwr.psi.epk.account.service.impl
 
 import jakarta.persistence.EntityNotFoundException
+import org.apache.http.auth.InvalidCredentialsException
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import pl.edu.pwr.psi.epk.account.dto.LoginDto
@@ -41,7 +42,7 @@ class UserServiceImpl(
         val user = getUserByEmail(loginDto.email)
 
         return if(encoder.matches(loginDto.password, user.password) && user.active) user
-        else throw IllegalArgumentException("Could not authenticate user with email '${loginDto.email}'.")
+        else throw InvalidCredentialsException("Could not authenticate user with email '${loginDto.email}'.")
     }
 
     override fun deduceBalance(passengerId: Long, amount: Double): Passenger {
@@ -50,11 +51,11 @@ class UserServiceImpl(
         if (passenger !is Passenger)
             throw IllegalArgumentException("User is not a passenger")
 
-        passenger.walletBalance.minus(amount)
+        if (passenger.walletBalance < amount)
+            throw IllegalArgumentException("Passenger does not have enough money.")
 
-        // todo check if balance is saved
-        // userRepository.save(user)
+        passenger.walletBalance = passenger.walletBalance - amount
 
-        return passenger
+        return userRepository.save(passenger)
     }
 }

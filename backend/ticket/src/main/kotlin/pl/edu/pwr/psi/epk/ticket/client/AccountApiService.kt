@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestHeader
 @FeignClient("account")
 interface AccountApiService {
 
-    @PostMapping("/balance/deduce")
+    @PostMapping("/account/balance/deduce")
     fun deduceBalance(
         @RequestHeader("user-id", required = true) passengerId: Long,
         @RequestBody amount: Double
