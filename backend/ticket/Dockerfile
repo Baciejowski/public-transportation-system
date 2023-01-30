@@ -18,5 +18,8 @@ FROM amazoncorretto:17
 RUN mkdir -p /opt/app
 COPY --from=build /app/target/*.jar /opt/app/epk-ticket.jar
 
-ENTRYPOINT ["java", "-jar", "/opt/app/epk-ticket.jar"]
+# for debug
+ENTRYPOINT ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8072", "-jar", "/opt/app/epk-ticket.jar"]
+
+#ENTRYPOINT ["java", "-jar", "/opt/app/epk-ticket.jar"]
 

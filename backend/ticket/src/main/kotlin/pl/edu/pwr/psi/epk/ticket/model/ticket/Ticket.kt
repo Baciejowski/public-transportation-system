@@ -25,6 +25,8 @@ class OneWayTicket(
     reducedPrice: Boolean
 ): Ticket(passengerId, pricePaid, reducedPrice) {
 
+    constructor() : this(-1, 0.0, false)
+
     var rideId: Long? = null
 }
 
@@ -34,4 +36,8 @@ class TimeLimitedTicket(
     pricePaid: Double,
     reducedPrice: Boolean,
     val duration: Duration,
-): Ticket(passengerId, pricePaid, reducedPrice)
+): Ticket(passengerId, pricePaid, reducedPrice) {
+
+    constructor() : this(-1, 0.0, false, Duration.ZERO)
+
+}

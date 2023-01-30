@@ -38,4 +38,6 @@ spec:
           - configMapRef:
               name: epk-account-config
           - secretRef:
+              name: epk-secret
+          - secretRef:
               name: epk-account-secret

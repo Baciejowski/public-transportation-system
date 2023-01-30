@@ -17,8 +17,11 @@ class DataInitializer(
 ): ApplicationRunner {
 
     override fun run(args: ApplicationArguments?) {
+        val john = Passenger("john.doe@mail.com", encoder.encode("secret"), "John", "Doe")
+        john.walletBalance = 10.0
+
         val mockUsers = listOf(
-            Passenger("john.doe@mail.com", encoder.encode("secret"), "John", "Doe"),
+            john,
             Passenger("olivia.may@mail.com", encoder.encode("secret"), "Olivia", "May"),
             Passenger("gregory.trevino@mail.com", encoder.encode("secret"), "Gregory", "Trevino"),
             Passenger("donald.soto@mail.com", encoder.encode("secret"), "Donald", "Soto"),

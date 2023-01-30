@@ -1,8 +1,8 @@
 package pl.edu.pwr.psi.epk.integration.step
 
 import org.springframework.test.web.reactive.server.WebTestClient
-import pl.edu.pwr.psi.epk.integration.dto.account.offer.TicketDto
-import pl.edu.pwr.psi.epk.integration.dto.account.offer.TicketOfferDto
+import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
+import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
 
 class TicketSteps {
 
@@ -16,14 +16,13 @@ class TicketSteps {
                 .expectBodyList(TicketOfferDto::class.java)
                 .returnResult().responseBody!!
 
-        fun userBuysTicket(webTestClient: WebTestClient, offeredTicketId: Long) {
+        fun userBuysTicket(webTestClient: WebTestClient, offeredTicketId: Long): TicketDto =
             webTestClient.post()
-                .uri("/ticket/tickets/offer/buy")
+                .uri("/ticket/tickets/offer/buy?offeredTicketId=$offeredTicketId")
                 .exchange()
                 .expectStatus().isOk
-                .expectBodyList(TicketDto::class.java)
+                .expectBody(TicketDto::class.java)
                 .returnResult().responseBody!!
-        }
 
     }
 
