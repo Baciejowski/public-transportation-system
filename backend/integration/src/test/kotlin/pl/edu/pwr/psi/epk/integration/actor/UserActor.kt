@@ -7,8 +7,10 @@ import pl.edu.pwr.psi.epk.integration.dto.ErrorDto
 import pl.edu.pwr.psi.epk.integration.dto.account.*
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
+import pl.edu.pwr.psi.epk.integration.dto.schedule.*
 import pl.edu.pwr.psi.epk.integration.step.AccountSteps
 import pl.edu.pwr.psi.epk.integration.step.AuthenticationSteps
+import pl.edu.pwr.psi.epk.integration.step.ScheduleSteps
 import pl.edu.pwr.psi.epk.integration.step.TicketSteps
 import pl.edu.pwr.psi.epk.integration.util.TestUtils
 import java.time.LocalDateTime
@@ -138,6 +140,29 @@ class PassengerActor(
     fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client, offeredTicketId)
 
     fun getsTickets(): List<TicketDto> = TicketSteps.userGetsTickets(client)
+
+    fun getsLines(): List<LineDto> = ScheduleSteps.getLines(client)
+
+    fun getsStops(): List<StopManifestDto> = ScheduleSteps.getStops(client)
+
+    fun getsBuses(): List<BusDto> = ScheduleSteps.getBuses(client)
+
+    fun getsLineRoutes(lineId: Long): List<RouteManifestDto> = ScheduleSteps.getLineRoutes(client, lineId)
+    fun triesToGetLineRoutes(lineId: Long): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetLineRoutes(client, lineId)
+
+    fun getsRoute(routeId: Long): RouteDetailDto = ScheduleSteps.getRoute(client, routeId)
+    fun triesToGetRoute(routeId: Long): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetRoute(client, routeId)
+
+    fun getsStopLines(stopId: Long): List<LineDto> = ScheduleSteps.getStopLines(client, stopId)
+    fun triesToGetStopLines(stopId: Long): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetStopLines(client, stopId)
+
+    fun getsStopDepartures(stopId: Long, length: Int): List<StopDepartureDto> =
+        ScheduleSteps.getStopDepartures(client, stopId, length)
+    fun triesToGetStopDepartures(stopId: Long, length: Int): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetStopDepartures(client, stopId, length)
 
     fun punchesTicket(ticketId: Long, rideId: Long): TicketDto =
         TicketSteps.userPunchesTicket(client, ticketId, rideId)

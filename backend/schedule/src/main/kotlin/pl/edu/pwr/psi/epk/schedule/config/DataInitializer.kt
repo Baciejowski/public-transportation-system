@@ -50,9 +50,18 @@ class DataInitializer(
         val routeA01 = Route(lineA, "Staszica - Piłsudskiego")
         routeA01.stops = listOf(stop121, stop69, stop70, stop72)
         routeRepository.save(routeA01)
+        routeA01.stops.forEach { it.routes.add(routeA01) }
+        stopRepository.saveAll(routeA01.stops)
+        lineA.routes.add(routeA01)
+        lineRepository.save(lineA)
+
         val routeA03 = Route(lineA, "Piłsudskiego - Uciechów I")
         routeA03.stops = listOf(stop72, stop88, stop310)
         routeRepository.save(routeA03)
+        routeA03.stops.forEach { it.routes.add(routeA03) }
+        stopRepository.saveAll(routeA03.stops)
+        lineA.routes.add(routeA03)
+        lineRepository.save(lineA)
 
         val calendar = calendarRepository.save(
             Calendar(
