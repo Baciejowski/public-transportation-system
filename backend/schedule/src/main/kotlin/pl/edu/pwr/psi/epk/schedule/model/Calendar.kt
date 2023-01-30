@@ -2,14 +2,12 @@ package pl.edu.pwr.psi.epk.schedule.model
 
 import jakarta.persistence.*
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
 class Calendar (
-
-    @OneToMany(mappedBy = "calendar")
-    val calendarExemptions: Set<CalendarExemption>,
-
+    @ElementCollection
     val serviceDays: Set<DayOfWeek>,
 
     val startDate: LocalDateTime,
@@ -24,5 +22,15 @@ class Calendar (
 
     @OneToMany(mappedBy = "calendar")
     val routeServices: Set<RouteService> = mutableSetOf()
+
+    @OneToMany(mappedBy = "calendar")
+    val calendarExemptions: Set<CalendarExemption> = mutableSetOf()
+
+    fun isServiceDay(firstStopDeparture: LocalDateTime): Boolean {
+        for(calendarExemption in calendarExemptions)
+            if(calendarExemption.startTime.isBefore(firstStopDeparture) && calendarExemption.endTime.isAfter(firstStopDeparture))
+                return calendarExemption.type==CalendarExemptionType.ADDITIONAL_RIDE
+        return serviceDays.contains(firstStopDeparture.dayOfWeek)
+    }
 
 }

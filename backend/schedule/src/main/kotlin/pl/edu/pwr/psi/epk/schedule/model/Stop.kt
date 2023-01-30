@@ -16,4 +16,7 @@ class Stop(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
+    @ManyToMany
+    var routes: List<Route> = mutableListOf()
+
 }
