@@ -147,7 +147,9 @@ class PassengerActor(
 
     fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client)
 
-    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client!!, offeredTicketId)
+    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client, offeredTicketId)
+
+    fun getsTickets(): List<TicketDto> = TicketSteps.userGetsTickets(client)
 
     fun validateEquality(userReadDto: PassengerReadDto) {
         super.validateUserEquality(userReadDto)

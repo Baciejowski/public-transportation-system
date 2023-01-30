@@ -24,6 +24,14 @@ class TicketSteps {
                 .expectBody(TicketDto::class.java)
                 .returnResult().responseBody!!
 
+        fun userGetsTickets(webTestClient: WebTestClient): List<TicketDto> =
+            webTestClient.get()
+                .uri("/ticket/tickets")
+                .exchange()
+                .expectStatus().isOk
+                .expectBodyList(TicketDto::class.java)
+                .returnResult().responseBody!!
+
     }
 
 

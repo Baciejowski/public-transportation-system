@@ -2,9 +2,10 @@ package pl.edu.pwr.psi.epk.ticket.controller
 
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import pl.edu.pwr.psi.epk.ticket.model.ticket.Ticket
 import pl.edu.pwr.psi.epk.ticket.model.offer.TicketOffer
+import pl.edu.pwr.psi.epk.ticket.model.ticket.Ticket
 import pl.edu.pwr.psi.epk.ticket.repository.TicketOfferRepository
+import pl.edu.pwr.psi.epk.ticket.repository.TicketRepository
 import pl.edu.pwr.psi.epk.ticket.service.TicketService
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -17,19 +18,19 @@ class OfferedTicketDto(val id: Long, val price: Double)
 @RequestMapping("/tickets")
 class TicketController(
     val ticketOfferRepository: TicketOfferRepository,
+    val ticketRepository: TicketRepository,
     val ticketService: TicketService
 ) {
 
     @GetMapping
-    fun getUserTickets(): ResponseEntity<List<TicketReadDto>> =
-        ResponseEntity.ok(
-            listOf(
-                TicketReadDto(
-                    1L,
-                    LocalDateTime.MIN
-                )
-            )
+    fun getUserTickets(
+        @RequestHeader("user-id", required = true) passengerId: Long
+    ): ResponseEntity<List<Ticket>> {
+
+        return ResponseEntity.ok(
+            ticketRepository.findAllByPassengerId(passengerId)
         )
+    }
 
     @PatchMapping
     fun punchTicket(ticketId: Long, rideId: Long): ResponseEntity<TicketReadDto> =
@@ -53,7 +54,7 @@ class TicketController(
     ): ResponseEntity<Ticket> {
 
         return ResponseEntity.ok(
-            ticketService.buyTicket(offeredTicketId, passengerId)
+            ticketService.buyTicket(passengerId, offeredTicketId)
         )
     }
 
