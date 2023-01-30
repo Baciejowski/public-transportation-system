@@ -33,9 +33,9 @@ class ScheduleServiceImpl(
             .map { routeServiceStop ->
                 val route = routeServiceStop.routeService.route
                 val rideStart = routeServiceStop.routeService.routeServiceStops.minOf {today+it.plannedDepartureTime }
-                val ride = routeServiceStop.routeService.rides.first{ it.plannedStartTime == rideStart }
+                val ride = routeServiceStop.routeService.rides.firstOrNull{ it.plannedStartTime == rideStart }
                 var delay = Duration.ZERO
-                if(ride.startTime != null) {
+                if(ride?.startTime != null) {
                     delay = ride.rideStops.last().timeDeviation
                 }
                 StopDepartureDTO(
