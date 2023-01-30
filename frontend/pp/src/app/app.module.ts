@@ -8,6 +8,7 @@ import { RegisterComponent } from './features/auth/pages/register/register.compo
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptor } from './features/auth/interceptors/session.interceptor';
@@ -16,6 +17,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LanguageSelectComponent } from './common/language-select/language-select.component';
 import { TicketComponent } from './features/tickets/components/ticket/ticket.component';
 import { TicketOfferComponent } from './features/tickets/pages/ticket-offer/ticket-offer.component';
+import { SchedulesComponent } from './features/schedule/pages/schedules/schedules.component';
+import { LineComponent } from './features/schedule/pages/line/line.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -30,7 +33,9 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     LoginComponent,
     LanguageSelectComponent,
     TicketComponent,
-    TicketOfferComponent
+    TicketOfferComponent,
+    SchedulesComponent,
+    LineComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,8 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     HttpClientModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatExpansionModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },

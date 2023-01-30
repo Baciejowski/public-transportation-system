@@ -27,5 +27,10 @@
         "SINGLE": "Single",
         "SINGLE_PLURAL": "Single",
         "TIME_LIMITED": "Time limited"
+    },
+    "SCHEDULE": {
+        "HEADING": "Schedule",
+        "LINES": "Lines",
+        "STOPS": "Stops"
     }
 }

@@ -27,5 +27,10 @@
         "SINGLE": "Jednorazowy",
         "SINGLE_PLURAL": "Jednorazowe",
         "TIME_LIMITED": "Czasowe"
+    },
+    "SCHEDULE": {
+        "HEADING": "Rozkłady jazdy",
+        "LINES": "Linie",
+        "STOPS": "Przystanki"
     }
 }
