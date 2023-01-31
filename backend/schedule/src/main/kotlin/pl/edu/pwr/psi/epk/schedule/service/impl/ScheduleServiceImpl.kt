@@ -76,6 +76,7 @@ class ScheduleServiceImpl(
         rideRepository
             .findAllByStartTimeIsNotNullAndEndTimeIsNull()
             .map { route -> Pair(route.rideStops.last(), route.rideStops.size) }
+            .filter { it.first.timeDeviation.abs().toMinutes()>=1 }
             .sortedBy { it.first.timeDeviation.abs() }
             .map { (rideStop, nextIndex) ->
                 val lastStop = rideStop.routeServiceStop.stop

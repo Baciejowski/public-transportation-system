@@ -57,7 +57,7 @@ class ScheduleController(
         if(stop.isEmpty)
             return ResponseEntity.notFound().build()
         val departures =
-            if(numberOfDepartures.isEmpty) 
+            if(numberOfDepartures.isEmpty)
                 scheduleService.getStopDepartures(id, LocalDateTime.now())
             else
                 scheduleService.getStopDepartures(id, LocalDateTime.now(), numberOfDepartures.get())
