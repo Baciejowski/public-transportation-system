@@ -50,23 +50,18 @@ class ScheduleController(
         return ResponseEntity.ok(RouteDetailDTO.fromRoute(route.get()))
     }
 
-    @GetMapping("/stops/{id}/lines")
-    fun getStopLines(@PathVariable id: Long): ResponseEntity<List<LineManifestDTO>> {
-        val stop = stopRepository.findById(id)
-        if(stop.isEmpty)
-            return ResponseEntity.notFound().build()
-        return ResponseEntity.ok(stop.get().routes.map{it.line}.distinctBy{it.id}.map {LineManifestDTO.fromLine(it)})
-    }
-
     //Screens 4.6.2.3, 4.7.2.1
-    @GetMapping("/stops/{id}/departures")
-    fun getStopDepartures(@PathVariable id: Long, @RequestParam length: Optional<Int>): ResponseEntity<List<StopDepartureDTO>> {
+    @GetMapping("/stops/{id}")
+    fun getStopDetails(@PathVariable id: Long, @RequestParam numberOfDepartures: Optional<Int>): ResponseEntity<StopDetailsDTO> {
         val stop = stopRepository.findById(id)
         if(stop.isEmpty)
             return ResponseEntity.notFound().build()
-        if(length.isEmpty)
-            return ResponseEntity.ok(scheduleService.getStopDepartures(id, LocalDateTime.now()))
-        return ResponseEntity.ok(scheduleService.getStopDepartures(id, LocalDateTime.now(), length.get()))
+        val departures =
+            if(numberOfDepartures.isEmpty) 
+                scheduleService.getStopDepartures(id, LocalDateTime.now())
+            else
+                scheduleService.getStopDepartures(id, LocalDateTime.now(), numberOfDepartures.get())
+        return ResponseEntity.ok(StopDetailsDTO.fromStopAndDepartures(stop.get(), departures))
     }
 
     //Screen 4.8.2.1
