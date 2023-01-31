@@ -1,13 +1,11 @@
 package pl.edu.pwr.psi.epk.schedule.config
 
-import jakarta.transaction.Transactional
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Configuration
-import org.springframework.transaction.annotation.EnableTransactionManagement
 import pl.edu.pwr.psi.epk.schedule.model.*
+import pl.edu.pwr.psi.epk.schedule.model.Calendar
 import pl.edu.pwr.psi.epk.schedule.repository.*
-import java.lang.Thread.sleep
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
@@ -44,10 +42,10 @@ class DataInitializer(
         return route
     }
 
-    fun createRouteServiceWithStops(route: Route, calendar: Calendar, halts: Map<Stop,Duration>): RouteService {
+    fun createRouteServiceWithStops(route: Route, calendar: Calendar, halts: List<Pair<Stop, Duration>>): RouteService {
         val routeService = routeServiceRepository.save(RouteService(route, calendar))
         val routeServiceStops =
-            routeServiceStopRepository.saveAllAndFlush(halts.map { RouteServiceStop(routeService, it.key, it.value) })
+            routeServiceStopRepository.saveAllAndFlush(halts.map { RouteServiceStop(routeService, it.first, it.second) })
         routeService.routeServiceStops = routeServiceStops
         return routeServiceRepository.saveAndFlush(routeService)
     }
@@ -56,7 +54,6 @@ class DataInitializer(
         val now = LocalDateTime.now()
         routeService.routeServiceStops = routeServiceStopRepository.findAllByRouteService(routeService)
         routeService.rides = rideRepository.findAllByRouteService(routeService)
-        println(routeService.routeServiceStops.size)
         var ride = Ride(
             routeService,
             bus,
@@ -122,48 +119,49 @@ class DataInitializer(
 
         val routeA01Services = (0L..23).map {
             createRouteServiceWithStops(
-                routeA01, calendar, mapOf(
-                    stop121 to Duration.ofHours(it).plusMinutes(15),
-                    stop69 to Duration.ofHours(it).plusMinutes(17),
-                    stop70 to Duration.ofHours(it).plusMinutes(18),
-                    stop72 to Duration.ofHours(it).plusMinutes(20)
+                routeA01, calendar, listOf(
+                    Pair(stop121, Duration.ofHours(it).plusMinutes(15)),
+                    Pair(stop69, Duration.ofHours(it).plusMinutes(17)),
+                    Pair(stop70, Duration.ofHours(it).plusMinutes(18)),
+                    Pair(stop72, Duration.ofHours(it).plusMinutes(20))
                 ))
         }
 
         val routeA03Services = (0L..23).map {
             createRouteServiceWithStops(
-                routeA03, calendar, mapOf(
-                    stop72 to Duration.ofHours(it).plusMinutes(20),
-                    stop88 to Duration.ofHours(it).plusMinutes(23),
-                    stop310 to Duration.ofHours(it).plusMinutes(33)
+                routeA03, calendar, listOf(
+                    Pair(stop72, Duration.ofHours(it).plusMinutes(20)),
+                    Pair(stop88, Duration.ofHours(it).plusMinutes(23)),
+                    Pair(stop310, Duration.ofHours(it).plusMinutes(33))
                 ))
         }
 
         val routeA05Services = (0L..23).map {
             createRouteServiceWithStops(
-                routeA05, calendar, mapOf(
-                    stop310 to Duration.ofHours(it).plusMinutes(37),
-                    stop89 to Duration.ofHours(it).plusMinutes(47),
-                    stop101 to Duration.ofHours(it).plusMinutes(48),
-                    stop72 to Duration.ofHours(it).plusMinutes(50),
-                    stop70 to Duration.ofHours(it).plusMinutes(52),
-                    stop69 to Duration.ofHours(it).plusMinutes(53),
-                    stop121 to Duration.ofHours(it).plusMinutes(55)
-                ))
+                routeA05, calendar, listOf(
+                    Pair(stop310, Duration.ofHours(it).plusMinutes(37)),
+                    Pair(stop89, Duration.ofHours(it).plusMinutes(47)),
+                    Pair(stop101, Duration.ofHours(it).plusMinutes(48)),
+                    Pair(stop72, Duration.ofHours(it).plusMinutes(50)),
+                    Pair(stop70, Duration.ofHours(it).plusMinutes(52)),
+                    Pair(stop69, Duration.ofHours(it).plusMinutes(53)),
+                    Pair(stop121, Duration.ofHours(it).plusMinutes(55))
+                )
+            )
         }
 
         val route4501Services = (0L..22).map {
             createRouteServiceWithStops(
-                route4501, calendar, mapOf(
-                    stop71 to Duration.ofHours(it).plusMinutes(0),
-                    stop136 to Duration.ofHours(it).plusMinutes(2),
-                    stop113 to Duration.ofHours(it).plusMinutes(4),
-                    stop246 to Duration.ofHours(it).plusMinutes(8),
-                    stop248 to Duration.ofHours(it).plusMinutes(10),
-                    stop260 to Duration.ofHours(it).plusMinutes(13),
-                    stop278 to Duration.ofHours(it).plusMinutes(20),
-                    stop280 to Duration.ofHours(it).plusMinutes(22),
-                    stop282 to Duration.ofHours(it).plusMinutes(23)
+                route4501, calendar, listOf(
+                    Pair(stop71, Duration.ofHours(it).plusMinutes(0)),
+                    Pair(stop136, Duration.ofHours(it).plusMinutes(2)),
+                    Pair(stop113, Duration.ofHours(it).plusMinutes(4)),
+                    Pair(stop246, Duration.ofHours(it).plusMinutes(8)),
+                    Pair(stop248, Duration.ofHours(it).plusMinutes(10)),
+                    Pair(stop260, Duration.ofHours(it).plusMinutes(13)),
+                    Pair(stop278, Duration.ofHours(it).plusMinutes(20)),
+                    Pair(stop280, Duration.ofHours(it).plusMinutes(22)),
+                    Pair(stop282, Duration.ofHours(it).plusMinutes(23))
                 ))
         }
 
