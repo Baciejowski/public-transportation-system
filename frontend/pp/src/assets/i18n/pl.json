@@ -31,6 +31,8 @@
     "SCHEDULE": {
         "HEADING": "Rozkłady jazdy",
         "LINES": "Linie",
-        "STOPS": "Przystanki"
+        "STOPS": "Przystanki",
+        "LINES_HEADING": "Linia",
+        "ROUTE_SELECT": "Wybierz wariant trasy"
     }
 }

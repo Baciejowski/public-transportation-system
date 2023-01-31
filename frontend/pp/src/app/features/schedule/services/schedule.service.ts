@@ -22,15 +22,15 @@ export class ScheduleService {
     return this.http.get<LineDto[]>("/api/schedule/schedule/lines");
   }
 
-  getLineRoutes(lineId: number): Observable<RouteManifestDto[]> {
+  getLineRoutes(lineId: string): Observable<RouteManifestDto[]> {
     return this.http.get<RouteManifestDto[]>(`/api/schedule/schedule/lines/${lineId}/routes`);
   }
 
-  getRouteDetails(routeId: number): Observable<RouteDetailDto> {
+  getRouteDetails(routeId: string): Observable<RouteDetailDto> {
     return this.http.get<RouteDetailDto>(`/api/schedule/schedule/routes/${routeId}`);
   }
 
-  getStopDepartures(stopId: number): Observable<StopDepartureDto[]> {
+  getStopDepartures(stopId: string): Observable<StopDepartureDto[]> {
     return this.http.get<StopDepartureDto[]>(`/api/schedule/schedule/stops/${stopId}/departures`);
   }
 }

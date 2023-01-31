@@ -31,6 +31,8 @@
     "SCHEDULE": {
         "HEADING": "Schedule",
         "LINES": "Lines",
-        "STOPS": "Stops"
+        "STOPS": "Stops",
+        "LINES_HEADING": "Line",
+        "ROUTE_SELECT": "Select route"
     }
 }
