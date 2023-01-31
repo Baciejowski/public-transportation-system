@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SessionInterceptor } from './features/auth/interceptors/session.interceptor';
@@ -19,6 +20,8 @@ import { TicketComponent } from './features/tickets/components/ticket/ticket.com
 import { TicketOfferComponent } from './features/tickets/pages/ticket-offer/ticket-offer.component';
 import { SchedulesComponent } from './features/schedule/pages/schedules/schedules.component';
 import { LineComponent } from './features/schedule/pages/line/line.component';
+import { StopComponent } from './features/schedule/pages/stop/stop.component';
+import { FormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -35,12 +38,14 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     TicketComponent,
     TicketOfferComponent,
     SchedulesComponent,
-    LineComponent
+    LineComponent,
+    StopComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     BrowserAnimationsModule,
     TranslateModule.forRoot({
       defaultLanguage: defaultLang,
@@ -54,7 +59,8 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatButtonToggleModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },

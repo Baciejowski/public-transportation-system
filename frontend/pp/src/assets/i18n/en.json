@@ -31,8 +31,22 @@
     "SCHEDULE": {
         "HEADING": "Schedule",
         "LINES": "Lines",
-        "STOPS": "Stops",
         "LINES_HEADING": "Line",
-        "ROUTE_SELECT": "Select route"
+        "STOPS": "Stops",
+        "ROUTE_SELECT": "Select route",
+        "STOP": {
+            "INCLUDE_DEVIATION": "Include deviation",
+            "YES": "Yes",
+            "NO": "No",
+            "DEPARTURE": "Departure in",
+            "DEVIATION": "Deviation",
+            "LAST": "Last stop",
+            "NEXT": "Next stop",
+            "ENTER_LINE": "Enter line",
+            "ENTER_DEVIATION": "Enter deviation"
+        }
+    },
+    "COMMON": {
+        "BACK": "Back"
     }
 }

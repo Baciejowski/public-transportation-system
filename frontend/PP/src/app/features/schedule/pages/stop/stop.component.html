@@ -1,0 +1,29 @@
+<main>
+    <header>
+        <h1>{{stop?.name}}</h1>
+    </header>
+
+    <div class="include-deviation">
+        {{ "SCHEDULE.STOP.INCLUDE_DEVIATION" | translate }}{{"?"}}
+        <mat-button-toggle-group #toggle="matButtonToggleGroup" (valueChange)="onToggleChange(toggle.value)">
+            <mat-button-toggle value='yes'>{{ "SCHEDULE.STOP.YES" | translate }}</mat-button-toggle>
+            <mat-button-toggle value='no'>{{ "SCHEDULE.STOP.NO" | translate }}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+
+    <section *ngIf="stop">
+        <div class="departure-card" *ngFor="let departure of stop.departures">
+            <div class="time-left-container">
+                <div class="departure-in">{{ "SCHEDULE.STOP.DEPARTURE" | translate }}{{":"}}</div>
+                <div class="time-left" [ngClass]="{'red': departure.deviation && includeDeviation}">{{ calculateTimeLeft(departure, includeDeviation) }}</div>
+                <div class="deviation red" *ngIf="departure.deviation && includeDeviation">
+                    {{departure.deviation}} {{"min"}}
+                </div>
+            </div>
+            <div class="line" (click)="selectLine(departure.line)">{{ departure.line.name }}</div>
+            <div class="time" [ngClass]="{'red': departure.deviation && includeDeviation}">{{ calculateDepartureTime(departure, includeDeviation) | date:'HH:mm' }}</div>
+        </div>
+    </section>
+
+    
+</main>

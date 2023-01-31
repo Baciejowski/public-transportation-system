@@ -1,8 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
+import { LineDetailsDto } from '../../models/LineDetailsDto';
 import { RouteDetailDto } from '../../models/routeDetailDto';
 import { RouteManifestDto } from '../../models/routeManifestDto';
+import { StopDto } from '../../models/stopDto';
 import { ScheduleService } from '../../services/schedule.service';
 
 @Component({
@@ -12,22 +14,31 @@ import { ScheduleService } from '../../services/schedule.service';
 })
 export class LineComponent implements OnInit, OnDestroy {
 
-  lineRoutes$: Observable<RouteManifestDto[]>;
+  line: LineDetailsDto | null;
   routeDetails: RouteDetailDto;
   destroy$ = new Subject();
 
-  constructor(private route: ActivatedRoute, private scheduleService: ScheduleService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private scheduleService: ScheduleService,
+    private router: Router
+  ) { }
   
   ngOnInit(): void {
     const lineId = this.route.snapshot.paramMap.get('lineId')!;
-    this.lineRoutes$ = this.scheduleService.getLineRoutes(lineId);
+    this.scheduleService.getLineDetails(lineId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(lineDetails => this.line = lineDetails);
   }
   
   switchRoute(routeId: string) {
-    console.log(routeId)
     this.scheduleService.getRouteDetails(routeId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(routeDetails => this.routeDetails = routeDetails);
+  }
+
+  selectStop(stop: StopDto) {
+    this.router.navigate(['stops', stop.id]);
   }
 
   ngOnDestroy(): void {

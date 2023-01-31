@@ -25,4 +25,8 @@ export class SchedulesComponent implements OnInit {
   selectLine(line: LineDto) {
     this.router.navigate(['lines', line.id]);
   }
+
+  selectStop(stop: StopDto) {
+    this.router.navigate(['stops', stop.id]);
+  }
 }

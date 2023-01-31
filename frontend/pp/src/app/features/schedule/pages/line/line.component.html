@@ -1,6 +1,6 @@
 <main>
     <header>
-        <h1>{{"SCHEDULE.LINES_HEADING" | translate}}</h1>
+        <h1>{{"SCHEDULE.LINES_HEADING" | translate}} {{line?.name}}</h1>
     </header>
 
     <mat-form-field appearance="fill">
@@ -9,15 +9,15 @@
             #selectedRoute
             (selectionChange)="switchRoute(selectedRoute.value)">
             <mat-option 
-                *ngFor="let route of lineRoutes$ | async" 
+                *ngFor="let route of line?.routes" 
                 [value]="route.id">
             {{ route.name }}
             </mat-option>
         </mat-select>
     </mat-form-field>
 
-    <section>
-        <div class="stop" *ngFor="let stop of routeDetails?.stops">{{stop.name}}</div>
+    <section *ngIf="routeDetails">
+        <div class="stop" *ngFor="let stop of routeDetails.stops" (click)="selectStop(stop)">{{stop.name}}</div>
     </section>
 
     

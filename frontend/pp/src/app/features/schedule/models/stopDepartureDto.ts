@@ -5,5 +5,5 @@ export interface StopDepartureDto {
     line: LineDto;
     route: RouteManifestDto;
     departure: string;
-    deviation: string;
+    deviation: string | null;
 }
