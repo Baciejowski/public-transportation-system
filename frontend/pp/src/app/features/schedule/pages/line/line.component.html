@@ -1,0 +1,22 @@
+<main>
+    <header>
+        <h1>{{"SCHEDULE.LINES_HEADING" | translate}}</h1>
+    </header>
+
+    <mat-form-field appearance="fill">
+        <mat-label>{{'SCHEDULE.ROUTE_SELECT' | translate}}</mat-label>
+        <mat-select 
+            #selectedRoute
+            (selectionChange)="switchRoute(selectedRoute.value)">
+            <mat-option 
+                *ngFor="let route of lineRoutes$ | async" 
+                [value]="route.id">
+            {{ route.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <ng-container *ngIf="route$ | async as route">
+        <p *ngFor="let stop of route.stops">{{stop.name}}</p>
+    </ng-container>
+</main>

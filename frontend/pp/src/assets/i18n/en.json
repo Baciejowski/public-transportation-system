@@ -1,0 +1,38 @@
+{
+    "LANG": {
+        "SELECT": "Language"
+    },
+    "AUTH": {
+        "REGISTER": "Register",
+        "LOGIN": "Login",
+        "SUBMIT": "Submit",
+        "PASSWORD": "Password",
+        "CONFIRM_PASSWORD": "Confirm password",
+        "FIRST_NAME": "First name",
+        "LAST_NAME": "Last name",
+        "FIRST_NAME_REQUIRED": "First name is required!",
+        "LAST_NAME_REQUIRED": "Last name is required!",
+        "EMAIL_REQUIRED": "Email is required!",
+        "EMAIL_CORRECT_FORM": "Email should be of correct form!",
+        "PASSWORD_REQUIRED": "Password is required!",
+        "PASSWORD_CONFIRM": "Confirm the password!",
+        "PASSWORD_NOT_MATCHING": "Passwords do not match!"
+    },
+    "TICKET": {
+        "OFFER": "Ticket offer",
+        "DISCOUNTED": "Discounted",
+        "DISCOUNTED_PLURAL": "Discounted",
+        "REGULAR": "Regular",
+        "REGULAR_PLURAL": "Regular",
+        "SINGLE": "Single",
+        "SINGLE_PLURAL": "Single",
+        "TIME_LIMITED": "Time limited"
+    },
+    "SCHEDULE": {
+        "HEADING": "Schedule",
+        "LINES": "Lines",
+        "STOPS": "Stops",
+        "LINES_HEADING": "Line",
+        "ROUTE_SELECT": "Select route"
+    }
+}

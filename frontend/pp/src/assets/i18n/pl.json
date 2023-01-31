@@ -1,0 +1,38 @@
+{
+    "LANG": {
+        "SELECT": "Język"
+    },
+    "AUTH": {
+        "REGISTER": "Zarejestruj się",
+        "LOGIN": "Zaloguj się",
+        "SUBMIT": "Potwierdź",
+        "PASSWORD": "Hasło",
+        "CONFIRM_PASSWORD": "Potwierdź hasło",
+        "FIRST_NAME": "Imię",
+        "LAST_NAME": "Nazwisko",
+        "FIRST_NAME_REQUIRED": "Imię jest wymagane!",
+        "LAST_NAME_REQUIRED": "Nazwisko  jest wymagane!",
+        "EMAIL_REQUIRED": "Email jest wymagany!",
+        "EMAIL_CORRECT_FORM": "Email powinien być w prawidłowej formie!",
+        "PASSWORD_REQUIRED": "Hasło jest wymagane!",
+        "PASSWORD_CONFIRM": "Potwierdź hasło!",
+        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!"
+    },
+    "TICKET": {
+        "OFFER": "Oferta biletów",
+        "DISCOUNTED": "Ulgowy",
+        "DISCOUNTED_PLURAL": "Ulgowe",
+        "REGULAR": "Normalny",
+        "REGULAR_PLURAL": "Normalne",
+        "SINGLE": "Jednorazowy",
+        "SINGLE_PLURAL": "Jednorazowe",
+        "TIME_LIMITED": "Czasowe"
+    },
+    "SCHEDULE": {
+        "HEADING": "Rozkłady jazdy",
+        "LINES": "Linie",
+        "STOPS": "Przystanki",
+        "LINES_HEADING": "Linia",
+        "ROUTE_SELECT": "Wybierz wariant trasy"
+    }
+}

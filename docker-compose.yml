@@ -2,6 +2,17 @@ version: '3.8'
 
 
 services:
+  passenger-app:
+    build:
+      context: ./frontend/pp
+      dockerfile: Dockerfile
+    image: epk-passenger-app
+    networks:
+      - discovery-network
+    ports:
+      - "80:80"
+    depends_on:
+      - gateway-app
 
   discovery-app:
     build:

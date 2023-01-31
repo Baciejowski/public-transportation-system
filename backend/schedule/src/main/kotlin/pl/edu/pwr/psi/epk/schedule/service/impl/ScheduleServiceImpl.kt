@@ -39,7 +39,7 @@ class ScheduleServiceImpl(
                     delay = ride.rideStops.last().timeDeviation
                 }
                 StopDepartureDTO(
-                    LineDTO.fromLine(route.line),
+                    LineManifestDTO.fromLine(route.line),
                     RouteManifestDTO.fromRoute(route),
                     today+routeServiceStop.plannedDepartureTime,
                     delay
@@ -62,7 +62,7 @@ class ScheduleServiceImpl(
                 .map { routeServiceStop ->
                     val route = routeServiceStop.routeService.route
                     StopDepartureDTO(
-                        LineDTO.fromLine(route.line),
+                        LineManifestDTO.fromLine(route.line),
                         RouteManifestDTO.fromRoute(route),
                         tomorrow+routeServiceStop.plannedDepartureTime,
                         Duration.ZERO
@@ -76,6 +76,7 @@ class ScheduleServiceImpl(
         rideRepository
             .findAllByStartTimeIsNotNullAndEndTimeIsNull()
             .map { route -> Pair(route.rideStops.last(), route.rideStops.size) }
+            .filter { it.first.timeDeviation.abs().toMinutes()>=1 }
             .sortedBy { it.first.timeDeviation.abs() }
             .map { (rideStop, nextIndex) ->
                 val lastStop = rideStop.routeServiceStop.stop
@@ -86,7 +87,7 @@ class ScheduleServiceImpl(
                             rideStop.timeDeviation
                 DeviationDTO(
                     rideStop.timeDeviation,
-                    LineDTO.fromLine(rideStop.ride.routeService.route.line),
+                    LineManifestDTO.fromLine(rideStop.ride.routeService.route.line),
                     StopManifestDTO.fromStop(lastStop),
                     departed,
                     StopManifestDTO.fromStop(nextStop),
