@@ -16,7 +16,9 @@
         </mat-select>
     </mat-form-field>
 
-    <ng-container *ngIf="route$ | async as route">
-        <p *ngFor="let stop of route.stops">{{stop.name}}</p>
-    </ng-container>
+    <section>
+        <div class="stop" *ngFor="let stop of routeDetails?.stops">{{stop.name}}</div>
+    </section>
+
+    
 </main>
