@@ -21,8 +21,10 @@ class ScheduleServiceImpl(
         val today = dateTime.toLocalDate().atStartOfDay()
         val tomorrow = today.plusDays(1)
 
-        val allDepartures = routeServiceStopRepository.findAllByStop_Id(stopId)
-        println(allDepartures.size)
+        val allDepartures =
+            routeServiceStopRepository
+                .findAllByStop_Id(stopId)
+                .filter { it.routeService.routeServiceStops.last() != it }
 
         val departuresOfTodaysRides = allDepartures
             .filter { routeServiceStop ->
