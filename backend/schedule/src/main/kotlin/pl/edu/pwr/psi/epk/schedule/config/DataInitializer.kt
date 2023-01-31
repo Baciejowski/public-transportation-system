@@ -125,7 +125,7 @@ class DataInitializer(
 
         val routeA03Services = (0L..23).map {
             createRouteServiceWithStops(
-                routeA01, calendar, mapOf(
+                routeA03, calendar, mapOf(
                     stop72 to Duration.ofHours(it).plusMinutes(20),
                     stop88 to Duration.ofHours(it).plusMinutes(23),
                     stop310 to Duration.ofHours(it).plusMinutes(33)
