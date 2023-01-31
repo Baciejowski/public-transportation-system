@@ -17,7 +17,7 @@ class StopManifestDTO(
 }
 
 class StopDepartureDTO(
-    val line: LineDTO,
+    val line: LineManifestDTO,
     val route: RouteManifestDTO,
     val departure: LocalDateTime,
     val deviation: Duration

@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 data class DeviationDTO(
     val deviation: Duration,
-    val line: LineDTO,
+    val line: LineManifestDTO,
     val lastStop: StopManifestDTO,
     val departed: LocalDateTime,
     val nextStop: StopManifestDTO
