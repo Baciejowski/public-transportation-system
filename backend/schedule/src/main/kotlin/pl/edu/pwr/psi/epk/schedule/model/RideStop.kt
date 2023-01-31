@@ -25,7 +25,7 @@ class RideStop(
     val id: Long = 0
 
     var timeDeviation: Duration = run {
-        val plannedDepartureDay = LocalDateTime.from(LocalDate.from(ride.plannedStartTime))
+        val plannedDepartureDay = ride.plannedStartTime.toLocalDate().atStartOfDay()
         val plannedDepartureDateTime = plannedDepartureDay.plus(routeServiceStop.plannedDepartureTime)
         Duration.between(plannedDepartureDateTime, LocalDateTime.now())
     }

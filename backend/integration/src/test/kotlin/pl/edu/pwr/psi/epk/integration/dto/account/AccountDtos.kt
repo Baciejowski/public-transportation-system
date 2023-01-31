@@ -21,4 +21,6 @@ enum class Role {
     PASSENGER, TICKET_INSPECTOR, MODERATOR, PLANNER
 }
 
-
+class BalanceTopUpDto(
+    val amount: Double
+)

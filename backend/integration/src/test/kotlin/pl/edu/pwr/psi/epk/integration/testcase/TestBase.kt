@@ -9,7 +9,6 @@ import pl.edu.pwr.psi.epk.integration.actor.ModeratorActor
 import pl.edu.pwr.psi.epk.integration.actor.PassengerActor
 import pl.edu.pwr.psi.epk.integration.actor.PlannerActor
 import pl.edu.pwr.psi.epk.integration.actor.TicketInspectorActor
-import pl.edu.pwr.psi.epk.integration.util.TestUtils
 import java.io.File
 import java.time.Duration
 
@@ -38,7 +37,8 @@ abstract class TestBase {
             .withLocalCompose(true)
 
         init {
-            DOCKER_COMPOSE_ENV.start()
+            if(System.getenv("TEST_CONTAINERS_START_COMPOSE").toBoolean())
+                DOCKER_COMPOSE_ENV.start()
         }
     }
 

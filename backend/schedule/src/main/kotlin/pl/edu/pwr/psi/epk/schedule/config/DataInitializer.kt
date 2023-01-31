@@ -1,10 +1,12 @@
 package pl.edu.pwr.psi.epk.schedule.config
 
+import jakarta.transaction.Transactional
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
 import org.springframework.context.annotation.Configuration
 import pl.edu.pwr.psi.epk.schedule.model.*
 import pl.edu.pwr.psi.epk.schedule.repository.*
+import java.lang.Thread.sleep
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
@@ -50,9 +52,18 @@ class DataInitializer(
         val routeA01 = Route(lineA, "Staszica - Piłsudskiego")
         routeA01.stops = listOf(stop121, stop69, stop70, stop72)
         routeRepository.save(routeA01)
+        routeA01.stops.forEach { it.routes.add(routeA01) }
+        stopRepository.saveAll(routeA01.stops)
+        lineA.routes.add(routeA01)
+        lineRepository.save(lineA)
+
         val routeA03 = Route(lineA, "Piłsudskiego - Uciechów I")
         routeA03.stops = listOf(stop72, stop88, stop310)
         routeRepository.save(routeA03)
+        routeA03.stops.forEach { it.routes.add(routeA03) }
+        stopRepository.saveAll(routeA03.stops)
+        lineA.routes.add(routeA03)
+        lineRepository.save(lineA)
 
         val calendar = calendarRepository.save(
             Calendar(
@@ -64,49 +75,54 @@ class DataInitializer(
                     DayOfWeek.FRIDAY),
                 today)
         )
-
+        
         val routeServicesA01 = routeServiceRepository.saveAll((0L..15).map{ RouteService(routeA01, calendar) })
         for(i in 0..15){
             val routeService = routeServicesA01[i]
-            routeServiceStopRepository.saveAll(listOf(
+            val routeServiceStops = routeServiceStopRepository.saveAll(listOf(
                 RouteServiceStop(routeService, stop121, Duration.ofHours(5L+i).plusMinutes(15)),
                 RouteServiceStop(routeService, stop69, Duration.ofHours(5L+i).plusMinutes(17)),
                 RouteServiceStop(routeService, stop70, Duration.ofHours(5L+i).plusMinutes(18)),
                 RouteServiceStop(routeService, stop72, Duration.ofHours(5L+i).plusMinutes(20))))
+            routeService.routeServiceStops = routeServiceStops
+            routeServiceRepository.saveAndFlush(routeService)
         }
 
         val routeServicesA03 = routeServiceRepository.saveAll((0L..15).map{RouteService(routeA03, calendar)})
         for(i in 0..15){
             val routeService = routeServicesA03[i]
-            routeServiceStopRepository.saveAll(listOf(
+            val routeServiceStops = routeServiceStopRepository.saveAll(listOf(
                 RouteServiceStop(routeService, stop72, Duration.ofHours(5L+i).plusMinutes(20)),
                 RouteServiceStop(routeService, stop88, Duration.ofHours(5L+i).plusMinutes(23)),
                 RouteServiceStop(routeService, stop310, Duration.ofHours(5L+i).plusMinutes(33))))
+            routeService.routeServiceStops = routeServiceStops
+            routeServiceRepository.save(routeService)
         }
-
         val buses = busRepository.saveAll((1..21).map{Bus(300+it, true)})
 
-        //to fix
-//        val rides = rideRepository.saveAll((routeServicesA01+routeServicesA03).map{routeService ->
-//            val ride = Ride(
-//                routeService,
-//                buses[0],
-//                today+routeService.routeServiceStops.minOf{it.plannedDepartureTime},
-//                today+routeService.routeServiceStops.maxOf{it.plannedDepartureTime}
-//            )
-//            if(ride.plannedStartTime.isBefore(now)){
-//                ride.startTime = ride.plannedStartTime
-//                ride.rideStops = ride.routeService.routeServiceStops.filter{(today+it.plannedDepartureTime).isBefore(now)}.map{RideStop(ride,it) }
-//                ride.rideStops.forEach{it.timeDeviation = Duration.ZERO}
-//                rideStopRepository.saveAll(ride.rideStops)
-//            }
-//            if(ride.plannedEndTime.isBefore(now))
-//                ride.endTime = ride.plannedEndTime
-//            ride
-//        })
 
-
-
+        val rides = (routeServicesA01+routeServicesA03).map { routeService ->
+            var ride = Ride(
+                routeService,
+                buses[0],
+                today + routeService.routeServiceStops.minOf { it.plannedDepartureTime },
+                today + routeService.routeServiceStops.maxOf { it.plannedDepartureTime }
+            )
+            if (ride.plannedStartTime.isBefore(now)) {
+                ride.startTime = ride.plannedStartTime
+                val passedStops = ride.routeService.routeServiceStops.filter {
+                        (today + it.plannedDepartureTime).isBefore(now)
+                    }
+                ride.rideStops = passedStops.map { RideStop(ride, it) }
+                ride.rideStops.forEach { it.timeDeviation = Duration.ZERO }
+            }
+            if (ride.plannedEndTime.isBefore(now))
+                ride.endTime = ride.plannedEndTime
+            ride = rideRepository.save(ride)
+            rideStopRepository.saveAll(ride.rideStops)
+            routeService.rides += ride
+            routeServiceRepository.save(routeService)
+            ride
+        }
     }
-
 }
