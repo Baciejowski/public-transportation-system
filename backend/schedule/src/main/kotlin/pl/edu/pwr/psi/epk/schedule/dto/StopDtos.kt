@@ -5,7 +5,7 @@ import pl.edu.pwr.psi.epk.schedule.model.Stop
 import java.time.Duration
 import java.time.LocalDateTime
 
-class StopManifestDTO(
+data class StopManifestDTO(
     val id: Long,
     val name: String,
     val coordinates: Coordinates,
@@ -16,7 +16,7 @@ class StopManifestDTO(
     }
 }
 
-class StopDetailsDTO(
+data class StopDetailsDTO(
     val id: Long,
     val name: String,
     val coordinates: Coordinates,
@@ -37,7 +37,7 @@ class StopDetailsDTO(
     }
 }
 
-class StopDepartureDTO(
+data class StopDepartureDTO(
     val line: LineManifestDTO,
     val route: RouteManifestDTO,
     val departure: LocalDateTime,

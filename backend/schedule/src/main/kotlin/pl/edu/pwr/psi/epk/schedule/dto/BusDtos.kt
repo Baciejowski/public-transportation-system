@@ -2,7 +2,7 @@ package pl.edu.pwr.psi.epk.schedule.dto
 
 import pl.edu.pwr.psi.epk.schedule.model.Bus
 
-class BusDTO(
+data class BusDTO(
     val sideNumber: Int,
     val isLowFloor: Boolean
 ) {

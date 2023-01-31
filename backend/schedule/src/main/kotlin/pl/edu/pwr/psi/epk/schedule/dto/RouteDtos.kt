@@ -2,7 +2,7 @@ package pl.edu.pwr.psi.epk.schedule.dto
 
 import pl.edu.pwr.psi.epk.schedule.model.Route
 
-class RouteManifestDTO(
+data class RouteManifestDTO(
     val id: Long,
     val name: String
 ) {
@@ -11,7 +11,7 @@ class RouteManifestDTO(
     }
 }
 
-class RouteDetailDTO(
+data class RouteDetailDTO(
     val id: Long,
     val name: String,
     val stops: List<StopManifestDTO>
