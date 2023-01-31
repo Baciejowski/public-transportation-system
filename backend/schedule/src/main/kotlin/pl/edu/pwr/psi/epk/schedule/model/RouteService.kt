@@ -27,6 +27,6 @@ class RouteService(
     var routeServiceStops: List<RouteServiceStop> = mutableListOf()
 
     @OneToMany(mappedBy = "routeService")
-    val rides: List<Ride> = mutableListOf()
+    var rides: List<Ride> = mutableListOf()
 
 }

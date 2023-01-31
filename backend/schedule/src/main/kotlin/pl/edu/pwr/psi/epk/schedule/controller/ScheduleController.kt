@@ -5,16 +5,11 @@ import org.springframework.web.bind.annotation.*
 import pl.edu.pwr.psi.epk.schedule.dto.*
 import pl.edu.pwr.psi.epk.schedule.model.Coordinates
 import pl.edu.pwr.psi.epk.schedule.model.Line
-import pl.edu.pwr.psi.epk.schedule.repository.BusRepository
-import pl.edu.pwr.psi.epk.schedule.repository.LineRepository
-import pl.edu.pwr.psi.epk.schedule.repository.RouteRepository
-import pl.edu.pwr.psi.epk.schedule.repository.StopRepository
+import pl.edu.pwr.psi.epk.schedule.repository.*
 import pl.edu.pwr.psi.epk.schedule.service.ScheduleService
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
-
-data class RideReadDto(val serviceId: Int, val busSideNumber: Int, val date: LocalDate)
 
 @RestController
 @RequestMapping("/schedule")
@@ -23,7 +18,8 @@ class ScheduleController(
     val routeRepository: RouteRepository,
     val stopRepository: StopRepository,
     val busRepository: BusRepository,
-    val scheduleService: ScheduleService
+    val scheduleService: ScheduleService,
+    val rideRepository: RideRepository
 ) {
     //Screen 4.6.2.1
     @GetMapping("/lines")
@@ -76,16 +72,17 @@ class ScheduleController(
         return ResponseEntity.ok(scheduleService.getStopDepartures(id, LocalDateTime.now(), length.get()))
     }
 
-//    @GetMapping
-//    fun getSchedule(lineId: String): ResponseEntity<*> = TODO()
-//
-//    @GetMapping("/rides")
-//    fun getCurrentRide(sideNumber: String): ResponseEntity<RideReadDto> = TODO()
-//
-//    @GetMapping("/location")
-//    fun getCurrentLocation(rideId: String): ResponseEntity<Coordinates> = TODO()
-//
-//    @PatchMapping("/location/next")
-//    fun updateCurrentLocation(rideId: String): ResponseEntity<*> = TODO()
+    //Screen 4.8.2.1
+    @GetMapping("/deviations")
+    fun getDeviations() =
+        ResponseEntity.ok(scheduleService.getDeviations())
 
+
+    @GetMapping("/rides/{id}")
+    fun getRideStatus(@PathVariable id: Long) : ResponseEntity<RideDTO> {
+        val ride = rideRepository.findById(id)
+        if(ride.isEmpty)
+            return ResponseEntity.notFound().build()
+        return ResponseEntity.ok(RideDTO.fromRide(ride.get()))
+    }
 }
