@@ -12,7 +12,7 @@ interface UserService {
     fun userExistsByEmail(email: String): Boolean
     fun registerUser(registerDto: RegisterDto): User
     fun authenticateUser(loginDto: LoginDto): User
-
+    fun topUpBalance(passengerId: Long, amount: Double): Passenger
     fun deduceBalance(passengerId: Long, amount: Double): Passenger
 
 }

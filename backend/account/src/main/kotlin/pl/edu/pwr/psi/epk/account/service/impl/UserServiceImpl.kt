@@ -45,6 +45,16 @@ class UserServiceImpl(
         else throw InvalidCredentialsException("Could not authenticate user with email '${loginDto.email}'.")
     }
 
+    override fun topUpBalance(passengerId: Long, amount: Double): Passenger {
+        val passenger: User = getUserById(passengerId)
+
+        if (passenger !is Passenger)
+            throw IllegalArgumentException("User is not a passenger")
+
+        passenger.walletBalance += amount
+        return userRepository.save(passenger)
+    }
+
     override fun deduceBalance(passengerId: Long, amount: Double): Passenger {
         val passenger: User = getUserById(passengerId)
 
@@ -54,7 +64,9 @@ class UserServiceImpl(
         if (passenger.walletBalance < amount)
             throw IllegalArgumentException("Passenger does not have enough money.")
 
-        passenger.walletBalance = passenger.walletBalance - amount
+        val newBalance = passenger.walletBalance.toBigDecimal().minus(amount.toBigDecimal()).toDouble()
+
+        passenger.walletBalance = newBalance
 
         return userRepository.save(passenger)
     }

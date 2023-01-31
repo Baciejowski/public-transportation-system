@@ -12,8 +12,8 @@ class RouteManifestDTO(
 }
 
 class RouteDetailDTO(
-    id: Long,
-    name: String,
+    val id: Long,
+    val name: String,
     val stops: List<StopManifestDTO>
 ) {
     companion object {
