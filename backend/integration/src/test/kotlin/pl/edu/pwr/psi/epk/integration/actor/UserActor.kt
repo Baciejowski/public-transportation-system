@@ -7,8 +7,10 @@ import pl.edu.pwr.psi.epk.integration.dto.ErrorDto
 import pl.edu.pwr.psi.epk.integration.dto.account.*
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
+import pl.edu.pwr.psi.epk.integration.dto.schedule.*
 import pl.edu.pwr.psi.epk.integration.step.AccountSteps
 import pl.edu.pwr.psi.epk.integration.step.AuthenticationSteps
+import pl.edu.pwr.psi.epk.integration.step.ScheduleSteps
 import pl.edu.pwr.psi.epk.integration.step.TicketSteps
 import pl.edu.pwr.psi.epk.integration.util.TestUtils
 import java.time.LocalDateTime
@@ -127,27 +129,43 @@ class PassengerActor(
         var NR_PASSENGER_MARK = PassengerActor("mark.twain@mail.com", "secret", "Mark", "Twain")
 
         var PASSENGERS = listOf(PASSENGER_JOHN, PASSENGER_OLIVIA, PASSENGER_GREGORY, PASSENGER_DONALD, PASSENGER_FREDDIE, PASSENGER_EMIL, NR_PASSENGER_MARK)
-
-        fun resetAll() {
-            PASSENGER_JOHN = PassengerActor("john.doe@mail.com", "secret", "John", "Doe")
-            PASSENGER_OLIVIA = PassengerActor("olivia.may@mail.com", "secret", "Olivia", "May")
-            PASSENGER_GREGORY = PassengerActor("gregory.trevino@mail.com", "secret", "Gregory", "Trevino")
-            PASSENGER_DONALD = PassengerActor("donald.soto@mail.com", "secret", "Donald", "Soto")
-            PASSENGER_FREDDIE = PassengerActor("freddie.stuart@mail.com", "secret", "Freddy", "Stuart")
-            PASSENGER_EMIL = PassengerActor("emil.briggs@mail.com", "secret", "Emil", "Briggs")
-
-            // NON REGISTERED
-            NR_PASSENGER_MARK = PassengerActor("mark.twain@mail.com", "secret", "Mark", "Twain")
-
-            PASSENGERS = listOf(PASSENGER_JOHN, PASSENGER_OLIVIA, PASSENGER_GREGORY, PASSENGER_DONALD, PASSENGER_FREDDIE, PASSENGER_EMIL, NR_PASSENGER_MARK)
-        }
     }
 
     override fun getsUserInfo(): PassengerReadDto = AccountSteps.userGetsPassengerInfo(client)
 
+    fun topsUpBalance(amount: Double): PassengerReadDto = AccountSteps.passengerTopsUpBalance(client, BalanceTopUpDto(amount))
+
     fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client)
 
-    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client!!, offeredTicketId)
+    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client, offeredTicketId)
+
+    fun getsTickets(): List<TicketDto> = TicketSteps.userGetsTickets(client)
+
+    fun getsLines(): List<LineDto> = ScheduleSteps.getLines(client)
+
+    fun getsStops(): List<StopManifestDto> = ScheduleSteps.getStops(client)
+
+    fun getsBuses(): List<BusDto> = ScheduleSteps.getBuses(client)
+
+    fun getsLineRoutes(lineId: Long): List<RouteManifestDto> = ScheduleSteps.getLineRoutes(client, lineId)
+    fun triesToGetLineRoutes(lineId: Long): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetLineRoutes(client, lineId)
+
+    fun getsRoute(routeId: Long): RouteDetailDto = ScheduleSteps.getRoute(client, routeId)
+    fun triesToGetRoute(routeId: Long): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetRoute(client, routeId)
+
+    fun getsStopLines(stopId: Long): List<LineDto> = ScheduleSteps.getStopLines(client, stopId)
+    fun triesToGetStopLines(stopId: Long): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetStopLines(client, stopId)
+
+    fun getsStopDepartures(stopId: Long, length: Int): List<StopDepartureDto> =
+        ScheduleSteps.getStopDepartures(client, stopId, length)
+    fun triesToGetStopDepartures(stopId: Long, length: Int): WebTestClient.ResponseSpec =
+        ScheduleSteps.tryGetStopDepartures(client, stopId, length)
+
+    fun punchesTicket(ticketId: Long, rideId: Long): TicketDto =
+        TicketSteps.userPunchesTicket(client, ticketId, rideId)
 
     fun validateEquality(userReadDto: PassengerReadDto) {
         super.validateUserEquality(userReadDto)
@@ -171,6 +189,9 @@ class TicketInspectorActor(
 
         var TICKET_INSPECTORS = listOf(TICKET_INSPECTOR_FELIX, TICKET_INSPECTOR_STEPHANIE, TICKET_INSPECTOR_DORIS)
     }
+
+    fun validatesTicket(ticketNo: Long, rideId: Long): Boolean =
+        TicketSteps.inspectorValidatesTicket(client, ticketNo, rideId)
 
 }
 

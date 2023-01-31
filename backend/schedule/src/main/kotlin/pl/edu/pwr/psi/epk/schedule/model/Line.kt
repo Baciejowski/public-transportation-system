@@ -13,6 +13,6 @@ class Line(
     val id: Long = 0
 
     @OneToMany(mappedBy = "line")
-    var routes: Set<Route> = mutableSetOf()
+    var routes: MutableSet<Route> = mutableSetOf()
 
 }

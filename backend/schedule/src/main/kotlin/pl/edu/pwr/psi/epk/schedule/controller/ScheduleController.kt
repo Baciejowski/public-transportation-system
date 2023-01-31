@@ -85,6 +85,4 @@ class ScheduleController(
             return ResponseEntity.notFound().build()
         return ResponseEntity.ok(RideDTO.fromRide(ride.get()))
     }
-
-
 }

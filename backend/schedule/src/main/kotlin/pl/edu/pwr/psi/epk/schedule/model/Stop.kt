@@ -17,6 +17,6 @@ class Stop(
     val id: Long = 0
 
     @ManyToMany
-    var routes: List<Route> = mutableListOf()
+    var routes: MutableList<Route> = mutableListOf()
 
 }

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import pl.edu.pwr.psi.epk.ticket.dto.ErrorDto
+import pl.edu.pwr.psi.epk.ticket.exception.ApiCallException
 
 @ControllerAdvice
 class ErrorHandlingController {
@@ -14,7 +15,7 @@ class ErrorHandlingController {
     protected fun handleError(
         e: Exception
     ): ResponseEntity<ErrorDto> = when(e) {
-        is IllegalArgumentException, is EntityNotFoundException ->
+        is IllegalArgumentException, is EntityNotFoundException, is ApiCallException ->
             ResponseEntity.badRequest()
                 .body(ErrorDto(HttpStatus.BAD_REQUEST, e.message))
 
