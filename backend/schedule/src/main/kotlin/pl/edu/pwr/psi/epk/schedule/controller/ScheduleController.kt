@@ -3,6 +3,8 @@ package pl.edu.pwr.psi.epk.schedule.controller
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.edu.pwr.psi.epk.schedule.dto.*
+import pl.edu.pwr.psi.epk.schedule.infrastructure.RequiredRole
+import pl.edu.pwr.psi.epk.schedule.infrastructure.Role
 import pl.edu.pwr.psi.epk.schedule.repository.*
 import pl.edu.pwr.psi.epk.schedule.service.ScheduleService
 import java.time.LocalDateTime
@@ -20,20 +22,25 @@ class ScheduleController(
 ) {
     //Screen 4.6.2.1
     @GetMapping("/lines")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getLines() =
         ResponseEntity.ok(lineRepository.findAll().map{LineManifestDTO.fromLine(it)})
 
     //Screen 4.6.2.1
     @GetMapping("/stops")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getStops() =
         ResponseEntity.ok(stopRepository.findAll().map{StopManifestDTO.fromStop(it)})
 
     @GetMapping("/buses")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getBuses() =
         ResponseEntity.ok(busRepository.findAll().map{BusDTO.fromBus(it)})
 
     //Screen 4.6.2.2?
+
     @GetMapping("/lines/{id}")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getLine(@PathVariable id: Long): ResponseEntity<LineDetailsDTO> {
         val line = lineRepository.findById(id)
         if(line.isEmpty)
@@ -43,6 +50,7 @@ class ScheduleController(
 
     //Screen 4.6.2.2
     @GetMapping("/routes/{id}")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getRoute(@PathVariable id: Long): ResponseEntity<RouteDetailDTO> {
         val route = routeRepository.findById(id)
         if(route.isEmpty)
@@ -52,6 +60,7 @@ class ScheduleController(
 
     //Screens 4.6.2.3, 4.7.2.1
     @GetMapping("/stops/{id}")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getStopDetails(@PathVariable id: Long, @RequestParam numberOfDepartures: Optional<Int>): ResponseEntity<StopDetailsDTO> {
         val stop = stopRepository.findById(id)
         if(stop.isEmpty)
@@ -66,11 +75,13 @@ class ScheduleController(
 
     //Screen 4.8.2.1
     @GetMapping("/deviations")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getDeviations() =
         ResponseEntity.ok(scheduleService.getDeviations())
 
 
     @GetMapping("/rides/{id}")
+    @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getRideStatus(@PathVariable id: Long) : ResponseEntity<RideDTO> {
         val ride = rideRepository.findById(id)
         if(ride.isEmpty)

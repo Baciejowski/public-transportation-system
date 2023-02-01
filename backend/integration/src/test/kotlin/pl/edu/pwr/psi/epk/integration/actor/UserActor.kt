@@ -2,16 +2,14 @@ package pl.edu.pwr.psi.epk.integration.actor
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertAll
+import org.springframework.http.HttpMethod
 import org.springframework.test.web.reactive.server.WebTestClient
 import pl.edu.pwr.psi.epk.integration.dto.ErrorDto
 import pl.edu.pwr.psi.epk.integration.dto.account.*
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
 import pl.edu.pwr.psi.epk.integration.dto.schedule.*
-import pl.edu.pwr.psi.epk.integration.step.AccountSteps
-import pl.edu.pwr.psi.epk.integration.step.AuthenticationSteps
-import pl.edu.pwr.psi.epk.integration.step.ScheduleSteps
-import pl.edu.pwr.psi.epk.integration.step.TicketSteps
+import pl.edu.pwr.psi.epk.integration.step.*
 import pl.edu.pwr.psi.epk.integration.util.TestUtils
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -84,6 +82,13 @@ abstract class UserActor {
 
     open fun getsUserInfo(): UserReadDto = AccountSteps.userGetsAccountInfo(client)
 
+    fun hasNoAccessToEndpoint(
+        endpointMethod: HttpMethod,
+        endpointPath: String,
+        body: Any? = null,
+        vararg pathParams: String
+    ) = EndpointRestrictionSteps.userHasNoAccessToEndpoint(client, endpointMethod, endpointPath, body, *pathParams)
+
     fun validateTokenEquality(tokenReadDto: TokenReadDto) {
         assertAll(
             { Assertions.assertThat(tokenReadDto.accessToken).isNotNull() },
@@ -137,7 +142,11 @@ class PassengerActor(
 
     fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client)
 
-    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client, offeredTicketId)
+    fun buysTickets(offeredTicketId: Long, quantity: Int): List<TicketDto> =
+        TicketSteps.userBuysTickets(client, offeredTicketId, quantity)
+
+    fun buysTicketsExpect400(offeredTicketId: Long, quantity: Int) =
+        TicketSteps.userBuysTicketsExpect400(client, offeredTicketId, quantity)
 
     fun getsTickets(): List<TicketDto> = TicketSteps.userGetsTickets(client)
 

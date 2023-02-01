@@ -1,7 +1,9 @@
 package pl.edu.pwr.psi.epk.ticket.service
 
 import feign.FeignException
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import pl.edu.pwr.psi.epk.ticket.client.AccountApiService
 import pl.edu.pwr.psi.epk.ticket.exception.ApiCallException
 import pl.edu.pwr.psi.epk.ticket.model.ticket.OneWayTicket
@@ -20,23 +22,33 @@ class TicketService(
     val accountApiService: AccountApiService
 ) {
 
-    fun buyTicket(passengerId: Long, offeredTicketId: Long): Ticket {
+    @Transactional
+    fun buyTickets(passengerId: Long, offeredTicketId: Long, quantity: Int): List<Ticket> {
+        if (quantity < 1)
+            throw IllegalArgumentException("Quantity must be at least 1.")
+
         val offeredTicket = offeredTicketRepository.findById(offeredTicketId).get()
         if (!offeredTicket.offer.isCurrentlyValid())
             throw IllegalArgumentException("Offer is not valid.")
 
-        val ticket = TicketFactory.createTicket(offeredTicket, passengerId)
-        val savedTicket = ticketRepository.save(ticket)
+        val tickets = (1..quantity).map { TicketFactory.createTicket(offeredTicket, passengerId) }
+        val savedTickets: List<Ticket> = ticketRepository.saveAll(tickets)
+
+        val amountToPay = offeredTicket.price.toBigDecimal().multiply(quantity.toBigDecimal()).toDouble()
 
         try {
-            accountApiService.deduceBalance(passengerId, offeredTicket.price)
+            accountApiService.deduceBalance(passengerId, amountToPay)
         } catch (ex: FeignException) {
-            throw ApiCallException("Error when trying to deduce balance using api service. $ex")
+            when (ex.status()) {
+                HttpStatus.BAD_REQUEST.value() ->
+                    throw IllegalArgumentException("Account service returned: ${ex.message}")
+                else -> throw ApiCallException("Error when trying to deduce balance using api service. ${ex.message}")
+            }
         } catch (ex: Exception) {
             throw ApiCallException("Unexpected error when trying to deduce balance using api service. $ex")
         }
 
-        return savedTicket
+        return savedTickets
     }
 
     fun punchTicket(passengerId: Long, ticketId: Long, rideId: Long): Ticket {
