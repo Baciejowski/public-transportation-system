@@ -7,7 +7,7 @@ class TicketOfferDto (
     val id: Long,
     val offerStart: LocalDateTime,
     val offerEnd: LocalDateTime?,
-    val tickets: Set<OfferedSingleTicketDto>
+    val tickets: List<OfferedSingleTicketDto>
 )
 
 abstract class OfferedTicket(

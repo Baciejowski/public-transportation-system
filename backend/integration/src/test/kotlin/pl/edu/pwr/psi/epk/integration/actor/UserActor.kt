@@ -137,7 +137,11 @@ class PassengerActor(
 
     fun getsTicketOffer(): List<TicketOfferDto> = TicketSteps.userGetsTicketOffer(client)
 
-    fun buysTicket(offeredTicketId: Long): TicketDto = TicketSteps.userBuysTicket(client, offeredTicketId)
+    fun buysTickets(offeredTicketId: Long, quantity: Int): List<TicketDto> =
+        TicketSteps.userBuysTickets(client, offeredTicketId, quantity)
+
+    fun buysTicketsExpect400(offeredTicketId: Long, quantity: Int) =
+        TicketSteps.userBuysTicketsExpect400(client, offeredTicketId, quantity)
 
     fun getsTickets(): List<TicketDto> = TicketSteps.userGetsTickets(client)
 

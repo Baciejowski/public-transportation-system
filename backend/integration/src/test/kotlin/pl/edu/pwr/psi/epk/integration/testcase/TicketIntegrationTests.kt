@@ -37,7 +37,7 @@ class TicketIntegrationTests : TestBase() {
 
     @Test
     @Order(2)
-    fun `Passenger buys a ticket`() {
+    fun `Passenger buys tickets`() {
         PASSENGER_JOHN.logsIn()
 
         val ticketOfferList: List<TicketOfferDto> = PASSENGER_JOHN.getsTicketOffer()
@@ -47,14 +47,20 @@ class TicketIntegrationTests : TestBase() {
 
         val balanceBefore = PASSENGER_JOHN.getsUserInfo().accountBalance
 
-        val ticket: TicketDto = PASSENGER_JOHN.buysTicket(offeredTicket.id)
+        val tickets: List<TicketDto> = PASSENGER_JOHN.buysTickets(offeredTicket.id, 2)
+        Assertions.assertThat(tickets).isNotEmpty
+
+        val ticket = tickets[0]
         Assertions.assertThat(ticket.ticketNo).isGreaterThan(0)
 
         val balanceAfter = PASSENGER_JOHN.getsUserInfo().accountBalance
-        Assertions.assertThat(balanceBefore - balanceAfter).isEqualTo(offeredTicket.price)
+        val expectedBalance: Double =
+            (balanceBefore.toBigDecimal() - offeredTicket.price.toBigDecimal() * 2.toBigDecimal()).toDouble()
+
+        Assertions.assertThat(expectedBalance).isEqualTo(balanceAfter)
 
         val ticketList: List<TicketDto> = PASSENGER_JOHN.getsTickets()
-        Assertions.assertThat(ticketList).isNotEmpty
+        Assertions.assertThat(ticketList).hasSize(2)
         Assertions.assertThat(ticketList[0].ticketNo).isGreaterThan(0)
     }
 
@@ -85,7 +91,7 @@ class TicketIntegrationTests : TestBase() {
     @Order(5)
     fun `Ticket inspector validates ticket`() {
         PASSENGER_JOHN.logsIn()
-        val punchedTicket = PASSENGER_JOHN.getsTickets()[0]
+        val punchedTicket = PASSENGER_JOHN.getsTickets().first { it.punchTime != null }
 
         TICKET_INSPECTOR_FELIX.logsIn()
         val rideId = -1L
@@ -95,4 +101,25 @@ class TicketIntegrationTests : TestBase() {
         Assertions.assertThat(validationResult).isEqualTo(true)
     }
 
+    @Test
+    @Order(6)
+    fun `Passenger tries to buy too many tickets, exceeding balance`() {
+        PASSENGER_JOHN.logsIn()
+
+        val ticketOfferList: List<TicketOfferDto> = PASSENGER_JOHN.getsTicketOffer()
+        val offer: TicketOfferDto = ticketOfferList[0]
+        val offeredTickets = offer.tickets.toList()
+        val offeredTicket: OfferedTicket = offeredTickets.last()
+
+        val ticketListBefore: List<TicketDto> = PASSENGER_JOHN.getsTickets()
+        val balanceBefore = PASSENGER_JOHN.getsUserInfo().accountBalance
+
+        PASSENGER_JOHN.buysTicketsExpect400(offeredTicket.id, 10)
+
+        val balanceAfter = PASSENGER_JOHN.getsUserInfo().accountBalance
+        Assertions.assertThat(balanceBefore).isEqualTo(balanceAfter)
+
+        val ticketListAfter: List<TicketDto> = PASSENGER_JOHN.getsTickets()
+        Assertions.assertThat(ticketListBefore).isEqualTo(ticketListAfter)
+    }
 }

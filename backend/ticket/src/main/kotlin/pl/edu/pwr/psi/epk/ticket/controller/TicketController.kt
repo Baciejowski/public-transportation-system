@@ -51,13 +51,14 @@ class TicketController(
         )
 
     @PostMapping("/offer/buy")
-    fun buyTicket(
+    fun buyTickets(
         @RequestHeader("user-id", required = true) passengerId: Long,
-        @RequestParam offeredTicketId: Long
-    ): ResponseEntity<Ticket> {
+        @RequestParam offeredTicketId: Long,
+        @RequestParam(required = false) quantity: Int = 1
+    ): ResponseEntity<List<Ticket>> {
 
         return ResponseEntity.ok(
-            ticketService.buyTicket(passengerId, offeredTicketId)
+            ticketService.buyTickets(passengerId, offeredTicketId, quantity)
         )
     }
 

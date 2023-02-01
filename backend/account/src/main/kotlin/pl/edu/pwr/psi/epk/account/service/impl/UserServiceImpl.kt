@@ -51,7 +51,7 @@ class UserServiceImpl(
         if (passenger !is Passenger)
             throw IllegalArgumentException("User is not a passenger")
 
-        passenger.walletBalance += amount
+        passenger.walletBalance = passenger.walletBalance.toBigDecimal().plus(amount.toBigDecimal()).toDouble()
         return userRepository.save(passenger)
     }
 
@@ -65,7 +65,6 @@ class UserServiceImpl(
             throw IllegalArgumentException("Passenger does not have enough money.")
 
         val newBalance = passenger.walletBalance.toBigDecimal().minus(amount.toBigDecimal()).toDouble()
-
         passenger.walletBalance = newBalance
 
         return userRepository.save(passenger)

@@ -1,3 +1,3 @@
 package pl.edu.pwr.psi.epk.ticket.exception
 
-class ApiCallException(msg: String) : Exception(msg)
+class ApiCallException(msg: String) : RuntimeException(msg)
