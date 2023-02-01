@@ -20,8 +20,6 @@
             </mat-error>
         </mat-form-field>
 
-        <mat-error *ngIf="error">{{error}}</mat-error>
-
         <div class="button-panel">
             <button mat-raised-button type="button" routerLink="/register">{{'AUTH.REGISTER' | translate}}</button>
             <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.valid">{{'AUTH.SUBMIT' | translate}}</button>

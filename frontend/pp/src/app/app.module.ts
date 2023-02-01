@@ -22,6 +22,8 @@ import { SchedulesComponent } from './features/schedule/pages/schedules/schedule
 import { LineComponent } from './features/schedule/pages/line/line.component';
 import { StopComponent } from './features/schedule/pages/stop/stop.component';
 import { FormsModule } from '@angular/forms';
+import { BuyTicketComponent } from './features/tickets/pages/buy-ticket/buy-ticket.component';
+import { BuyTicketSuccessComponent } from './features/tickets/pages/buy-ticket-success/buy-ticket-success.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -39,7 +41,9 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     TicketOfferComponent,
     SchedulesComponent,
     LineComponent,
-    StopComponent
+    StopComponent,
+    BuyTicketComponent,
+    BuyTicketSuccessComponent
   ],
   imports: [
     BrowserModule,

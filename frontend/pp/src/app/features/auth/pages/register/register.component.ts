@@ -54,8 +54,6 @@ export class RegisterComponent implements OnDestroy {
   get password() { return this.registerForm.get("fullPassword.password") }
   get confirmPassword() { return this.registerForm.get("fullPassword.confirmPassword") }
 
-  error: String | null = null;
-
   onSubmit() {
     const registerDto = {
       email: this.registerForm.get("email")!.value,
@@ -66,12 +64,8 @@ export class RegisterComponent implements OnDestroy {
     this.authService.register(registerDto)
       .pipe(
         takeUntil(this.destroy$),
-        catchError(error => of(error))
       )
       .subscribe(res => {
-        if (res instanceof HttpErrorResponse) {
-          this.error = res.error;
-        }
         this.router.navigateByUrl('/tickets/offer')
       });
   }

@@ -1,9 +1,9 @@
-import { OfferedTicket } from "./offeredTicketDto";
+import { OfferedTicketDto } from "./offeredTicketDto";
 
-export interface TicketOffer {
+export interface TicketOfferDto {
     offerStart: string;
     offerEnd: string;
     id: number;
-    tickets: OfferedTicket[];
+    tickets: OfferedTicketDto[];
     currentlyValid: boolean;
 }

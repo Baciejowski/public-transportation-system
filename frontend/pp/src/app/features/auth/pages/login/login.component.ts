@@ -21,8 +21,6 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
-
-  error: String | null = null;
   
   get email() { return this.loginForm.get("email") }
   get password() { return this.loginForm.get("password") }
@@ -31,18 +29,6 @@ export class LoginComponent {
     const loginDto = this.loginForm.value as LoginDto;
     this.authService.login(loginDto)
       .pipe(
-        catchError(error => of(error)),
-        mergeMap(res => {
-          if (res instanceof HttpErrorResponse) {
-            this.error = res.error;
-          }
-          return this.authService.getUserInfo();
-        }),
-        // tap(res => {
-        //   if (res instanceof HttpErrorResponse) {
-        //     this.error = res.error;
-        //   }
-        // }),
         takeUntil(this.destroy$)    
       ).subscribe(res => {
         this.router.navigateByUrl('/tickets/offer');

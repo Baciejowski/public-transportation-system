@@ -6,6 +6,8 @@ import { RegisterComponent } from './features/auth/pages/register/register.compo
 import { LineComponent } from './features/schedule/pages/line/line.component';
 import { SchedulesComponent } from './features/schedule/pages/schedules/schedules.component';
 import { StopComponent } from './features/schedule/pages/stop/stop.component';
+import { BuyTicketSuccessComponent } from './features/tickets/pages/buy-ticket-success/buy-ticket-success.component';
+import { BuyTicketComponent } from './features/tickets/pages/buy-ticket/buy-ticket.component';
 import { TicketOfferComponent } from './features/tickets/pages/ticket-offer/ticket-offer.component';
 
 const routes: Routes = [
@@ -20,6 +22,16 @@ const routes: Routes = [
   {
     path: "tickets/offer",
     component: TicketOfferComponent,
+    canActivate: [AuthenticatedGuard]
+  },
+  {
+    path: "tickets/buy",
+    component: BuyTicketComponent,
+    canActivate: [AuthenticatedGuard]
+  },
+  {
+    path: "tickets/buy/success",
+    component: BuyTicketSuccessComponent,
     canActivate: [AuthenticatedGuard]
   },
   {

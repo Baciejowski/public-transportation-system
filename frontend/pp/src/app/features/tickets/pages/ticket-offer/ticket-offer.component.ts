@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, Observable, Subject } from 'rxjs';
-import { TicketOffer } from '../../models/ticketOfferDto';
+import { Router } from '@angular/router';
+import { map, Observable, Subject, takeUntil } from 'rxjs';
+import { OfferedTicketDto } from '../../models/offeredTicketDto';
+import { TicketOfferDto } from '../../models/ticketOfferDto';
 import { TicketService } from '../../services/ticket.service';
 
 @Component({
@@ -9,10 +11,12 @@ import { TicketService } from '../../services/ticket.service';
   styleUrls: ['./ticket-offer.component.scss']
 })
 export class TicketOfferComponent implements OnInit, OnDestroy {
-  ticketOffer$: Observable<TicketOffer>;
+  discounted: boolean = false;
   destroy$ = new Subject();
+  oneWayTickets: OfferedTicketDto[] = [];
+  timeLimitedTickets: OfferedTicketDto[] = [];
 
-  constructor(private ticketService: TicketService) { }
+  constructor(private ticketService: TicketService, private router: Router) { }
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
@@ -20,11 +24,36 @@ export class TicketOfferComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.ticketOffer$ = this.ticketService.getTicketOffers().pipe(
-      map(ticketOffers => ticketOffers.find(offer => offer.currentlyValid)!)
-    )
+    this.ticketService.getTicketOffers()
+      .pipe(
+        map(ticketOffers => ticketOffers.find(offer => offer.currentlyValid)!),
+        takeUntil(this.destroy$)
+      )
+      .subscribe(ticketOffer => {
+        ticketOffer.tickets.forEach(ticket => {
+          if (ticket.duration) {
+            this.timeLimitedTickets.push(ticket);
+          } else {
+            this.oneWayTickets.push(ticket);
+          }
+        });
+        this.oneWayTickets.sort((a, b) => a.price - b.price);
+        this.timeLimitedTickets.sort((a, b) => a.price - b.price);
+      });
+    
   }
 
+  onToggleChange(value: string) {
+    if (value === 'discounted') {
+      this.discounted = true;
+    } else {
+      this.discounted = false;
+    }
+  }
 
+  onTicketSelect(ticket: OfferedTicketDto) {
+    this.ticketService.selectedTicket = ticket;
+    this.router.navigate(['tickets', 'buy']);
+  }
 
 }
