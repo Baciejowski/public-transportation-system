@@ -2,16 +2,14 @@ package pl.edu.pwr.psi.epk.integration.actor
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.assertAll
+import org.springframework.http.HttpMethod
 import org.springframework.test.web.reactive.server.WebTestClient
 import pl.edu.pwr.psi.epk.integration.dto.ErrorDto
 import pl.edu.pwr.psi.epk.integration.dto.account.*
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketDto
 import pl.edu.pwr.psi.epk.integration.dto.offer.TicketOfferDto
 import pl.edu.pwr.psi.epk.integration.dto.schedule.*
-import pl.edu.pwr.psi.epk.integration.step.AccountSteps
-import pl.edu.pwr.psi.epk.integration.step.AuthenticationSteps
-import pl.edu.pwr.psi.epk.integration.step.ScheduleSteps
-import pl.edu.pwr.psi.epk.integration.step.TicketSteps
+import pl.edu.pwr.psi.epk.integration.step.*
 import pl.edu.pwr.psi.epk.integration.util.TestUtils
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -83,6 +81,13 @@ abstract class UserActor {
     }
 
     open fun getsUserInfo(): UserReadDto = AccountSteps.userGetsAccountInfo(client)
+
+    fun hasNoAccessToEndpoint(
+        endpointMethod: HttpMethod,
+        endpointPath: String,
+        body: Any? = null,
+        vararg pathParams: String
+    ) = EndpointRestrictionSteps.userHasNoAccessToEndpoint(client, endpointMethod, endpointPath, body, *pathParams)
 
     fun validateTokenEquality(tokenReadDto: TokenReadDto) {
         assertAll(

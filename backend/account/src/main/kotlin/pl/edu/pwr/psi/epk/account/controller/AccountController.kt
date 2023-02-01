@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.edu.pwr.psi.epk.account.dto.BalanceTopUpDto
 import pl.edu.pwr.psi.epk.account.dto.UserReadDto
+import pl.edu.pwr.psi.epk.account.infrastructure.RequiredRole
+import pl.edu.pwr.psi.epk.account.model.Role
 import pl.edu.pwr.psi.epk.account.service.UserService
 
 @RestController
@@ -17,6 +19,7 @@ class AccountController(
         ResponseEntity.ok(UserReadDto.fromUser(userService.getUserById(userId)))
 
     @PostMapping("/balance/top-up")
+    @RequiredRole(Role.PASSENGER)
     fun topUpBalance(
         @RequestHeader("user-id", required = true) passengerId: Long,
         @RequestBody balanceTopUpDto: BalanceTopUpDto
@@ -25,6 +28,7 @@ class AccountController(
     }
 
     @PostMapping("/balance/deduce")
+    @RequiredRole(Role.PASSENGER)
     fun deduceBalance(
         @RequestHeader("user-id", required = true) passengerId: Long,
         @RequestBody amount: Double
