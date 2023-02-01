@@ -4,7 +4,7 @@ version: '3.8'
 services:
   passenger-app:
     build:
-      context: ./frontend/PP
+      context: ./frontend/pp
       dockerfile: Dockerfile
     image: epk-passenger-app
     networks:

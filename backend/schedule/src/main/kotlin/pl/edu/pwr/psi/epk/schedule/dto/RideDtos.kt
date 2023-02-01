@@ -4,7 +4,7 @@ import pl.edu.pwr.psi.epk.schedule.model.Ride
 import java.time.LocalDateTime
 
 data class RideDTO(
-    val lineDTO: LineDTO,
+    val lineManifestDTO: LineManifestDTO,
     val route: RouteManifestDTO,
     val busSideNumber: Int,
     val plannedStartTime: LocalDateTime,
@@ -14,7 +14,7 @@ data class RideDTO(
 ) {
     companion object{
         fun fromRide(ride: Ride) = RideDTO(
-            LineDTO.fromLine(ride.routeService.route.line),
+            LineManifestDTO.fromLine(ride.routeService.route.line),
             RouteManifestDTO.fromRoute(ride.routeService.route),
             ride.bus.sideNumber,
             ride.plannedStartTime,
