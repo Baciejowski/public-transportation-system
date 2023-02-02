@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LineDetailsDto } from '../models/LineDetailsDto';
+import { LineDetailsDto } from '../models/lineDetailsDto';
 import { LineDto } from '../models/lineDto';
 import { RouteDetailDto } from '../models/routeDetailDto';
 import { RouteManifestDto } from '../models/routeManifestDto';

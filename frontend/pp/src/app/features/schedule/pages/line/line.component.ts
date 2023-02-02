@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, takeUntil, tap } from 'rxjs';
-import { LineDetailsDto } from '../../models/LineDetailsDto';
+import { LineDetailsDto } from '../../models/lineDetailsDto';
 import { RouteDetailDto } from '../../models/routeDetailDto';
 import { RouteManifestDto } from '../../models/routeManifestDto';
 import { StopDto } from '../../models/stopDto';
