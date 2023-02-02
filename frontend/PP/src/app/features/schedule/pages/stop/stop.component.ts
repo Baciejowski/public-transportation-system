@@ -55,7 +55,7 @@ export class StopComponent implements OnInit, OnDestroy {
       const minutes = reminder < 10 ? `0${reminder % 60}` : reminder;
       return minutes ? `${hours}:${minutes} h` : `${hours} h`;
     }
-    return `${difference} min`
+    return `${difference >= 0 ? difference : 0} min`
   }
 
   calculateDeviation(deviation: string | null): string | null {
@@ -66,7 +66,7 @@ export class StopComponent implements OnInit, OnDestroy {
   calculateDepartureTime(stopDeparture: StopDepartureDto, includeDeviation: boolean): string {
     const departureTime = moment(stopDeparture.departure + 'Z');
     if (!includeDeviation) return departureTime.format();
-    else return departureTime.add(moment.duration(stopDeparture.deviation)).format();
+    else return departureTime.add(stopDeparture.deviation, 'minutes').format();
   }
   
   onToggleChange(value: string) {

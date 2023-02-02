@@ -17,7 +17,7 @@
                 <div class="departure-in">{{ "SCHEDULE.STOP.DEPARTURE" | translate }}{{":"}}</div>
                 <div class="time-left" [ngClass]="{'red': departure.deviation && includeDeviation}">{{ calculateTimeLeft(departure, includeDeviation) }}</div>
                 <div class="deviation red" *ngIf="departure.deviation && includeDeviation">
-                    {{departure.deviation}} {{"min"}}
+                    {{departure.deviation.includes("-") ? "" : "+"}}{{departure.deviation}} {{"min"}}
                 </div>
             </div>
             <div class="line" (click)="selectLine(departure.line)">{{ departure.line.name }}</div>
