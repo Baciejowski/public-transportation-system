@@ -1,0 +1,58 @@
+{
+    "LANG": {
+        "SELECT": "Język"
+    },
+    "AUTH": {
+        "REGISTER": "Zarejestruj się",
+        "LOGIN": "Zaloguj się",
+        "SUBMIT": "Potwierdź",
+        "PASSWORD": "Hasło",
+        "CONFIRM_PASSWORD": "Potwierdź hasło",
+        "FIRST_NAME": "Imię",
+        "LAST_NAME": "Nazwisko",
+        "FIRST_NAME_REQUIRED": "Imię jest wymagane!",
+        "LAST_NAME_REQUIRED": "Nazwisko  jest wymagane!",
+        "EMAIL_REQUIRED": "Email jest wymagany!",
+        "EMAIL_CORRECT_FORM": "Email powinien być w prawidłowej formie!",
+        "PASSWORD_REQUIRED": "Hasło jest wymagane!",
+        "PASSWORD_CONFIRM": "Potwierdź hasło!",
+        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!"
+    },
+    "TICKET": {
+        "OFFER": "Oferta biletów",
+        "REDUCED": "Ulgowy",
+        "REDUCED_PLURAL": "Ulgowe",
+        "REGULAR": "Normalny",
+        "REGULAR_PLURAL": "Normalne",
+        "ONEWAY": "Jednorazowy",
+        "ONEWAY_PLURAL": "Jednorazowe",
+        "TIME_LIMITED": "Czasowe",
+        "NO_TICKET_SELECTED": "Nie wybrano biletu. Powróć do oferty i wybierz bilet",
+        "BUY": "Kup",
+        "PURCHASE_DISCLAIMER": "Uprawniający posiadacza biletu do korzystania z nieograniczonej liczby przejazdów, na wszystkich typach linii, w wyznaczonym czasie od momentu skasowania biletu.",
+        "BALANCE": "Balans konta",
+        "PURCHASE_SUCCESS": "Zakup biletu udany",
+        "OWNED": "Posiadane bilety"
+    },
+    "SCHEDULE": {
+        "HEADING": "Rozkłady jazdy",
+        "LINES": "Linie",
+        "LINES_HEADING": "Linia",
+        "STOPS": "Przystanki",
+        "ROUTE_SELECT": "Wybierz wariant trasy",
+        "STOP": {
+            "INCLUDE_DEVIATION": "Uwzględnić opóźnienia",
+            "YES": "Tak",
+            "NO": "Nie",
+            "DEPARTURE": "Odjazd za",
+            "DEVIATION": "Opóźnienie",
+            "LAST": "Ostatni",
+            "NEXT": "Następny",
+            "ENTER_LINE": "Wprowadź linię",
+            "ENTER_DEVIATION": "Wprowadź opóźnienie"
+        }
+    },
+    "COMMON": {
+        "BACK": "Powrót"
+    }
+}

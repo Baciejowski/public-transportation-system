@@ -1,0 +1,94 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #F2F2F2;
+    color: #937DC2;
+    text-align: center;
+    gap: 1rem;
+}
+
+header {
+    background-color: white;
+    border-radius: 0 0 30px 30px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: normal;
+}
+
+section {
+    background-color: white;
+    padding: 0.75rem;
+    color: white;
+    border-radius: 10px;
+    width: 80%;
+    height: fit-content;
+    margin-bottom: 1rem;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.75rem;
+}
+
+.include-deviation {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.departure-card {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    color: #937DC2;
+    gap: 1rem;
+
+    .time-left-container {
+        padding: 0.75rem;
+        background-color: #937DC2;
+        color: white;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+
+        .departure-in {
+            font-weight: lighter;
+        }
+    }
+
+    .line {
+        padding: 0.25rem 0.5rem;
+        background-color: #937DC2;
+        color: white;
+        border-radius: 5px;
+        width: 2.5rem;
+        height: 100%;
+        cursor: pointer;
+    }
+
+    .time {
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+
+    .deviation {
+        position: absolute;
+        right: 15%;
+        bottom: 5%;
+        font-size: 0.7rem;
+    }
+
+    .red {
+        color: red;
+    }
+}

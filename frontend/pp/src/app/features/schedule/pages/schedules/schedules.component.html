@@ -1,0 +1,33 @@
+<main>
+    <header>
+        <h1>{{"SCHEDULE.HEADING" | translate}}</h1>
+    </header>
+    <section class="lines">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{"SCHEDULE.LINES" | translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="lines$ | async as lines">
+                <div class="line" *ngFor="let line of lines" (click)="selectLine(line)">
+                    {{line.name}}
+                </div>
+            </ng-container>
+        </mat-expansion-panel>
+    </section>
+    <section class="stops">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{"SCHEDULE.STOPS" | translate}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="stops$ | async as stops">
+                <div class="stop" *ngFor="let stop of stops" (click)="selectStop(stop)">
+                    {{stop.name}}
+                </div>
+            </ng-container>
+        </mat-expansion-panel>
+    </section>
+</main>

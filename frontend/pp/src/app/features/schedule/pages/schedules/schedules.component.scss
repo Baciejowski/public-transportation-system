@@ -1,0 +1,80 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    // justify-content: center;
+    min-height: 100vh;
+    background-color: #F2F2F2;
+    color: #937DC2;
+    text-align: center;
+    gap: 1rem;
+}
+
+header {
+    background-color: white;
+    border-radius: 0 0 30px 30px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: normal;
+}
+
+section {
+    background-color: white;
+    padding: 0.75rem;
+    color: white;
+    border-radius: 10px;
+    width: 80%;
+    height: fit-content;
+    margin-bottom: 1rem;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+
+    .mat-expansion-panel-header {
+        background-color: #937DC2;
+        span, mat-panel-title {
+            color: white;
+        }
+    }
+
+    .line {
+        padding: 0.25rem 0.5rem;
+        background-color: #937DC2;
+        color: white;
+        border-radius: 5px;
+        width: 2.5rem;
+        cursor: pointer;
+    }
+
+    .stop {
+        background-color: #937DC2;
+        color: white;
+        border-radius: 5px;
+        width: 100%;
+        padding: 0.5rem;
+        cursor: pointer;
+    }
+}
+
+:host ::ng-deep {
+    .mat-expansion-panel-body {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    .stops .mat-expansion-panel {
+        flex-direction: column;
+    }
+}
+
+
+
+@media (hover: none) {
+    section .mat-expansion-panel .mat-expansion-panel-header {
+        background-color: #937DC2;
+    }
+}
+

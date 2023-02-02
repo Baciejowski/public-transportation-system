@@ -1,0 +1,58 @@
+{
+    "LANG": {
+        "SELECT": "Language"
+    },
+    "AUTH": {
+        "REGISTER": "Register",
+        "LOGIN": "Login",
+        "SUBMIT": "Submit",
+        "PASSWORD": "Password",
+        "CONFIRM_PASSWORD": "Confirm password",
+        "FIRST_NAME": "First name",
+        "LAST_NAME": "Last name",
+        "FIRST_NAME_REQUIRED": "First name is required!",
+        "LAST_NAME_REQUIRED": "Last name is required!",
+        "EMAIL_REQUIRED": "Email is required!",
+        "EMAIL_CORRECT_FORM": "Email should be of correct form!",
+        "PASSWORD_REQUIRED": "Password is required!",
+        "PASSWORD_CONFIRM": "Confirm the password!",
+        "PASSWORD_NOT_MATCHING": "Passwords do not match!"
+    },
+    "TICKET": {
+        "OFFER": "Ticket offer",
+        "REDUCED": "Reduced",
+        "REDUCED_PLURAL": "Reduced",
+        "REGULAR": "Regular",
+        "REGULAR_PLURAL": "Regular",
+        "ONEWAY": "One-way",
+        "ONEWAY_PLURAL": "One-way",
+        "TIME_LIMITED": "Time limited",
+        "NO_TICKET_SELECTED": "No ticket has been selected. Go back to offer page and select a ticket.",
+        "BUY": "Buy",
+        "PURCHASE_DISCLAIMER": "Allows owner of the ticket to use unlimited number of rides, on all line types, in given time counted from the moment of punching the ticket",
+        "BALANCE": "Account balance",
+        "PURCHASE_SUCCESS": "Ticket purchased",
+        "OWNED": "Owned tickets"
+    },
+    "SCHEDULE": {
+        "HEADING": "Schedule",
+        "LINES": "Lines",
+        "LINES_HEADING": "Line",
+        "STOPS": "Stops",
+        "ROUTE_SELECT": "Select route",
+        "STOP": {
+            "INCLUDE_DEVIATION": "Include deviation",
+            "YES": "Yes",
+            "NO": "No",
+            "DEPARTURE": "Departure in",
+            "DEVIATION": "Deviation",
+            "LAST": "Last stop",
+            "NEXT": "Next stop",
+            "ENTER_LINE": "Enter line",
+            "ENTER_DEVIATION": "Enter deviation"
+        }
+    },
+    "COMMON": {
+        "BACK": "Back"
+    }
+}

@@ -1,0 +1,34 @@
+<main>
+    <section>
+        <h1>{{'TICKET.OFFER' | translate}}</h1>
+        <mat-button-toggle-group #toggle="matButtonToggleGroup" (valueChange)="onToggleChange(toggle.value)">
+            <mat-button-toggle value='discounted'>{{ "TICKET.REDUCED_PLURAL" | translate }}</mat-button-toggle>
+            <mat-button-toggle value='regular'>{{ "TICKET.REGULAR_PLURAL" | translate }}</mat-button-toggle>
+        </mat-button-toggle-group>
+    </section>
+    <section>
+        <h3>{{'TICKET.ONEWAY_PLURAL' | translate}}</h3>
+        <div class="ticket-container">
+            <ng-container *ngFor="let oneWayTicket of oneWayTickets">
+                <app-ticket 
+                    *ngIf="oneWayTicket.isReduced === discounted"
+                    [ticket]="oneWayTicket"
+                    (click)="onTicketSelect(oneWayTicket)">
+                </app-ticket>
+            </ng-container>
+        </div>
+    </section>
+    <section>
+        <h3>{{'TICKET.TIME_LIMITED' | translate}}</h3>
+        <div class="ticket-container">
+            <ng-container *ngFor="let timeLimitedTicket of timeLimitedTickets">
+                <app-ticket
+                    *ngIf="timeLimitedTicket.isReduced === discounted"
+                    [ticket]="timeLimitedTicket"
+                    (click)="onTicketSelect(timeLimitedTicket)">
+                </app-ticket>
+            </ng-container>
+        </div>
+    </section>
+</main>
+    

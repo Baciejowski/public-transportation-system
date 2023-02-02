@@ -1,0 +1,24 @@
+<main>
+    <section *ngIf="ticket; else noTicketSelected">
+        <div class="ticket-container">
+            <app-ticket [ticket]="ticket">
+            </app-ticket>
+            <div class="count">
+                <div class="element" (click)="changeCount(-1)">-</div>
+                <div class="element long">{{count}}</div>
+                <div class="element" (click)="changeCount(1)">+</div>
+            </div>
+        </div>
+        <p>{{ "TICKET.PURCHASE_DISCLAIMER" | translate }}</p>
+        <footer>
+            {{ "TICKET.BALANCE" | translate }}{{": "}}{{accountBalance.toFixed(2)}}{{" zł"}}
+            <button mat-button [disabled]="cost > accountBalance" (click)="buy()">{{ "TICKET.BUY" | translate }}</button>
+        </footer>
+    </section>
+    <ng-template #noTicketSelected>
+        <section>
+            {{ "TICKET.NO_TICKET_SELECTED" | translate }}
+            <button mat-button class="back" [routerLink]="['/tickets/offer']">{{"COMMON.BACK" | translate}}</button>
+        </section>
+    </ng-template>
+</main>
