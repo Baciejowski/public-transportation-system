@@ -19,6 +19,7 @@ open class Endpoint(
             AccountEndpoint.BALANCE_DEDUCE to listOf(Role.TICKET_INSPECTOR, Role.PLANNER),
 
             TicketEndpoint.GET_TICKETS to listOf(Role.TICKET_INSPECTOR, Role.PLANNER),
+            TicketEndpoint.GET_ALL_TICKETS to listOf(Role.TICKET_INSPECTOR, Role.PLANNER),
             TicketEndpoint.GET_TICKETS_OFFER to listOf(Role.TICKET_INSPECTOR, Role.PLANNER),
             TicketEndpoint.BUY_TICKET to listOf(Role.TICKET_INSPECTOR, Role.PLANNER),
             TicketEndpoint.PUNCH_TICKET to listOf(Role.TICKET_INSPECTOR, Role.PLANNER),
@@ -67,6 +68,7 @@ class TicketEndpoint(
     companion object {
         private const val TICKET_SERVICE_PREFIX = "/ticket"
         val GET_TICKETS = TicketEndpoint("Get tickets", HttpMethod.GET, "$TICKET_SERVICE_PREFIX/tickets")
+        val GET_ALL_TICKETS = TicketEndpoint("Get tickets", HttpMethod.GET, "$TICKET_SERVICE_PREFIX/tickets/all")
         val GET_TICKETS_OFFER = TicketEndpoint("Get tickets offer", HttpMethod.GET, "$TICKET_SERVICE_PREFIX/tickets/offer")
         val BUY_TICKET = TicketEndpoint("Buy ticket", HttpMethod.POST, "$TICKET_SERVICE_PREFIX/tickets/offer/buy?offeredTicketId={offeredTicketId}", arrayOf("1"))
         val PUNCH_TICKET = TicketEndpoint("Punch ticket", HttpMethod.PATCH, "$TICKET_SERVICE_PREFIX/tickets/punch?ticketId={ticketId}&rideId={rideId}", arrayOf("1", "1"))

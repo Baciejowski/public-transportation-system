@@ -22,6 +22,11 @@ class TicketService(
     val accountApiService: AccountApiService
 ) {
 
+    fun getCurrentTickets(passengerId: Long): List<Ticket> {
+        val dateFrom = LocalDateTime.now(ZoneOffset.UTC).minusDays(2)
+        return ticketRepository.findAllCurrentTickets(passengerId, dateFrom)
+    }
+
     @Transactional
     fun buyTickets(passengerId: Long, offeredTicketId: Long, quantity: Int): List<Ticket> {
         if (quantity < 1)

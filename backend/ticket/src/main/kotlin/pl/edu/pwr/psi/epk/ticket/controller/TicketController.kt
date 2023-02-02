@@ -28,6 +28,17 @@ class TicketController(
     ): ResponseEntity<List<Ticket>> {
 
         return ResponseEntity.ok(
+            ticketService.getCurrentTickets(passengerId)
+        )
+    }
+
+    @GetMapping("/all")
+    @RequiredRole(Role.PASSENGER)
+    fun getAllUserTickets(
+        @RequestHeader("user-id", required = true) passengerId: Long
+    ): ResponseEntity<List<Ticket>> {
+
+        return ResponseEntity.ok(
             ticketRepository.findAllByPassengerId(passengerId)
         )
     }
