@@ -38,6 +38,7 @@ class ScheduleController(
         ResponseEntity.ok(busRepository.findAll().map{BusDTO.fromBus(it)})
 
     //Screen 4.6.2.2?
+
     @GetMapping("/lines/{id}")
     @RequiredRole(Role.PASSENGER, Role.PLANNER)
     fun getLine(@PathVariable id: Long): ResponseEntity<LineDetailsDTO> {
