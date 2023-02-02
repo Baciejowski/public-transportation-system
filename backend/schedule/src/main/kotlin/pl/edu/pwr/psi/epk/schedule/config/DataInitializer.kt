@@ -73,7 +73,7 @@ class DataInitializer(
         if (ride.plannedEndTime.isBefore(now))
             ride.endTime = ride.plannedEndTime
         else if (ride.plannedStartTime.isBefore(now))
-            ride.rideStops.last().timeDeviation = Duration.ofMinutes(ride.id%6-2)
+            ride.rideStops.last().timeDeviation = Duration.ofMinutes(2)//ride.id%6-2)
 
         ride = rideRepository.save(ride)
         rideStopRepository.saveAll(ride.rideStops)
