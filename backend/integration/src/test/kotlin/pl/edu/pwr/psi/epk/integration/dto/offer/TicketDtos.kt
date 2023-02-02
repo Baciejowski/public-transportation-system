@@ -3,7 +3,7 @@ package pl.edu.pwr.psi.epk.integration.dto.offer
 import java.time.Duration
 import java.time.LocalDateTime
 
-class TicketDto (
+data class TicketDto (
     val ticketNo: Long,
     val passengerId: Long,
     val pricePaid: Double,

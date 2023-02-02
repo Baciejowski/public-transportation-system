@@ -17,7 +17,8 @@ class TicketOffer (
     val id: Long = -1
 
     @OneToMany(mappedBy = "offer", cascade = [CascadeType.ALL])
-    val tickets = mutableSetOf<OfferedTicket>()
+    @OrderBy("price ASC")
+    val tickets = mutableListOf<OfferedTicket>()
 
     fun isCurrentlyValid(): Boolean {
         val now = LocalDateTime.now(ZoneOffset.UTC)

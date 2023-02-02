@@ -36,29 +36,54 @@ class DevDataInitializer(private val tickerOfferRepo: TicketOfferRepository) : A
                 ticketOffer
             ),
             OfferedTimeLimitedTicket(
-                16.0,
+                2.0,
                 false,
                 ticketOffer,
-                Duration.ofDays(14)
+                Duration.ofMinutes(15)
             ),
             OfferedTimeLimitedTicket(
-                8.0,
+                1.0,
                 true,
                 ticketOffer,
-                Duration.ofDays(14)
+                Duration.ofMinutes(15)
             ),
             OfferedTimeLimitedTicket(
-                30.0,
+                3.5,
                 false,
                 ticketOffer,
-                Duration.ofDays(30)
+                Duration.ofMinutes(30)
             ),
             OfferedTimeLimitedTicket(
-                16.0,
+                1.75,
                 true,
                 ticketOffer,
-                Duration.ofDays(30)
+                Duration.ofMinutes(30)
+            ),
+            OfferedTimeLimitedTicket(
+                6.0,
+                true,
+                ticketOffer,
+                Duration.ofMinutes(60)
+            ),
+            OfferedTimeLimitedTicket(
+                3.0,
+                true,
+                ticketOffer,
+                Duration.ofMinutes(60)
+            ),
+            OfferedTimeLimitedTicket(
+                6.0,
+                true,
+                ticketOffer,
+                Duration.ofDays(1)
+            ),
+            OfferedTimeLimitedTicket(
+                6.0,
+                true,
+                ticketOffer,
+                Duration.ofDays(1)
             )
+
         )
 
         tickerOfferRepo.save(ticketOffer)

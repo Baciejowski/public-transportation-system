@@ -15,10 +15,11 @@ class ErrorHandlingController {
     protected fun handleError(
         e: Exception
     ): ResponseEntity<ErrorDto> = when(e) {
-        is IllegalArgumentException, is EntityNotFoundException, is ApiCallException ->
+        is IllegalArgumentException, is EntityNotFoundException ->
             ResponseEntity.badRequest()
                 .body(ErrorDto(HttpStatus.BAD_REQUEST, e.message))
-
+        is ApiCallException ->
+            ResponseEntity(ErrorDto(HttpStatus.SERVICE_UNAVAILABLE, e.message), HttpStatus.SERVICE_UNAVAILABLE)
         else -> ResponseEntity.internalServerError()
             .body(ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, "Something unexpected happened: ${e.message}"))
     }
