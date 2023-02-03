@@ -1,6 +1,7 @@
 package pl.edu.pwr.psi.epk.ticket.service
 
 import feign.FeignException
+import jakarta.persistence.EntityNotFoundException
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,6 +22,9 @@ class TicketService(
     val ticketRepository: TicketRepository,
     val accountApiService: AccountApiService
 ) {
+
+    fun getTicketById(ticketId: Long): Ticket = ticketRepository.findById(ticketId)
+        .orElseThrow { EntityNotFoundException("Could not find ticket with id '$ticketId'.") }
 
     fun getCurrentTickets(passengerId: Long): List<Ticket> {
         val dateFrom = LocalDateTime.now(ZoneOffset.UTC).minusDays(2)
@@ -58,7 +62,7 @@ class TicketService(
 
     fun punchTicket(passengerId: Long, ticketId: Long, rideId: Long): Ticket {
 
-        val ticket: Ticket = ticketRepository.findById(ticketId).get()
+        val ticket: Ticket = getTicketById(ticketId)
 
         if (ticket.passengerId != passengerId)
             throw IllegalArgumentException("Ticket does not belong to the passenger")
@@ -75,7 +79,7 @@ class TicketService(
 
     fun validateTicket(ticketId: Long, rideId: Long): Boolean {
 
-        val ticket: Ticket = ticketRepository.findById(ticketId).get()
+        val ticket: Ticket = getTicketById(ticketId)
 
         if (!ticket.isPunched())
             throw IllegalArgumentException("Ticket is not punched.")
