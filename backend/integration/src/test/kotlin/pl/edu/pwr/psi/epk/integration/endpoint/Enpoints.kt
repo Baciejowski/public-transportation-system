@@ -26,10 +26,7 @@ open class Endpoint(
             TicketEndpoint.VALIDATE_TICKET to listOf(Role.PASSENGER, Role.PLANNER),
 
             ScheduleEndpoint.GET_LINES to listOf(Role.TICKET_INSPECTOR),
-            ScheduleEndpoint.GET_LINE_ROUTES to listOf(Role.TICKET_INSPECTOR),
             ScheduleEndpoint.GET_STOPS to listOf(Role.TICKET_INSPECTOR),
-            ScheduleEndpoint.GET_STOP_LINES to listOf(Role.TICKET_INSPECTOR),
-            ScheduleEndpoint.GET_STOP_DEPARTURES to listOf(Role.TICKET_INSPECTOR),
             ScheduleEndpoint.GET_ROUTE to listOf(Role.TICKET_INSPECTOR),
             ScheduleEndpoint.GET_RIDE to listOf(Role.TICKET_INSPECTOR),
             ScheduleEndpoint.GET_DEVIATIONS to listOf(Role.TICKET_INSPECTOR),
@@ -88,10 +85,7 @@ class ScheduleEndpoint(
     companion object {
         private const val SCHEDULE_SERVICE_PREFIX = "/schedule/schedule"
         val GET_LINES = ScheduleEndpoint("Get lines", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/lines")
-        val GET_LINE_ROUTES = ScheduleEndpoint("Get line routes", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/lines/{lineId}/routes", arrayOf("1"))
         val GET_STOPS = ScheduleEndpoint("Get stops", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/stops")
-        val GET_STOP_LINES = ScheduleEndpoint("Get stop lines", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/stops/{stopId}/lines", arrayOf("1"))
-        val GET_STOP_DEPARTURES = ScheduleEndpoint("Get stop departures", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/stops/{stopId}/departures", arrayOf("1"))
         val GET_ROUTE = ScheduleEndpoint("Get route", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/routes/{routeId}", arrayOf("1"))
         val GET_RIDE = ScheduleEndpoint("Get ride", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/rides/{rideId}", arrayOf("1"))
         val GET_DEVIATIONS = ScheduleEndpoint("Get deviations", HttpMethod.GET, "$SCHEDULE_SERVICE_PREFIX/deviations")

@@ -156,7 +156,7 @@ class PassengerActor(
 
     fun getsBuses(): List<BusDto> = ScheduleSteps.getBuses(client)
 
-    fun getsLineRoutes(lineId: Long): List<RouteManifestDto> = ScheduleSteps.getLineRoutes(client, lineId)
+    fun getsLineRoutes(lineId: Long): List<RouteDetailDto> = ScheduleSteps.getLineRoutes(client, lineId)
     fun triesToGetLineRoutes(lineId: Long): WebTestClient.ResponseSpec =
         ScheduleSteps.tryGetLineRoutes(client, lineId)
 

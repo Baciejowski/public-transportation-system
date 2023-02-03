@@ -26,6 +26,9 @@ class ErrorHandlingController {
             ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ErrorDto(HttpStatus.UNAUTHORIZED, e.message))
 
+        is SecurityException ->
+            ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+
         else -> ResponseEntity.internalServerError()
             .body(ErrorDto(HttpStatus.INTERNAL_SERVER_ERROR, "Something unexpected happened: ${e.message}"))
     }

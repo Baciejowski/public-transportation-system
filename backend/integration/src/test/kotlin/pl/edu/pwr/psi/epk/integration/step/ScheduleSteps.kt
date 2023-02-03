@@ -30,10 +30,10 @@ class ScheduleSteps {
                 .expectBodyList(BusDto::class.java)
                 .returnResult().responseBody!!
 
-        fun getLineRoutes(webTestClient: WebTestClient, lineId: Long): List<RouteManifestDto> =
+        fun getLineRoutes(webTestClient: WebTestClient, lineId: Long): List<RouteDetailDto> =
             tryGetLineRoutes(webTestClient, lineId)
                 .expectStatus().isOk
-                .expectBodyList(RouteManifestDto::class.java)
+                .expectBodyList(RouteDetailDto::class.java)
                 .returnResult().responseBody!!
 
         fun tryGetLineRoutes(webTestClient: WebTestClient, lineId: Long): WebTestClient.ResponseSpec =

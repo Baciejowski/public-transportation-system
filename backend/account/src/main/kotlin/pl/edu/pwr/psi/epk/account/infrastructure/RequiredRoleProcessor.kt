@@ -20,17 +20,11 @@ class RequiredRoleProcessor {
         val request = (RequestContextHolder.currentRequestAttributes() as ServletRequestAttributes).request
         val annotation = (call.signature as MethodSignature).method.getAnnotation(RequiredRole::class.java)
 
-        return try {
-            val role = Role.valueOf(request.getHeader("user-role"))
-            if (role == Role.MODERATOR || annotation.roles.contains(role))
-                call.proceed() as ResponseEntity<*>
-            else
-                ResponseEntity.status(HttpStatus.FORBIDDEN).build<Any>()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            ResponseEntity.status(HttpStatus.FORBIDDEN).build<Any>()
-        }
-
+        val role = Role.valueOf(request.getHeader("user-role"))
+        if (role == Role.MODERATOR || annotation.roles.contains(role))
+            return call.proceed() as ResponseEntity<*>
+        else
+            throw SecurityException()
     }
 
 }

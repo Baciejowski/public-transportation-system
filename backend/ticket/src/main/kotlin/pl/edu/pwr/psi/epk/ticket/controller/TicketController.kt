@@ -68,7 +68,7 @@ class TicketController(
     fun buyTickets(
         @RequestHeader("user-id", required = true) passengerId: Long,
         @RequestParam offeredTicketId: Long,
-        @RequestParam(required = false) quantity: Int = 1
+        @RequestParam(required = false, defaultValue = "1") quantity: Int
     ): ResponseEntity<List<Ticket>> {
 
         return ResponseEntity.ok(
