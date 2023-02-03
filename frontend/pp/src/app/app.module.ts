@@ -33,6 +33,8 @@ import { DeviationsComponent } from './features/schedule/pages/deviations/deviat
 import { MenuComponent } from './common/menu/menu.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -82,7 +84,8 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     MatExpansionModule,
     MatButtonToggleModule,
     MatSidenavModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatSnackBarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },

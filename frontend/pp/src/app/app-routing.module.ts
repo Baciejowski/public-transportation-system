@@ -118,7 +118,7 @@ const routes: Routes = [
     component: DeviationsComponent,
     canActivate: [AuthenticatedGuard],
     data: {
-      roles: ['PASSENGER', 'PLANNER']
+      roles: ['PLANNER']
     }
   },
   {

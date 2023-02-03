@@ -6,7 +6,7 @@
             <p>{{ "TICKET.ID" | translate }} {{"#"}}{{ticket.ticketNo}}</p>
             <p>{{ "TICKET.PUNCH_DATE" | translate }}{{":"}}<br>{{ticket.punchTime + 'Z' | date:'HH:mm dd.MM.yyyy'}}</p>
         </div>
-        <p>{{ "TICKET.PURCHASE_DISCLAIMER" | translate }}</p>
+        <p>{{ (ticket.duration ? "TICKET.PURCHASE_DISCLAIMER_TIME" : "TICKET.PURCHASE_DISCLAIMER_ONEWAY") | translate }}</p>
         <footer>
             <button mat-button class="back" [routerLink]="['/tickets/active']">{{"COMMON.BACK" | translate}}</button>
         </footer>

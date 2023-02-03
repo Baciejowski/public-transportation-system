@@ -16,7 +16,8 @@
         "EMAIL_CORRECT_FORM": "Email powinien być w prawidłowej formie!",
         "PASSWORD_REQUIRED": "Hasło jest wymagane!",
         "PASSWORD_CONFIRM": "Potwierdź hasło!",
-        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!"
+        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!",
+        "ACCESS": "Funkcja niedostępna"
     },
     "VALIDATION": {
         "PANEL": "Panel kontrolera",

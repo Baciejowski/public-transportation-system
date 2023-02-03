@@ -15,6 +15,7 @@ export class TicketOfferComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   oneWayTickets: OfferedTicketDto[] = [];
   timeLimitedTickets: OfferedTicketDto[] = [];
+  loading: boolean = false;
 
   constructor(private ticketService: TicketService, private router: Router) { }
 
@@ -24,6 +25,7 @@ export class TicketOfferComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.ticketService.getTicketOffers()
       .pipe(
         map(ticketOffers => ticketOffers.find(offer => offer.currentlyValid)!),
@@ -39,6 +41,7 @@ export class TicketOfferComponent implements OnInit, OnDestroy {
         });
         this.oneWayTickets.sort((a, b) => a.price - b.price);
         this.timeLimitedTickets.sort((a, b) => a.price - b.price);
+        this.loading = false;
       });
     
   }

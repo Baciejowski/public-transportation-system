@@ -14,6 +14,7 @@ export class ActiveTicketsComponent implements OnInit {
   destroy$ = new Subject();
   oneWayTickets: TicketDto[] = [];
   timeLimitedTickets: TicketDto[] = [];
+  loading: boolean = false;
 
   constructor(private ticketService: TicketService, private router: Router) { }
 
@@ -23,6 +24,7 @@ export class ActiveTicketsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.ticketService.getTickets()
       .pipe(takeUntil(this.destroy$))
       .subscribe(tickets => {
@@ -34,6 +36,7 @@ export class ActiveTicketsComponent implements OnInit {
             this.oneWayTickets.push(ticket);
           }
         });
+        this.loading = false;
       });
     
   }

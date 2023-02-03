@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, Subject } from 'rxjs';
 import { LoginDto } from '../models/loginDto';
 import { RegisterDto } from '../models/registerDto';
 import { HttpClient } from '@angular/common/http';
@@ -66,6 +66,7 @@ export class AuthService {
 
   public session = Session.instance();
   private userInfo$ = new BehaviorSubject<UserInfoDto | null>(null);
+  public error$ = new Subject();
 
   constructor(private http: HttpClient) {}
 

@@ -4,7 +4,7 @@
             <app-ticket [ticket]="ticket">
             </app-ticket>
         </div>
-        <p>{{ "TICKET.PURCHASE_DISCLAIMER" | translate }}</p>
+        <p>{{ (ticket.duration ? "TICKET.PURCHASE_DISCLAIMER_TIME" : "TICKET.PURCHASE_DISCLAIMER_ONEWAY") | translate }}</p>
         <footer>
             <mat-form-field appearance="fill">
                 <mat-label for="rideId">{{ "TICKET.RIDE_ID" | translate }}</mat-label>

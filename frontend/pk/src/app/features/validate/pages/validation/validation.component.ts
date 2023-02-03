@@ -21,7 +21,7 @@ export class ValidationComponent implements OnDestroy, OnInit {
   ngOnInit(): void {
     this.authService.error$.subscribe(error => {
       const errorMessage = error as string;
-      const text = errorMessage === "Forbidden" ? this.translateService.instant("VALIDATION.NOT_PUNCHED") : errorMessage;
+      const text = errorMessage === "Bad Request" ? this.translateService.instant("VALIDATION.NOT_PUNCHED") : errorMessage;
       this._snackBar.open(text, "OK", {duration: 5000})
     });
   }

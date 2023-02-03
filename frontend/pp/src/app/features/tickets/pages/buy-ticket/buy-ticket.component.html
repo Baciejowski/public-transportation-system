@@ -9,7 +9,7 @@
                 <div class="element" (click)="changeCount(1)">+</div>
             </div>
         </div>
-        <p>{{ "TICKET.PURCHASE_DISCLAIMER" | translate }}</p>
+        <p>{{ (ticket.duration ? "TICKET.PURCHASE_DISCLAIMER_TIME" : "TICKET.PURCHASE_DISCLAIMER_ONEWAY") | translate }}</p>
         <footer>
             {{ "TICKET.BALANCE" | translate }}{{": "}}{{accountBalance.toFixed(2)}}{{" zł"}}
             <button mat-button [disabled]="cost > accountBalance" (click)="buy()">{{ "TICKET.BUY" | translate }}</button>

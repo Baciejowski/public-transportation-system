@@ -52,6 +52,7 @@ export class BuyTicketComponent implements OnInit, OnDestroy {
       this.ticketService.buyTickets(this.ticket!.id, this.count)
         .pipe(takeUntil(this.destroy$))
         .subscribe(result => {
+          this.authService.initUserInfo();
           this.router.navigate(['tickets', 'buy', 'success']);
         });
     }

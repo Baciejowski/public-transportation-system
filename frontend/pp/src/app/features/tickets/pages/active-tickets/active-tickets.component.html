@@ -10,7 +10,8 @@
                 [ticket]="oneWayTicket"
                 (click)="onTicketSelect(oneWayTicket)">
             </app-ticket>
-            <p *ngIf="!oneWayTickets.length">{{'TICKET.NO_TICKETS' | translate}}</p>
+            <p *ngIf="loading">{{'TICKET.LOADING' | translate}}{{"..."}}</p>
+            <p *ngIf="!oneWayTickets.length && !loading">{{'TICKET.NO_TICKETS' | translate}}</p>
         </div>
     </section>
     <section>
@@ -21,7 +22,8 @@
                 [ticket]="timeLimitedTicket"
                 (click)="onTicketSelect(timeLimitedTicket)">
             </app-ticket>
-            <p *ngIf="!timeLimitedTickets.length">{{'TICKET.NO_TICKETS' | translate}}</p>
+            <p *ngIf="loading">{{'TICKET.LOADING' | translate}}{{"..."}}</p>
+            <p *ngIf="!timeLimitedTickets.length  && !loading">{{'TICKET.NO_TICKETS' | translate}}</p>
         </div>
     </section>
 </main>

@@ -35,6 +35,7 @@ export class AuthenticatedGuard implements CanActivate {
     if (route.data['roles'].includes(role)) {
       return true;
     }
+    this.authService.error$.next("Cannot access");
     return this.router.parseUrl("/login");
   }
 }

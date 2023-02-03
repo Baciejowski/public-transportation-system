@@ -16,7 +16,8 @@
         "EMAIL_CORRECT_FORM": "Email should be of correct form!",
         "PASSWORD_REQUIRED": "Password is required!",
         "PASSWORD_CONFIRM": "Confirm the password!",
-        "PASSWORD_NOT_MATCHING": "Passwords do not match!"
+        "PASSWORD_NOT_MATCHING": "Passwords do not match!",
+        "ACCESS": "Function unavailable"
     },
     "VALIDATION": {
         "PANEL": "Ticket inspector panel",

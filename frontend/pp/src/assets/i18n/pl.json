@@ -16,7 +16,8 @@
         "EMAIL_CORRECT_FORM": "Email powinien być w prawidłowej formie!",
         "PASSWORD_REQUIRED": "Hasło jest wymagane!",
         "PASSWORD_CONFIRM": "Potwierdź hasło!",
-        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!"
+        "PASSWORD_NOT_MATCHING": "Hasła nie pokrywają się!",
+        "ACCESS": "Funkcja niedostępna"
     },
     "TICKET": {
         "OFFER": "Oferta biletów",
@@ -29,7 +30,8 @@
         "TIME_LIMITED": "Czasowe",
         "NO_TICKET_SELECTED": "Nie wybrano biletu. Powróć i wybierz bilet",
         "BUY": "Kup",
-        "PURCHASE_DISCLAIMER": "Uprawniający posiadacza biletu do korzystania z nieograniczonej liczby przejazdów, na wszystkich typach linii, w wyznaczonym czasie od momentu skasowania biletu.",
+        "PURCHASE_DISCLAIMER_TIME": "Uprawniający posiadacza biletu do korzystania z nieograniczonej liczby przejazdów, na wszystkich typach linii, w wyznaczonym czasie od momentu skasowania biletu.",
+        "PURCHASE_DISCLAIMER_ONEWAY": "Uprawniający posiadacza biletu do korzystania z jednego, konkretnego przejazdu",
         "BALANCE": "Bilans konta",
         "PURCHASE_SUCCESS": "Zakup biletu udany",
         "PUNCH_SUCCESS": "Bilet został skasowany",
@@ -41,7 +43,8 @@
         "RIDE": "Przejazd",
         "PUNCH_TICKET": "Skasuj bilet",
         "ID": "Bilet nr",
-        "PUNCH_DATE": "Skasowany o"
+        "PUNCH_DATE": "Skasowany o",
+        "LOADING": "Ładowanie"
     },
     "SCHEDULE": {
         "HEADING": "Rozkłady jazdy",

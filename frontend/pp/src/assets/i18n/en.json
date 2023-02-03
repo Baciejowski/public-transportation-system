@@ -16,7 +16,8 @@
         "EMAIL_CORRECT_FORM": "Email should be of correct form!",
         "PASSWORD_REQUIRED": "Password is required!",
         "PASSWORD_CONFIRM": "Confirm the password!",
-        "PASSWORD_NOT_MATCHING": "Passwords do not match!"
+        "PASSWORD_NOT_MATCHING": "Passwords do not match!",
+        "ACCESS": "Function unavailable"
     },
     "TICKET": {
         "OFFER": "Ticket offer",
@@ -29,7 +30,8 @@
         "TIME_LIMITED": "Time limited",
         "NO_TICKET_SELECTED": "No ticket has been selected. Go back and select a ticket.",
         "BUY": "Buy",
-        "PURCHASE_DISCLAIMER": "Allows owner of the ticket to use unlimited number of rides, on all line types, in given time counted from the moment of punching the ticket",
+        "PURCHASE_DISCLAIMER_TIME": "Allows owner of the ticket to use unlimited number of rides, on all line types, in given time counted from the moment of punching the ticket",
+        "PURCHASE_DISCLAIMER_ONEWAY": "Allows owner of the ticket to use one selected ride",
         "BALANCE": "Account balance",
         "PURCHASE_SUCCESS": "Ticket purchased",
         "PUNCH_SUCCESS": "Ticket has been punched",
@@ -41,7 +43,8 @@
         "RIDE": "Ride",
         "PUNCH_TICKET": "Punch ticket",
         "ID": "Ticket ID",
-        "PUNCH_DATE": "Punched at"
+        "PUNCH_DATE": "Punched at",
+        "LOADING": "Loading"
     },
     "SCHEDULE": {
         "HEADING": "Schedule",

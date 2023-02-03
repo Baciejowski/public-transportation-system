@@ -1,16 +1,29 @@
-<button class="menu-open-btn" [hidden]="sidenav.opened" type="button" mat-icon-button (click)="sidenav.open()">
-  <fa-icon [icon]="faBars"></fa-icon>
-</button>
-<mat-drawer #sidenav class="sidenav" mode="side">
-  <a class="menu-entry" routerLink="/tickets/offer" mat-raised-button (click)="sidenav.close()">
-    {{'TICKET.OFFER' | translate}}
-  </a>
-  <a class="menu-entry" routerLink="/schedules" mat-raised-button (click)="sidenav.close()">
-    {{"SCHEDULE.HEADING" | translate}}
-  </a>
-
-  <button class="menu-close-btn" type="button" mat-icon-button (click)="sidenav.close()">
-    <fa-icon [icon]="faChevronLeft"></fa-icon>
+<ng-container *ngIf="hasToken">
+  <button class="menu-open-btn" [hidden]="sidenav.opened" type="button" mat-icon-button (click)="sidenav.open()">
+    <fa-icon [icon]="faBars"></fa-icon>
   </button>
-</mat-drawer>
+  <mat-drawer #sidenav class="sidenav" mode="side">
+    <a *ngIf="checkRole(['PASSENGER'])" class="menu-entry" routerLink="/tickets/offer" mat-raised-button (click)="sidenav.close()">
+      {{'TICKET.OFFER' | translate}}
+    </a>
+    <a *ngIf="checkRole(['PASSENGER'])" class="menu-entry" routerLink="/tickets/owned" mat-raised-button (click)="sidenav.close()">
+      {{"TICKET.OWNED" | translate}}
+    </a>
+    <a *ngIf="checkRole(['PASSENGER'])" class="menu-entry" routerLink="/tickets/active" mat-raised-button (click)="sidenav.close()">
+      {{"TICKET.ACTIVE" | translate}}
+    </a>
+    <a *ngIf="checkRole(['PASSENGER', 'PLANNER'])" class="menu-entry" routerLink="/schedules" mat-raised-button (click)="sidenav.close()">
+      {{"SCHEDULE.HEADING" | translate}}
+    </a>
+    <a *ngIf="checkRole(['PLANNER'])" class="menu-entry" routerLink="/deviations" mat-raised-button (click)="sidenav.close()">
+      {{"SCHEDULE.DEVIATIONS" | translate}}
+    </a>
+
+    <button class="menu-close-btn" type="button" mat-icon-button (click)="sidenav.close()">
+      <fa-icon [icon]="faChevronLeft"></fa-icon>
+    </button>
+
+    <app-language-select></app-language-select>
+  </mat-drawer>
+</ng-container>
 

@@ -3,9 +3,10 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { mergeMap, Observable } from 'rxjs';
+import { catchError, mergeMap, Observable, throwError } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
@@ -22,7 +23,12 @@ export class SessionInterceptor implements HttpInterceptor {
     }
     
     if (this.authService.isLoggedIn() || req.url.includes("refresh") || req.url.includes("assets") || req.url.includes("account/account")) {
-      return next.handle(req);
+      return next.handle(req).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.authService.error$.next(error.statusText);
+          return throwError(() => new Error(error.status.toString()))
+        })
+      );
     }
 
     return this.authService.refresh().pipe(mergeMap(_ => {
@@ -32,7 +38,12 @@ export class SessionInterceptor implements HttpInterceptor {
           setHeaders: { Authorization: `Bearer ${token}` }
         });
       }
-      return next.handle(req)
+      return next.handle(req).pipe(
+        catchError((error: HttpErrorResponse) => {
+          this.authService.error$.next(error.statusText);
+          return throwError(() => new Error(error.status.toString()))
+        })
+      );
     }));
   }
 }

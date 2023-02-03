@@ -2,7 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { catchError, of, Subject, takeUntil } from 'rxjs';
 import { RegisterDto } from '../../models/registerDto';
 import { AuthService } from '../../services/auth.service';
@@ -22,9 +24,17 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnDestroy {
+export class RegisterComponent implements OnDestroy, OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private _snackBar: MatSnackBar, private translateService: TranslateService) { }
+  
+  ngOnInit(): void {
+    this.authService.error$.subscribe(error => {
+      const errorMessage = error as string;
+      const text = errorMessage === "Cannot access" ? this.translateService.instant("AUTH.ACCESS") : errorMessage;
+      this._snackBar.open(text, "OK", {duration: 5000})
+    });
+  }
 
   matcher = new MyErrorStateMatcher();
   destroy$ = new Subject();
