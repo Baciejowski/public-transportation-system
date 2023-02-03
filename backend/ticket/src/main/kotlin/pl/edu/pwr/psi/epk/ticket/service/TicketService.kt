@@ -82,7 +82,8 @@ class TicketService(
 
         return when (ticket) {
             is OneWayTicket -> rideId == ticket.rideId
-            is TimeLimitedTicket -> ticket.punchTime!!.isBefore(LocalDateTime.now(ZoneOffset.UTC).plus(ticket.duration))
+            is TimeLimitedTicket -> LocalDateTime.now(ZoneOffset.UTC)
+                .isBefore(ticket.punchTime!!.plus(ticket.duration))
             else -> throw IllegalArgumentException("Ticket type is not supported.")
         }
     }
