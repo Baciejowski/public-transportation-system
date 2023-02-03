@@ -4,6 +4,6 @@
         <div class="time">{{time | translate}}</div>
     </div>
     <div class="ticket-lower">
-        <div class="subtitle"><span class="thin">{{subtitleThin}}</span> <span class="bold">{{subtitleBold}}</span></div>
+        <div class="subtitle"><span class="thin" *ngIf="subtitleThin">{{subtitleThin | translate}}{{" #"}}{{rideId}}</span> <span class="bold">{{subtitleBold}}</span></div>
     </div>
 </div>

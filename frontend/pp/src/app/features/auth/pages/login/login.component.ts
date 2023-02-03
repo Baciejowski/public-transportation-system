@@ -31,6 +31,7 @@ export class LoginComponent {
       .pipe(
         takeUntil(this.destroy$)    
       ).subscribe(res => {
+        this.authService.initUserInfo();
         this.router.navigateByUrl('/tickets/offer');
       });
   }

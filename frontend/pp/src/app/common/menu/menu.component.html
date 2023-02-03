@@ -1,0 +1,16 @@
+<button class="menu-open-btn" [hidden]="sidenav.opened" type="button" mat-icon-button (click)="sidenav.open()">
+  <fa-icon [icon]="faBars"></fa-icon>
+</button>
+<mat-drawer #sidenav class="sidenav" mode="side">
+  <a class="menu-entry" routerLink="/tickets/offer" mat-raised-button (click)="sidenav.close()">
+    {{'TICKET.OFFER' | translate}}
+  </a>
+  <a class="menu-entry" routerLink="/schedules" mat-raised-button (click)="sidenav.close()">
+    {{"SCHEDULE.HEADING" | translate}}
+  </a>
+
+  <button class="menu-close-btn" type="button" mat-icon-button (click)="sidenav.close()">
+    <fa-icon [icon]="faChevronLeft"></fa-icon>
+  </button>
+</mat-drawer>
+

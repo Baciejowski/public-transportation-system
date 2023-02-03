@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { DeviationDto } from '../models/deviationDto';
 import { LineDetailsDto } from '../models/lineDetailsDto';
 import { LineDto } from '../models/lineDto';
 import { RouteDetailDto } from '../models/routeDetailDto';
@@ -34,5 +35,9 @@ export class ScheduleService {
 
   getStopDetails(stopId: string): Observable<StopDetailsDto> {
     return this.http.get<StopDetailsDto>(`/api/schedule/schedule/stops/${stopId}`);
+  }
+
+  getDeviations(): Observable<DeviationDto[]> {
+    return this.http.get<DeviationDto[]>("/api/schedule/schedule/deviations");
   }
 }

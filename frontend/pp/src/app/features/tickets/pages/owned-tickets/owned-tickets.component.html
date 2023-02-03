@@ -1,0 +1,28 @@
+<main>
+    <section>
+        <h1>{{'TICKET.OWNED' | translate}}</h1>
+    </section>
+    <section>
+        <h3>{{'TICKET.ONEWAY_PLURAL' | translate}}</h3>
+        <div class="ticket-container">
+            <app-ticket
+                *ngFor="let oneWayTicket of oneWayTickets"
+                [ticket]="oneWayTicket"
+                (click)="onTicketSelect(oneWayTicket)">
+            </app-ticket>
+            <p *ngIf="!oneWayTickets.length">{{'TICKET.NO_TICKETS' | translate}}</p>
+        </div>
+    </section>
+    <section>
+        <h3>{{'TICKET.TIME_LIMITED' | translate}}</h3>
+        <div class="ticket-container">
+            <app-ticket
+                *ngFor="let timeLimitedTicket of timeLimitedTickets"
+                [ticket]="timeLimitedTicket"
+                (click)="onTicketSelect(timeLimitedTicket)">
+            </app-ticket>
+            <p *ngIf="!timeLimitedTickets.length">{{'TICKET.NO_TICKETS' | translate}}</p>
+        </div>
+    </section>
+</main>
+    

@@ -1,0 +1,16 @@
+<main>
+    <section>
+        <h1>{{'VALIDATION.PANEL' | translate}}</h1>
+    </section>
+    <div class="container">
+        <mat-form-field appearance="fill">
+            <mat-label for="ticketId">{{ "VALIDATION.ENTER_TICKET" | translate }}</mat-label>
+            <input id="ticketId" type="text" matInput [(ngModel)]="ticketId">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="rideId">{{ "VALIDATION.ENTER_RIDE" | translate }}</mat-label>
+            <input id="rideId" type="text" matInput [(ngModel)]="rideId">
+        </mat-form-field>
+        <button mat-button [disabled]="!rideId || !ticketId" (click)="validate()">{{ "VALIDATION.VALIDATE" | translate }}</button>
+    </div>
+</main>

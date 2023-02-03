@@ -1,0 +1,20 @@
+<main>
+    <section *ngIf="ticket; else noTicketSelected">
+        <div class="ticket-container">
+            <app-ticket [ticket]="ticket">
+            </app-ticket>
+            <p>{{ "TICKET.ID" | translate }} {{"#"}}{{ticket.ticketNo}}</p>
+            <p>{{ "TICKET.PUNCH_DATE" | translate }}{{":"}}<br>{{ticket.punchTime + 'Z' | date:'HH:mm dd.MM.yyyy'}}</p>
+        </div>
+        <p>{{ "TICKET.PURCHASE_DISCLAIMER" | translate }}</p>
+        <footer>
+            <button mat-button class="back" [routerLink]="['/tickets/active']">{{"COMMON.BACK" | translate}}</button>
+        </footer>
+    </section>
+    <ng-template #noTicketSelected>
+        <section>
+            {{ "TICKET.NO_TICKET_SELECTED" | translate }}
+            <button mat-button class="back" [routerLink]="['/tickets/active']">{{"COMMON.BACK" | translate}}</button>
+        </section>
+    </ng-template>
+</main>

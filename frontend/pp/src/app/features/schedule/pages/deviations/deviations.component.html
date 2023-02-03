@@ -1,0 +1,21 @@
+<main>
+    <header>
+        <h1>{{ "SCHEDULE.DEVIATIONS" | translate }}</h1>
+    </header>
+
+    <section *ngIf="deviations">
+        <div class="deviation-card" *ngFor="let deviation of deviations">
+            <div class="deviation-time-container">
+                <div class="deviation">{{ "SCHEDULE.STOP.DEVIATION" | translate }}{{":"}}</div>
+                <div class="red">{{ calculateDeviation(deviation.deviation) }} {{"min"}}</div>
+            </div>
+            <div class="line" (click)="selectLine(deviation.line)">{{ deviation.line.name }}</div>
+            <div class="stops">
+                <div class="last">{{deviation.lastStop.name}}</div>
+                <div class="next">{{deviation.nextStop.name}}</div>
+            </div>
+        </div>
+    </section>
+
+    
+</main>

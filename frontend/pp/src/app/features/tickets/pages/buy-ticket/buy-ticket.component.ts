@@ -27,7 +27,7 @@ export class BuyTicketComponent implements OnInit, OnDestroy {
   ) { }
   
   ngOnInit(): void {
-    this.ticket = this.ticketService.selectedTicket;
+    this.ticket = this.ticketService.buySelectedTicket;
     this.cost = this.count * (this.ticket?.price || 0); 
     this.authService.getUserInfo()
       .pipe(takeUntil(this.destroy$))
@@ -35,7 +35,7 @@ export class BuyTicketComponent implements OnInit, OnDestroy {
   }
   
   ngOnDestroy(): void {
-    this.ticketService.selectedTicket = null;
+    this.ticketService.buySelectedTicket = null;
     this.destroy$.next(true);
     this.destroy$.complete();
   }

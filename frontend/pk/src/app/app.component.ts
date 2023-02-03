@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from './features/auth/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'pk';
+  constructor(translate: TranslateService) {
+    translate.addLangs(['en', 'pl']);
+}
 }

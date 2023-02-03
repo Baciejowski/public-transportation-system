@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 import { OfferedTicketDto } from '../../models/offeredTicketDto';
+import { TicketDto } from '../../models/ticketDto';
 
 @Component({
   selector: 'app-ticket',
@@ -12,14 +13,25 @@ export class TicketComponent implements OnInit {
   time: string = '';
   subtitleThin: string = '';
   subtitleBold: string = '';
-  @Input() ticket: OfferedTicketDto;
+  rideId: number;
+  @Input() ticket: OfferedTicketDto | TicketDto;
 
   constructor() { }
 
   ngOnInit(): void {
+
     this.type = this.ticket.isReduced ? "TICKET.REDUCED" : "TICKET.REGULAR";
     this.time = this.ticket.duration ? this.calculateTime(this.ticket.duration) : "TICKET.ONEWAY";
-    this.subtitleBold = `${this.ticket.price.toFixed(2)} zł`;
+    const punchedTicket = this.ticket as TicketDto;
+    if (punchedTicket.punched && punchedTicket.rideId) {
+      this.rideId = punchedTicket.rideId;
+      this.subtitleThin = "TICKET.RIDE";
+    } else {
+      const price = (this.ticket as OfferedTicketDto).price ?
+                    (this.ticket as OfferedTicketDto).price :
+                    (this.ticket as TicketDto).pricePaid;
+      this.subtitleBold = `${price.toFixed(2)} zł`;
+    }
   }
 
   calculateTime(time: string): string {

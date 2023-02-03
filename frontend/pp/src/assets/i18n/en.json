@@ -27,12 +27,21 @@
         "ONEWAY": "One-way",
         "ONEWAY_PLURAL": "One-way",
         "TIME_LIMITED": "Time limited",
-        "NO_TICKET_SELECTED": "No ticket has been selected. Go back to offer page and select a ticket.",
+        "NO_TICKET_SELECTED": "No ticket has been selected. Go back and select a ticket.",
         "BUY": "Buy",
         "PURCHASE_DISCLAIMER": "Allows owner of the ticket to use unlimited number of rides, on all line types, in given time counted from the moment of punching the ticket",
         "BALANCE": "Account balance",
         "PURCHASE_SUCCESS": "Ticket purchased",
-        "OWNED": "Owned tickets"
+        "PUNCH_SUCCESS": "Ticket has been punched",
+        "OWNED": "Owned tickets",
+        "AMOUNT": "Amount",
+        "NO_TICKETS": "No tickets",
+        "RIDE_ID": "Ride ID",
+        "ACTIVE": "Active tickets",
+        "RIDE": "Ride",
+        "PUNCH_TICKET": "Punch ticket",
+        "ID": "Ticket ID",
+        "PUNCH_DATE": "Punched at"
     },
     "SCHEDULE": {
         "HEADING": "Schedule",
@@ -50,7 +59,8 @@
             "NEXT": "Next stop",
             "ENTER_LINE": "Enter line",
             "ENTER_DEVIATION": "Enter deviation"
-        }
+        },
+        "DEVIATIONS": "Deviations"
     },
     "COMMON": {
         "BACK": "Back"

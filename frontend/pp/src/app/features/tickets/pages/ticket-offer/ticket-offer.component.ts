@@ -52,7 +52,7 @@ export class TicketOfferComponent implements OnInit, OnDestroy {
   }
 
   onTicketSelect(ticket: OfferedTicketDto) {
-    this.ticketService.selectedTicket = ticket;
+    this.ticketService.buySelectedTicket = ticket;
     this.router.navigate(['tickets', 'buy']);
   }
 

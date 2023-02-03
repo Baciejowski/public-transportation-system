@@ -24,6 +24,15 @@ import { StopComponent } from './features/schedule/pages/stop/stop.component';
 import { FormsModule } from '@angular/forms';
 import { BuyTicketComponent } from './features/tickets/pages/buy-ticket/buy-ticket.component';
 import { BuyTicketSuccessComponent } from './features/tickets/pages/buy-ticket-success/buy-ticket-success.component';
+import { PunchTicketSuccessComponent } from './features/tickets/pages/punch-ticket-success/punch-ticket-success.component';
+import { PunchTicketComponent } from './features/tickets/pages/punch-ticket/punch-ticket.component';
+import { OwnedTicketsComponent } from './features/tickets/pages/owned-tickets/owned-tickets.component';
+import { ActiveTicketsComponent } from './features/tickets/pages/active-tickets/active-tickets.component';
+import { ActiveTicketComponent } from './features/tickets/pages/active-ticket/active-ticket.component';
+import { DeviationsComponent } from './features/schedule/pages/deviations/deviations.component';
+import { MenuComponent } from './common/menu/menu.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -43,7 +52,14 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     LineComponent,
     StopComponent,
     BuyTicketComponent,
-    BuyTicketSuccessComponent
+    BuyTicketSuccessComponent,
+    PunchTicketSuccessComponent,
+    PunchTicketComponent,
+    OwnedTicketsComponent,
+    ActiveTicketsComponent,
+    ActiveTicketComponent,
+    DeviationsComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -54,9 +70,9 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     TranslateModule.forRoot({
       defaultLanguage: defaultLang,
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
       }
     }),
     HttpClientModule,
@@ -64,7 +80,9 @@ const defaultLang = localStorage.getItem('lang') || 'en';
     MatButtonModule,
     MatSelectModule,
     MatExpansionModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatSidenavModule,
+    FontAwesomeModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: SessionInterceptor, multi: true },

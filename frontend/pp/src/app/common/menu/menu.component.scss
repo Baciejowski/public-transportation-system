@@ -1,0 +1,39 @@
+.menu-open-btn {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.menu-close-btn {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #FFFFFF;
+}
+
+.menu-close-btn:hover {
+
+}
+
+.menu-entry {
+  width: 100%;
+  margin: 3vh 0;
+  background-color: #C689C6;
+  color: #FFFFFF;
+  font-weight: normal;
+}
+
+.sidenav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  width: 100%;
+  max-width: 250px;
+  padding: 15px;
+  align-items: start;
+  justify-content: center;
+  background-color: #937DC2;
+}
+

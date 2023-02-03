@@ -66,6 +66,7 @@ export class RegisterComponent implements OnDestroy {
         takeUntil(this.destroy$),
       )
       .subscribe(res => {
+        this.authService.initUserInfo();
         this.router.navigateByUrl('/tickets/offer')
       });
   }

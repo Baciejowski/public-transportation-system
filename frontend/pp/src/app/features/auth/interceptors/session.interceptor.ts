@@ -21,7 +21,7 @@ export class SessionInterceptor implements HttpInterceptor {
       });
     }
     
-    if (this.authService.isLoggedIn() || req.url.includes("refresh") || req.url.includes("assets")) {
+    if (this.authService.isLoggedIn() || req.url.includes("refresh") || req.url.includes("assets") || req.url.includes("account/account")) {
       return next.handle(req);
     }
 

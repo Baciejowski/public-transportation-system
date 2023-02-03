@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
 import { LoginDto } from '../models/loginDto';
 import { RegisterDto } from '../models/registerDto';
 import { HttpClient } from '@angular/common/http';
@@ -65,6 +65,7 @@ class Session {
 export class AuthService {
 
   public session = Session.instance();
+  private userInfo$ = new BehaviorSubject<UserInfoDto | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -76,13 +77,17 @@ export class AuthService {
     return !this.session.isExpired()
   }
 
-  getUserInfo(): Observable<UserInfoDto | null> {
+  public initUserInfo(): void {
     const token = this.session.getRefreshToken();
     if (token) {
-      return this.http.get<UserInfoDto>("/api/account/account");
+      this.http.get<UserInfoDto>("/api/account/account").subscribe(userInfo => this.userInfo$.next(userInfo));
     } else {
-      return of(null);
+      this.userInfo$.next(null);
     }
+  }
+
+  getUserInfo(): Observable<UserInfoDto | null> {
+    return this.userInfo$;
   }
 
   refresh(): Observable<boolean> {

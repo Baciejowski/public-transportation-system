@@ -27,12 +27,21 @@
         "ONEWAY": "Jednorazowy",
         "ONEWAY_PLURAL": "Jednorazowe",
         "TIME_LIMITED": "Czasowe",
-        "NO_TICKET_SELECTED": "Nie wybrano biletu. Powróć do oferty i wybierz bilet",
+        "NO_TICKET_SELECTED": "Nie wybrano biletu. Powróć i wybierz bilet",
         "BUY": "Kup",
         "PURCHASE_DISCLAIMER": "Uprawniający posiadacza biletu do korzystania z nieograniczonej liczby przejazdów, na wszystkich typach linii, w wyznaczonym czasie od momentu skasowania biletu.",
-        "BALANCE": "Balans konta",
+        "BALANCE": "Bilans konta",
         "PURCHASE_SUCCESS": "Zakup biletu udany",
-        "OWNED": "Posiadane bilety"
+        "PUNCH_SUCCESS": "Bilet został skasowany",
+        "OWNED": "Posiadane bilety",
+        "AMOUNT": "Ilość",
+        "NO_TICKETS": "Brak biletów",
+        "RIDE_ID": "ID przejazdu",
+        "ACTIVE": "Aktywne bilety",
+        "RIDE": "Przejazd",
+        "PUNCH_TICKET": "Skasuj bilet",
+        "ID": "Bilet nr",
+        "PUNCH_DATE": "Skasowany o"
     },
     "SCHEDULE": {
         "HEADING": "Rozkłady jazdy",
@@ -50,7 +59,8 @@
             "NEXT": "Następny",
             "ENTER_LINE": "Wprowadź linię",
             "ENTER_DEVIATION": "Wprowadź opóźnienie"
-        }
+        },
+        "DEVIATIONS": "Opóźnienia"
     },
     "COMMON": {
         "BACK": "Powrót"
