@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
         - name: epk-gateway-app
-          image: epk-gateway-app
-          imagePullPolicy: Never
+          image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-gateway-app
           ports:
             - containerPort: 8080
           envFrom:
@@ -29,7 +28,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: epk-gateway-service
+  name: gateway-app
 spec:
   selector:
     app: epk-gateway-app
@@ -37,21 +36,3 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-
----
-
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: epk-ingress
-spec:
-  rules:
-    - http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: epk-gateway-service
-                port:
-                  number: 8080

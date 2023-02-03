@@ -28,8 +28,7 @@ spec:
     spec:
       containers:
         - name: epk-account-app
-          image: epk-account-app
-          imagePullPolicy: Never
+          image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-account-app
           ports:
             - containerPort: 8081
           envFrom:

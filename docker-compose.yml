@@ -2,11 +2,24 @@ version: '3.8'
 
 
 services:
+
+  controller-app:
+    build:
+      context: ./frontend/pk
+      dockerfile: Dockerfile
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-controller-app
+    networks:
+      - discovery-network
+    ports:
+      - "81:80"
+    depends_on:
+      - gateway-app
+
   passenger-app:
     build:
       context: ./frontend/pp
       dockerfile: Dockerfile
-    image: epk-passenger-app
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-passenger-app
     networks:
       - discovery-network
     ports:
@@ -18,7 +31,7 @@ services:
     build:
       context: ./backend/discovery
       dockerfile: Dockerfile
-    image: epk-discovery-app
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-discovery-app
     env_file:
       - ./backend/discovery/app-environment.env
     networks:
@@ -30,7 +43,7 @@ services:
     build:
       context: ./backend/gateway
       dockerfile: Dockerfile
-    image: epk-gateway-app
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-gateway-app
     env_file:
       - ./backend/gateway/app-environment.env
     networks:
@@ -55,7 +68,7 @@ services:
     build:
       context: ./backend/account
       dockerfile: Dockerfile
-    image: epk-account-app
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-account-app
     env_file:
       - ./backend/account/app-environment.env
     networks:
@@ -83,7 +96,7 @@ services:
     build:
       context: ./backend/schedule
       dockerfile: Dockerfile
-    image: epk-schedule-app
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-schedule-app
     env_file:
       - ./backend/schedule/app-environment.env
     networks:
@@ -110,7 +123,7 @@ services:
     build:
       context: ./backend/ticket
       dockerfile: Dockerfile
-    image: epk-ticket-app
+    image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-ticket-app
     env_file:
       - ./backend/ticket/app-environment.env
     networks:

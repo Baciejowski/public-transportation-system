@@ -28,8 +28,7 @@ spec:
     spec:
       containers:
         - name: epk-schedule-app
-          image: epk-schedule-app
-          imagePullPolicy: Never
+          image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-schedule-app
           ports:
             - containerPort: 8083
           envFrom:

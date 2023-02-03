@@ -28,8 +28,7 @@ spec:
     spec:
       containers:
         - name: epk-ticket-app
-          image: epk-ticket-app
-          imagePullPolicy: Never
+          image: 333675123754.dkr.ecr.us-east-1.amazonaws.com/kwojcikowski:epk-ticket-app
           ports:
             - containerPort: 8082
           envFrom:
