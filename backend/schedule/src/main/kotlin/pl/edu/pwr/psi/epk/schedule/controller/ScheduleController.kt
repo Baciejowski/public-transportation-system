@@ -1,10 +1,12 @@
 package pl.edu.pwr.psi.epk.schedule.controller
 
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import pl.edu.pwr.psi.epk.schedule.dto.*
 import pl.edu.pwr.psi.epk.schedule.infrastructure.RequiredRole
 import pl.edu.pwr.psi.epk.schedule.infrastructure.Role
+import pl.edu.pwr.psi.epk.schedule.model.RideStop
 import pl.edu.pwr.psi.epk.schedule.repository.*
 import pl.edu.pwr.psi.epk.schedule.service.ScheduleService
 import java.time.LocalDateTime
@@ -18,7 +20,8 @@ class ScheduleController(
     val stopRepository: StopRepository,
     val busRepository: BusRepository,
     val scheduleService: ScheduleService,
-    val rideRepository: RideRepository
+    val rideRepository: RideRepository,
+    val rideStopRepository: RideStopRepository
 ) {
     //Screen 4.6.2.1
     @GetMapping("/lines")
@@ -87,5 +90,39 @@ class ScheduleController(
         if(ride.isEmpty)
             return ResponseEntity.notFound().build()
         return ResponseEntity.ok(RideDTO.fromRide(ride.get()))
+    }
+
+    @PostMapping("/rides/{id}/stops")
+    fun saveRideStop(@PathVariable id: Long, @RequestBody rideStopDTO: RideStopDTO) : ResponseEntity<RideDTO> {
+        val ride = rideRepository.findById(id)
+        if(ride.isEmpty)
+            return ResponseEntity.notFound().build()
+        var rideObj = ride.get()
+        if(rideStopDTO.stopNo <= rideObj.rideStops.filterNotNull().size)
+            return ResponseEntity(HttpStatus.CONFLICT)
+        val routeStops = rideObj.routeService.routeServiceStops.filterNotNull()
+        if(rideStopDTO.stopNo > routeStops.size)
+            return ResponseEntity.badRequest().build()
+        if(rideObj.rideStops.filterNotNull().isEmpty())
+            rideObj.startTime = LocalDateTime.now()
+        for(i in rideObj.rideStops.filterNotNull().size until rideStopDTO.stopNo){
+            val rideStop = rideStopRepository.save(RideStop(rideObj,routeStops[i]))
+            rideObj.rideStops += rideStop
+        }
+        if(rideObj.rideStops.filterNotNull().size == routeStops.size)
+            rideObj.endTime = LocalDateTime.now()
+        rideObj = rideRepository.save(rideObj)
+        return ResponseEntity.ok(RideDTO.fromRide(rideObj))
+    }
+
+    @GetMapping("/rides")
+    fun getCurrentRides(): ResponseEntity<List<RideDTO>> {
+        return ResponseEntity.ok((
+                rideRepository
+                    .findAllByStartTimeIsNotNullAndEndTimeIsNull() +
+                        rideRepository
+                            .findAll()
+                            .filter { it.endTime == null && LocalDateTime.now().isAfter(it.plannedStartTime)}
+                ).distinctBy { it.id }.map { RideDTO.fromRide(it) })
     }
 }

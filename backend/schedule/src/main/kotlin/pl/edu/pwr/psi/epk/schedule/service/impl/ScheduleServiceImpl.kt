@@ -24,20 +24,20 @@ class ScheduleServiceImpl(
         val allDepartures =
             routeServiceStopRepository
                 .findAllByStop_Id(stopId)
-                .filter { it.routeService.routeServiceStops.last() != it }
+                .filter { it.routeService.routeServiceStops.filterNotNull().last() != it }
 
         val departuresOfTodaysRides = allDepartures
             .filter { routeServiceStop ->
                 routeServiceStop.routeService.calendar.isServiceDay(
-                    routeServiceStop.routeService.routeServiceStops.minOf {today+it.plannedDepartureTime }) }
+                    routeServiceStop.routeService.routeServiceStops.filterNotNull().minOf {today+it.plannedDepartureTime }) }
             .sortedBy { today+it.plannedDepartureTime }
             .map { routeServiceStop ->
                 val route = routeServiceStop.routeService.route
-                val rideStart = routeServiceStop.routeService.routeServiceStops.minOf {today+it.plannedDepartureTime }
+                val rideStart = routeServiceStop.routeService.routeServiceStops.filterNotNull().minOf {today+it.plannedDepartureTime }
                 val ride = routeServiceStop.routeService.rides.firstOrNull{ it.plannedStartTime == rideStart }
                 var delay = Duration.ZERO
                 if(ride?.startTime != null) {
-                    delay = ride.rideStops.last().timeDeviation
+                    delay = ride.rideStops.filterNotNull().last().timeDeviation
                 }
                 StopDepartureDTO(
                     LineManifestDTO.fromLine(route.line),
@@ -60,7 +60,7 @@ class ScheduleServiceImpl(
                 .findAllByStop_Id(stopId)
                 .filter { routeServiceStop ->
                     routeServiceStop.routeService.calendar.isServiceDay(
-                        routeServiceStop.routeService.routeServiceStops.minOf { tomorrow+it.plannedDepartureTime }) }
+                        routeServiceStop.routeService.routeServiceStops.filterNotNull().minOf { tomorrow+it.plannedDepartureTime }) }
                 .filter { it.plannedDepartureTime.toDaysPart()==0L }
                 .map { routeServiceStop ->
                     val route = routeServiceStop.routeService.route
@@ -78,12 +78,12 @@ class ScheduleServiceImpl(
     override fun getDeviations(): List<DeviationDTO> =
         rideRepository
             .findAllByStartTimeIsNotNullAndEndTimeIsNull()
-            .map { route -> Pair(route.rideStops.last(), route.rideStops.size) }
+            .map { route -> Pair(route.rideStops.filterNotNull().last(), route.rideStops.filterNotNull().size) }
             .filter { it.first.timeDeviation.abs().toMinutes()>=1 }
             .sortedBy { it.first.timeDeviation.abs() }
             .map { (lastRideStop, nextIndex) ->
                 val lastStop = lastRideStop.routeServiceStop.stop
-                val nextStop = lastRideStop.routeServiceStop.routeService.routeServiceStops[nextIndex].stop
+                val nextStop = lastRideStop.routeServiceStop.routeService.routeServiceStops.filterNotNull()[nextIndex].stop
                 val departed =
                     lastRideStop.ride.plannedStartTime.toLocalDate().atStartOfDay() +
                             lastRideStop.routeServiceStop.plannedDepartureTime +

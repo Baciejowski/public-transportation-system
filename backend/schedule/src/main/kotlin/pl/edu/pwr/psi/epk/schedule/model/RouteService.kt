@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
+import jakarta.persistence.OrderColumn
 
 @Entity
 class RouteService(
@@ -24,6 +25,7 @@ class RouteService(
     val id: Long = 0
 
     @OneToMany(mappedBy = "routeService")
+    @OrderColumn
     var routeServiceStops: List<RouteServiceStop> = mutableListOf()
 
     @OneToMany(mappedBy = "routeService")

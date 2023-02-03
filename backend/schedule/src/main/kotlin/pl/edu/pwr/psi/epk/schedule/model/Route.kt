@@ -16,6 +16,7 @@ class Route(
     val id: Long = 0
 
     @ManyToMany
+    @OrderColumn
     var stops: List<Stop> = mutableListOf()
 
     @OneToMany(mappedBy = "route")

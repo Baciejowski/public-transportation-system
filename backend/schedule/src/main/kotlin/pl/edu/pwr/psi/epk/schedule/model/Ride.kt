@@ -24,6 +24,7 @@ class Ride (
     val id: Long = 0
 
     @OneToMany(mappedBy = "ride")
+    @OrderColumn
     var rideStops: List<RideStop> = mutableListOf()
 
     var startTime: LocalDateTime? = null

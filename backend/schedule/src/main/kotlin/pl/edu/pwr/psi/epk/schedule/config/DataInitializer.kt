@@ -32,14 +32,13 @@ class DataInitializer(
         calendarRepository.save(Calendar(days, from.atStartOfDay()))
 
     fun createRoute(line: Line, name: String, stops: List<Stop>): Route {
-        val route = Route(line, name)
+        val route = routeRepository.save(Route(line, name))
         route.stops = stops
-        routeRepository.save(route)
         route.stops.forEach { it.routes.add(route)}
         stopRepository.saveAll(route.stops)
         line.routes.add(route)
         lineRepository.save(line)
-        return route
+        return routeRepository.save(route)
     }
 
     fun createRouteServiceWithStops(route: Route, calendar: Calendar, halts: List<Pair<Stop, Duration>>): RouteService {
@@ -66,17 +65,22 @@ class DataInitializer(
             val passedStops = ride.routeService.routeServiceStops.filter {
                 (date.atStartOfDay() + it.plannedDepartureTime).isBefore(now)
             }
+            ride = rideRepository.save(ride)
             ride.rideStops = passedStops.map { RideStop(ride, it) }
             ride.rideStops.forEach { it.timeDeviation = Duration.ZERO }
         }
 
-        if (ride.plannedEndTime.isBefore(now))
+        if (ride.plannedEndTime.isBefore(now) || ride.rideStops.filterNotNull().size == routeService.routeServiceStops.filterNotNull().size)
             ride.endTime = ride.plannedEndTime
-        else if (ride.plannedStartTime.isBefore(now))
-            ride.rideStops.last().timeDeviation = Duration.ofMinutes(2)//ride.id%6-2)
+        else if (ride.plannedStartTime.isBefore(now)) {
+            val timeDeviation = Duration.ofMinutes(2)
+            ride.rideStops.last().timeDeviation = timeDeviation
+            if(ride.rideStops.size==1)
+                ride.startTime = ride.startTime?.plus(timeDeviation)
+        }
 
-        ride = rideRepository.save(ride)
         rideStopRepository.saveAll(ride.rideStops)
+        ride = rideRepository.save(ride)
         routeService.rides += ride
         routeServiceRepository.save(routeService)
         return ride
@@ -150,20 +154,21 @@ class DataInitializer(
             )
         }
 
-        val route4501Services = (0L..22).map {
+        val route4501Services = (0L..22).map {hours -> (0..5).map {
+            val minutes = it*10L
             createRouteServiceWithStops(
                 route4501, calendar, listOf(
-                    Pair(stop71, Duration.ofHours(it).plusMinutes(0)),
-                    Pair(stop136, Duration.ofHours(it).plusMinutes(2)),
-                    Pair(stop113, Duration.ofHours(it).plusMinutes(4)),
-                    Pair(stop246, Duration.ofHours(it).plusMinutes(8)),
-                    Pair(stop248, Duration.ofHours(it).plusMinutes(10)),
-                    Pair(stop260, Duration.ofHours(it).plusMinutes(13)),
-                    Pair(stop278, Duration.ofHours(it).plusMinutes(20)),
-                    Pair(stop280, Duration.ofHours(it).plusMinutes(22)),
-                    Pair(stop282, Duration.ofHours(it).plusMinutes(23))
+                    Pair(stop71, Duration.ofHours(hours).plusMinutes(minutes + 0)),
+                    Pair(stop136, Duration.ofHours(hours).plusMinutes(minutes + 2)),
+                    Pair(stop113, Duration.ofHours(hours).plusMinutes(minutes + 4)),
+                    Pair(stop246, Duration.ofHours(hours).plusMinutes(minutes + 8)),
+                    Pair(stop248, Duration.ofHours(hours).plusMinutes(minutes + 10)),
+                    Pair(stop260, Duration.ofHours(hours).plusMinutes(minutes + 13)),
+                    Pair(stop278, Duration.ofHours(hours).plusMinutes(minutes + 20)),
+                    Pair(stop280, Duration.ofHours(hours).plusMinutes(minutes + 22)),
+                    Pair(stop282, Duration.ofHours(hours).plusMinutes(minutes + 23))
                 ))
-        }
+        }}.flatten()
 
         val buses = busRepository.saveAll((1..21).map{Bus(300+it, true)})
 
