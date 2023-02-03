@@ -16,6 +16,9 @@ export class DeviationsComponent implements OnInit {
   deviations: DeviationDto[];
   destroy$ = new Subject();
   includeDeviation: boolean = false;
+  deviation: string;
+  line: string;
+  filteredDeviations: DeviationDto[]
 
   constructor(
     private scheduleService: ScheduleService,
@@ -28,6 +31,7 @@ export class DeviationsComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(deviations => {
         this.deviations = deviations;
+        this.filteredDeviations = deviations;
       });
   }
   
@@ -43,6 +47,22 @@ export class DeviationsComponent implements OnInit {
 
   selectLine(line: LineDto) {
     this.router.navigate(['lines', line.id]);
+  }
+
+  filter() {
+    this.filteredDeviations = this.deviations
+      .filter(x => {
+        if (this.line) {
+          return x.line.name.toLowerCase().includes(this.line.toLowerCase())
+        }
+        return x;
+      })
+      .filter(x => {
+        if (this.deviation && parseInt(this.deviation)) {
+          return moment.duration(x.deviation).asMinutes() >= parseInt(this.deviation) 
+        }
+        return x;
+      })
   }
 
 }

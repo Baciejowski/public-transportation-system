@@ -3,8 +3,19 @@
         <h1>{{ "SCHEDULE.DEVIATIONS" | translate }}</h1>
     </header>
 
-    <section *ngIf="deviations">
-        <div class="deviation-card" *ngFor="let deviation of deviations">
+    <div class="filters">
+        <mat-form-field appearance="fill">
+            <mat-label for="line">{{ "SCHEDULE.STOP.ENTER_LINE" | translate }}</mat-label>
+            <input id="line" type="text" matInput [(ngModel)]="line" (input)="filter()">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label for="deviation">{{ "SCHEDULE.STOP.ENTER_DEVIATION" | translate }}</mat-label>
+            <input id="deviation" type="text" matInput [(ngModel)]="deviation" (input)="filter()">
+        </mat-form-field>
+    </div>
+
+    <section *ngIf="filteredDeviations?.length">
+        <div class="deviation-card" *ngFor="let deviation of filteredDeviations">
             <div class="deviation-time-container">
                 <div class="deviation">{{ "SCHEDULE.STOP.DEVIATION" | translate }}{{":"}}</div>
                 <div class="red">{{ calculateDeviation(deviation.deviation) }} {{"min"}}</div>
