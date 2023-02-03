@@ -30,7 +30,6 @@ class ScheduleServiceImpl(
             .filter { routeServiceStop ->
                 routeServiceStop.routeService.calendar.isServiceDay(
                     routeServiceStop.routeService.routeServiceStops.minOf {today+it.plannedDepartureTime }) }
-            .filter { dateTime.isBefore(today+it.plannedDepartureTime) }
             .sortedBy { today+it.plannedDepartureTime }
             .map { routeServiceStop ->
                 val route = routeServiceStop.routeService.route
@@ -47,6 +46,8 @@ class ScheduleServiceImpl(
                     delay
                 )
             }
+            // v uncomment in order to simulate bus riding
+            .filter { dateTime.isBefore(it.departure+it.deviation) }
 
         val departuresToday = departuresOfTodaysRides
             .filter { it.departure.toLocalDate() == today.toLocalDate() }
@@ -80,16 +81,16 @@ class ScheduleServiceImpl(
             .map { route -> Pair(route.rideStops.last(), route.rideStops.size) }
             .filter { it.first.timeDeviation.abs().toMinutes()>=1 }
             .sortedBy { it.first.timeDeviation.abs() }
-            .map { (rideStop, nextIndex) ->
-                val lastStop = rideStop.routeServiceStop.stop
-                val nextStop = rideStop.routeServiceStop.routeService.routeServiceStops[nextIndex].stop
+            .map { (lastRideStop, nextIndex) ->
+                val lastStop = lastRideStop.routeServiceStop.stop
+                val nextStop = lastRideStop.routeServiceStop.routeService.routeServiceStops[nextIndex].stop
                 val departed =
-                    rideStop.ride.plannedStartTime.toLocalDate().atStartOfDay() +
-                            rideStop.routeServiceStop.plannedDepartureTime +
-                            rideStop.timeDeviation
+                    lastRideStop.ride.plannedStartTime.toLocalDate().atStartOfDay() +
+                            lastRideStop.routeServiceStop.plannedDepartureTime +
+                            lastRideStop.timeDeviation
                 DeviationDTO(
-                    rideStop.timeDeviation,
-                    LineManifestDTO.fromLine(rideStop.ride.routeService.route.line),
+                    lastRideStop.timeDeviation,
+                    LineManifestDTO.fromLine(lastRideStop.ride.routeService.route.line),
                     StopManifestDTO.fromStop(lastStop),
                     departed,
                     StopManifestDTO.fromStop(nextStop),

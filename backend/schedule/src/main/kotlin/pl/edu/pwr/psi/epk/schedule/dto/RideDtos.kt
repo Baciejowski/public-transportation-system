@@ -10,7 +10,10 @@ data class RideDTO(
     val plannedStartTime: LocalDateTime,
     val plannedEndTime: LocalDateTime,
     val startTime: LocalDateTime?,
-    val endTime: LocalDateTime?
+    val endTime: LocalDateTime?,
+    val lastStop: StopManifestDTO?,
+    val lastStopNo: Int?,
+    val nextStopNo: StopManifestDTO?
 ) {
     companion object{
         fun fromRide(ride: Ride) = RideDTO(
@@ -20,7 +23,17 @@ data class RideDTO(
             ride.plannedStartTime,
             ride.plannedEndTime,
             ride.startTime,
-            ride.endTime
+            ride.endTime,
+            if(ride.rideStops.isEmpty()) null else StopManifestDTO.fromStop(ride.rideStops.last().routeServiceStop.stop),
+            if(ride.rideStops.isEmpty()) null else ride.rideStops.size,
+            if(ride.rideStops.isEmpty() || ride.rideStops.size == ride.routeService.routeServiceStops.size)
+                null
+            else
+                StopManifestDTO.fromStop(ride.routeService.routeServiceStops[ride.rideStops.size].stop)
         )
     }
 }
+
+data class RideStopDTO(
+    val stopNo: Int
+)
